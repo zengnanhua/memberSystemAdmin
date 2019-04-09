@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using UserIdentity.AuthenticationValidator;
 
 namespace UserIdentity
 {
@@ -23,6 +26,34 @@ namespace UserIdentity
        
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("MysqlConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            services.AddIdentityServer()
+               .AddExtensionGrantValidator<UserPwdValidator>()
+               .AddConfigurationStore(options =>
+               {
+                   options.ConfigureDbContext = builder => builder.UseMySQL(connectionString,
+                   MySQLOptionsAction: sqlOptions =>
+                   {
+                       sqlOptions.MigrationsAssembly(migrationsAssembly);
+                   });
+               })
+               .AddOperationalStore(options =>
+               {
+                   options.ConfigureDbContext = builder => builder.UseMySQL(connectionString,
+                       MySQLOptionsAction: sqlOptions =>
+                       {
+                           sqlOptions.MigrationsAssembly(migrationsAssembly);
+                       });
+               });
+               //.AddDeveloperSigningCredential()
+               //.AddInMemoryClients(Config.GetClients())
+               //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+               //.AddInMemoryApiResources(Config.GetApiResources())
+               ;
+
+
             services.AddMvc();
         }
 
@@ -33,7 +64,7 @@ namespace UserIdentity
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseIdentityServer();
             app.UseMvc();
         }
     }
