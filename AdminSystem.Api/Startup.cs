@@ -22,13 +22,27 @@ namespace AdminSystem.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+      
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+           
+            services.AddMvcCore()
+              .AddAuthorization()
+              .AddJsonFormatters()
+             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc()
+
+            services.AddAuthentication("Bearer")
+           .AddIdentityServerAuthentication(options =>
+           {
+               options.Authority = "http://localhost:57988";
+               options.RequireHttpsMetadata = false;
+               options.ApiName = "admin_api";
+           });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,9 +51,9 @@ namespace AdminSystem.Api
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();
