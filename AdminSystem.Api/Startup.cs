@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AdminSystem.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,8 +33,7 @@ namespace AdminSystem.Api
               .AddCustomDbContext(Configuration)
               .AddMvcCore()
               .AddAuthorization()
-              .AddJsonFormatters()
-             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+              .AddJsonFormatters();
             //services.AddMvc()
 
             services.AddAuthentication("Bearer")
@@ -54,13 +52,10 @@ namespace AdminSystem.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
+     
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+           
             app.UseMvc();
         }
     }
