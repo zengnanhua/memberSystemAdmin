@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AdminSystem.Api.Infrastructure.AutofacModules;
 using AdminSystem.Infrastructure;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +29,7 @@ namespace AdminSystem.Api
         public IConfiguration Configuration { get; }
 
       
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
 
@@ -43,6 +47,11 @@ namespace AdminSystem.Api
                options.RequireHttpsMetadata = false;
                options.ApiName = "admin_api";
            });
+
+            var container = new ContainerBuilder();
+            container.Populate(services);
+            container.RegisterModule(new MediatorModule());
+            return new AutofacServiceProvider(container.Build());
         }
 
        
@@ -63,7 +72,7 @@ namespace AdminSystem.Api
     {
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services //.AddEntityFrameworkMySql()
+            services.AddEntityFrameworkMySql()
                    .AddDbContext<ApplicationDbContext>(options =>
                    {
                        options.UseMySql(configuration.GetConnectionString("MysqlConnection"),
