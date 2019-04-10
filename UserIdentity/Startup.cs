@@ -30,19 +30,20 @@ namespace UserIdentity
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddIdentityServer()
+               .AddDeveloperSigningCredential()
                .AddExtensionGrantValidator<UserPwdValidator>()
                .AddConfigurationStore(options =>
                {
-                   options.ConfigureDbContext = builder => builder.UseMySQL(connectionString,
-                   MySQLOptionsAction: sqlOptions =>
+                   options.ConfigureDbContext = builder => builder.UseMySql(connectionString,
+                   mySqlOptionsAction: sqlOptions =>
                    {
                        sqlOptions.MigrationsAssembly(migrationsAssembly);
                    });
                })
                .AddOperationalStore(options =>
                {
-                   options.ConfigureDbContext = builder => builder.UseMySQL(connectionString,
-                       MySQLOptionsAction: sqlOptions =>
+                   options.ConfigureDbContext = builder => builder.UseMySql(connectionString,
+                       mySqlOptionsAction: sqlOptions =>
                        {
                            sqlOptions.MigrationsAssembly(migrationsAssembly);
                        });

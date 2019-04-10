@@ -17,6 +17,7 @@ namespace UserIdentity
                 new Client()
                 {
                     ClientId="adminSystem",
+                    ClientName="adminSystemApi",
                     ClientSecrets=new List<Secret>
                     {
                         new Secret("secret".Sha256())

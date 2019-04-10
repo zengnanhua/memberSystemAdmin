@@ -18,7 +18,7 @@ namespace UserIdentity.Data
                 {
                     context.Clients.Add(client.ToEntity());
                 }
-               var d= await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             if (context.IdentityResources.Count() <= 0)
             {

@@ -1,3 +1,9 @@
 /.vs/
 /UserIdentity/bin/
 /UserIdentity/obj/
+/AdminSystem.Api/bin/
+/AdminSystem.Api/obj/
+/AdminSystem.Domain/bin/
+/AdminSystem.Domain/obj/
+/AdminSystem.Infrastructure/bin/
+/AdminSystem.Infrastructure/obj/
