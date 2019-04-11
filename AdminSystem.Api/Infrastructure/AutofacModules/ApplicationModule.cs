@@ -1,4 +1,6 @@
 ﻿using AdminSystem.Application.Queries;
+using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Infrastructure.Repositories;
 using Autofac;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,10 @@ namespace AdminSystem.Api.Infrastructure.AutofacModules
             builder.Register(c => new ApplicationUserQuery(QueriesConnectionString))
                 .As<IApplicationUserQuery>()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<ApplicationUserRepository>()
+               .As<IApplicationUserRepository>()
+               .InstancePerLifetimeScope();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using AdminSystem.Application.Commands;
+using Autofac;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace AdminSystem.Api.Infrastructure.AutofacModules
                 var componentContext = context.Resolve<IComponentContext>();
                 return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
             });
+
+            builder.RegisterAssemblyTypes(typeof(CreateUserCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+
         }
          
     }

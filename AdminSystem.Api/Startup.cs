@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AdminSystem.Api.Infrastructure.AutofacModules;
+using AdminSystem.Api.Infrastructure.Filters;
 using AdminSystem.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -156,7 +157,7 @@ namespace AdminSystem.Api
                 //    }
                 //});
 
-                //options.OperationFilter<AuthorizeCheckOperationFilter>();
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
             return services;

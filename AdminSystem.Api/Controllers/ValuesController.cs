@@ -37,6 +37,7 @@ namespace UserIdentity.Controllers
 
         // POST api/values
         [HttpPost]
+        [Authorize]
         public void Post([FromBody]string value)
         {
         }
