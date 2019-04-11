@@ -11,6 +11,7 @@ namespace AdminSystem.Api.Controllers
 {
     //[Produces("application/json")]
     [Route("api/[controller]/[action]")]
+   
     public class HomeController : Controller
     {
         IMediator _mediator;
@@ -23,7 +24,7 @@ namespace AdminSystem.Api.Controllers
         {
             return new RedirectResult("~/swagger");
         }
-
+        [HttpGet]
         public async Task<bool> CreateUser()
         {
             CreateUserCommand createUserCommand = new CreateUserCommand("115516","小就","女");

@@ -143,6 +143,15 @@ namespace AdminSystem.Api
                     TermsOfService = "Terms Of Service"
                 });
 
+               
+
+                //options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                //{
+                //    Description = "Authorization format : Bearer {token}",
+                //    Name = "Authorization",
+                //    In = "header",
+                //    Type = "apiKey"
+                //});
                 options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "AdminSystem.Api.xml"));
 
                 //options.AddSecurityDefinition("oauth2", new OAuth2Scheme
