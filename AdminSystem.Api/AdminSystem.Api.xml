@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdminSystem.Api</name>
+    </assembly>
+    <members>
+        <member name="M:AdminSystem.Api.CustomExtensionsMethods.AddCustomDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加数据库
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserIdentity.Controllers.ValuesController.Get">
+            <summary>
+            获取用户 测试
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

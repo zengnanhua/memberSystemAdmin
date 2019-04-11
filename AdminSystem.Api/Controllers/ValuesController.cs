@@ -17,7 +17,10 @@ namespace UserIdentity.Controllers
         {
             _apptionUserQuery = apptionUserQuery;
         }
-        // GET api/values
+        /// <summary>
+        /// 获取用户 测试
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<object>> Get()
         {
