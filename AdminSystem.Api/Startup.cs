@@ -78,7 +78,8 @@ namespace AdminSystem.Api
                        options.UseMySql(configuration.GetConnectionString("MysqlConnection"),
                            mySqlOptionsAction: sqlOptions =>
                            {
-                               sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                               //sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                               sqlOptions.MigrationsAssembly("AdminSystem.Api");
                                sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                            });
                    },

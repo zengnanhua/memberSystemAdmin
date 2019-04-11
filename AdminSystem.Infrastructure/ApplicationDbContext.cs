@@ -35,6 +35,8 @@ namespace AdminSystem.Infrastructure
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+
             base.OnModelCreating(builder);
 
         }
@@ -106,14 +108,17 @@ namespace AdminSystem.Infrastructure
     }
 
     /// <summary>
-    /// 没用用到
+    /// 生成 数据库的
     /// </summary>
     public class OrderingContextDesignFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseMySql("Server=.;Initial Catalog=Microsoft.eShopOnContainers.Services.OrderingDb;Integrated Security=true");
+                .UseMySql("server=www.zengnanhua.club;port=3306;user=nanhua;password=sa123; database=AdminSystem;", mySqlOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly("AdminSystem.Api");
+                });
 
             return new ApplicationDbContext(optionsBuilder.Options, new NoMediator());
         }

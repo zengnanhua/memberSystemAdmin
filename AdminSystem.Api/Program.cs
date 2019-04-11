@@ -28,7 +28,7 @@ namespace AdminSystem.Api
                     .SeedAsync(context, env)
                     .Wait();
             });
-           host.Run();
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
