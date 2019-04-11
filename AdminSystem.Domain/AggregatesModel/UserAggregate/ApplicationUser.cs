@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.SeedWork;
+﻿using AdminSystem.Domain.Events;
+using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,11 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         public ApplicationUser()
         {
 
+        }
+
+        public void UpdateUser()
+        {
+            this.AddDomainEvent(new CreateUserChangeRoleDomainEvent(this.UserName));
         }
 
         public string Name { get; set; }

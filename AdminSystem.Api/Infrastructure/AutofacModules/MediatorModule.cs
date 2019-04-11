@@ -1,4 +1,6 @@
 ﻿using AdminSystem.Application.Commands;
+using AdminSystem.Application.DomainEventHandlers;
+using AdminSystem.Domain.Events;
 using Autofac;
 using MediatR;
 using System;
@@ -25,7 +27,8 @@ namespace AdminSystem.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateUserCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-
+            builder.RegisterAssemblyTypes(typeof(CreateUserChangeRoleDomainEventHandler).GetTypeInfo().Assembly)
+             .AsClosedTypesOf(typeof(INotificationHandler<>));
         }
          
     }

@@ -26,7 +26,7 @@ namespace AdminSystem.Api.Controllers
 
         public async Task<bool> CreateUser()
         {
-            CreateUserCommand createUserCommand = new CreateUserCommand("115515","小鱼","女");
+            CreateUserCommand createUserCommand = new CreateUserCommand("115516","小就","女");
             return await _mediator.Send(createUserCommand);
         }
 
