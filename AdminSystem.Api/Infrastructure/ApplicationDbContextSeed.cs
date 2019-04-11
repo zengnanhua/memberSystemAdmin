@@ -1,4 +1,5 @@
-﻿using AdminSystem.Infrastructure;
+﻿using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,18 @@ namespace AdminSystem.Api.Infrastructure
     {
         public async Task SeedAsync(ApplicationDbContext context, IHostingEnvironment env)
         {
-            //if (!context.CardTypes.Any())
-            //{
-
-            //}
+            if (!context.ApplicationUsers.Any())
+            {
+                ApplicationUser user = new ApplicationUser()
+                {
+                    
+                    Name="小华",
+                    Sex="男",
+                    UserName="15889421601"
+                };
+                context.ApplicationUsers.Add(user);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

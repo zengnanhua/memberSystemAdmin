@@ -9,4 +9,8 @@
     <ProjectReference Include="..\AdminSystem.Infrastructure\AdminSystem.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+  </ItemGroup>
+
 </Project>

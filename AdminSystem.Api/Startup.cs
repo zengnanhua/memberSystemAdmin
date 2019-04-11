@@ -50,7 +50,10 @@ namespace AdminSystem.Api
 
             var container = new ContainerBuilder();
             container.Populate(services);
+
             container.RegisterModule(new MediatorModule());
+            container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MysqlConnection")));
+
             return new AutofacServiceProvider(container.Build());
         }
 

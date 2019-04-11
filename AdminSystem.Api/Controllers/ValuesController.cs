@@ -4,18 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using AdminSystem.Application.Queries;
 
 namespace UserIdentity.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class ValuesController : Controller
     {
+        private IApplicationUserQuery _apptionUserQuery;
+        public ValuesController(IApplicationUserQuery apptionUserQuery)
+        {
+            _apptionUserQuery = apptionUserQuery;
+        }
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<object>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var list=await _apptionUserQuery.GetUserAsync(1);
+            return new object[] { "value1", list };
         }
 
         // GET api/values/5
