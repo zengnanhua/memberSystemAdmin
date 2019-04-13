@@ -16,14 +16,14 @@ namespace UserIdentity.AuthenticationValidator
             var identityName = context.Request.Raw["identityName"];
             var password = context.Request.Raw["password"];
             var dic = new Dictionary<string, object>();
-            dic.Add("ResultCode","10004");
-            dic.Add("ResultMessage","");
+            dic.Add("resultCode", "10004"); //未授权
+            dic.Add("resultMessage", "");
             dic.Add("data", "");
             var result = new GrantValidationResult(customResponse:dic);
             result.IsError = true;
             if (string.IsNullOrWhiteSpace(identityName) || string.IsNullOrWhiteSpace(password))
             {
-                dic["ResultMessage"] = "用户名或密码不能为空";
+                dic["resultMessage"] = "用户名或密码不能为空";
                 context.Result = result;
                 return;
             }
@@ -35,13 +35,13 @@ namespace UserIdentity.AuthenticationValidator
                      new Claim("Role", "admin")
                 };
                 result = new GrantValidationResult(identityName, GrantType,claims: clims, customResponse:dic);
-                dic["ResultCode"] = "10000";
-                dic["ResultMessage"] = "登录成功";
+                dic["resultCode"] = "10000";
+                dic["resultMessage"] = "登录成功";
 
                 context.Result = result;
                 return;
             }
-            dic["ResultMessage"] = "用户名或密码错误";
+            dic["resultMessage"] = "用户名或密码错误";
             context.Result = result;
             return;
         }
