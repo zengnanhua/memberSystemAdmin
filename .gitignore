@@ -2,14 +2,14 @@
  * 
 # Except this file 
 !.gitignore
-/.vs/
-/UserIdentity/bin/
-/UserIdentity/obj/
-/AdminSystem.Api/bin/
-/AdminSystem.Api/obj/
-/AdminSystem.Domain/bin/
-/AdminSystem.Domain/obj/
-/AdminSystem.Infrastructure/bin/
-/AdminSystem.Infrastructure/obj/
-/AdminSystem.Application/bin/
-/AdminSystem.Application/obj/
+/BackSrc/.vs/
+/BackSrc/UserIdentity/bin/
+/BackSrc/UserIdentity/obj/
+/BackSrc/AdminSystem.Api/bin/
+/BackSrc/AdminSystem.Api/obj/
+/BackSrc/AdminSystem.Domain/bin/
+/BackSrc/AdminSystem.Domain/obj/
+/BackSrc/AdminSystem.Infrastructure/bin/
+/BackSrc/AdminSystem.Infrastructure/obj/
+/BackSrc/AdminSystem.Application/bin/
+/BackSrc/AdminSystem.Application/obj/
