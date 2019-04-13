@@ -59,6 +59,17 @@ namespace UserIdentity
                //.AddInMemoryApiResources(Config.GetApiResources())
                ;
 
+            #region 允许所有跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+            #endregion
 
             services.AddMvc();
         }
@@ -70,6 +81,7 @@ namespace UserIdentity
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("cors");
             app.UseIdentityServer();
             app.UseMvc();
         }

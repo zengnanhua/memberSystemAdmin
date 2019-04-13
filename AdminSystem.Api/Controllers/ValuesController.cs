@@ -26,8 +26,9 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<IEnumerable<object>> Get()
         {
-            var list=await _apptionUserQuery.GetUserAsync(1);
-            return new object[] { "value1", list };
+            throw new Exception("这是异常");
+            //var list=await _apptionUserQuery.GetUserAsync(1);
+            return new object[] { "value1", "sdfa" };
         }
 
         // GET api/values/5
