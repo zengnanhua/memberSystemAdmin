@@ -43,7 +43,7 @@ namespace AdminSystem.Api
               .AddMvc(options=> 
               {
                   options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-              });
+              }).AddControllersAsServices();
               
             
             //services.AddMvc()
@@ -52,7 +52,7 @@ namespace AdminSystem.Api
             services.AddAuthentication("Bearer")
            .AddIdentityServerAuthentication(options =>
            {
-               options.Authority = "http://localhost:57988";
+               options.Authority = Configuration["AuthorizationUrl"];
                options.RequireHttpsMetadata = false;
                options.ApiName = "admin_api";
            });

@@ -11,7 +11,7 @@ namespace UserIdentity.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class ValuesController : Controller
     {
         private IApplicationUserQuery _apptionUserQuery;
@@ -26,7 +26,7 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<IEnumerable<object>> Get()
         {
-            throw new Exception("这是异常");
+           
             //var list=await _apptionUserQuery.GetUserAsync(1);
             return new object[] { "value1", "sdfa" };
         }
