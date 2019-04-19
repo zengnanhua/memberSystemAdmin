@@ -14,13 +14,7 @@ namespace AdminSystem.Api.Infrastructure
         {
             if (!context.ApplicationUsers.Any())
             {
-                ApplicationUser user = new ApplicationUser()
-                {
-                    
-                    Name="小华",
-                    Sex="男",
-                    UserName="15889421601"
-                };
+                ApplicationUser user = new ApplicationUser("admin", "管理员", "123456",phone:"15889421601");
                 context.ApplicationUsers.Add(user);
                 await context.SaveChangesAsync();
             }

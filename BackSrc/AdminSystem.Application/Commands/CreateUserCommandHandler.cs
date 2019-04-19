@@ -17,9 +17,7 @@ namespace AdminSystem.Application.Commands
         }
         public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = new ApplicationUser() { Name = request.Name, Sex = request.Sex, UserName = request.UserName };
-           // entity.UpdateUser();
-            //_applicationUserRepository.AddUser(entity);
+           
             return await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
         }
     }

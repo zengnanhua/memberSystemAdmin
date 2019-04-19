@@ -7,6 +7,6 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
     public interface IApplicationUserRepository:IRepository<ApplicationUser>
     {
-        bool AddUser(ApplicationUser user);
+        void AddUser(ApplicationUser user);
     }
 }

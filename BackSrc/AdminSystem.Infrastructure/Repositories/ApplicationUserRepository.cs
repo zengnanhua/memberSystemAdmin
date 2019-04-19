@@ -3,6 +3,7 @@ using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdminSystem.Infrastructure.Repositories
 {
@@ -21,15 +22,14 @@ namespace AdminSystem.Infrastructure.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public bool AddUser(ApplicationUser user)
+        public  void AddUser(ApplicationUser user)
         {
             if (user.IsTransient())
             {
                 _context.ApplicationUsers
                    .Add(user);  
             }
-            return true;
-
+    
         }
     }
 }
