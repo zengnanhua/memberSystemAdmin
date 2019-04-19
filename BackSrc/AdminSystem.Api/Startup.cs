@@ -44,9 +44,19 @@ namespace AdminSystem.Api
               {
                   options.Filters.Add(typeof(HttpGlobalExceptionFilter));
               }).AddControllersAsServices();
-              
-            
-            //services.AddMvc()
+
+
+            #region 允许跨域访问
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+            #endregion
 
             #region 验证权限
             services.AddAuthentication("Bearer")
@@ -58,11 +68,9 @@ namespace AdminSystem.Api
            });
             #endregion
 
-
             #region 使用 autofac
             var container = new ContainerBuilder();
             container.Populate(services);
-
             container.RegisterModule(new MediatorModule());
             container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MysqlConnection")));
 
@@ -78,7 +86,9 @@ namespace AdminSystem.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-     
+
+            app.UseCors("CorsPolicy");//允许跨域
+
             app.UseAuthentication();
 
             app.UseMvc();

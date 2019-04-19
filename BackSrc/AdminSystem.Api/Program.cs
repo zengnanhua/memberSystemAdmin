@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using AdminSystem.Infrastructure;
+using Serilog;
 
 namespace AdminSystem.Api
 {
@@ -33,6 +34,7 @@ namespace AdminSystem.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseSerilog(InitSerilog)
                 .UseStartup<Startup>();
 
         private static IConfiguration GetConfiguration()
@@ -45,6 +47,22 @@ namespace AdminSystem.Api
             var config = builder.Build();
 
             return builder.Build();
+        }
+
+        /// <summary>
+        /// 初始化  Serilog
+        /// </summary>
+        /// <param name="hostingContext"></param>
+        /// <param name="loggerConfiguration"></param>
+        private static void InitSerilog(WebHostBuilderContext hostingContext, LoggerConfiguration loggerConfiguration)
+        {
+            var outPutTempLate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level}] {HttpRequestId} {NewLine} {SourceContext} {NewLine} {Message}{NewLine}{Exception}";
+            var Namespace = typeof(Program).Namespace;
+            loggerConfiguration
+            .Enrich.WithProperty("ApplicationContext", Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1))
+            .WriteTo.RollingFile("./log/log-{Date}.txt",outputTemplate: outPutTempLate)
+            .Enrich.FromLogContext()
+            .WriteTo.Console(outputTemplate: outPutTempLate);
         }
     }
 }
