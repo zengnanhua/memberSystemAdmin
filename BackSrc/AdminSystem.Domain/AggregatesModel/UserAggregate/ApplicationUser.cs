@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
-    public class ApplicationUser: Entity, IAggregateRoot
+    public class ApplicationUser: Entity, IAggregateRoot,IAudited
     {
         /// <summary>
         /// 用户姓名
@@ -34,18 +34,22 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// 用户地址
         /// </summary>
         public Address Address { get; private set; }
-        /// <summary>
-        /// 最后更新人
-        /// </summary>
-        public int LastUpdateUserId { get;private set; }
-        /// <summary>
-        /// 最后更新时间
-        /// </summary>
-        public string LastUpdateTime { get; private set; }
-        /// <summary>
-        /// 最后登录时间
-        /// </summary>
-        public string LastLoginTime { get; private set; }
+
+        public List<UserRole> UserRoleList { get; set; }
+
+        public int CreateUserId { get; private set; }
+
+        public DateTime CreateDateTime { get; private set; }
+
+        public int UpdateUserId { get; private set; }
+
+        public DateTime UpdateDateTime { get; private set; }
+
+        public int DeleteUserId { get; private set; }
+
+        public DateTime DeleteDateTime { get; private set; }
+
+        public bool IsDelete { get; private set; }
 
         protected ApplicationUser()
         {

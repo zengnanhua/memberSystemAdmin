@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.AggregatesModel.UserAggregate;
+﻿using AdminSystem.Domain.AggregatesModel.RoleAggregate;
+using AdminSystem.Domain.AggregatesModel.UserAggregate;
 using AdminSystem.Domain.SeedWork;
 using AdminSystem.Infrastructure.EntityConfigurations;
 using MediatR;
@@ -17,7 +18,7 @@ namespace AdminSystem.Infrastructure
     public class ApplicationDbContext: DbContext, IUnitOfWork
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-
+        public DbSet<Role> Roles { get; set; }
 
         private readonly IMediator _mediator;
 
@@ -36,8 +37,8 @@ namespace AdminSystem.Infrastructure
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
-
+            ModelCreateConfiguration.InitApplyConfiguration(builder);
+           
             base.OnModelCreating(builder);
 
         }
