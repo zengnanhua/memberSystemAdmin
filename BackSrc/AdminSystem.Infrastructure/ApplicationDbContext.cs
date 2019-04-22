@@ -1,5 +1,6 @@
 ﻿using AdminSystem.Domain.AggregatesModel.UserAggregate;
 using AdminSystem.Domain.SeedWork;
+using AdminSystem.Infrastructure.EntityConfigurations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -35,7 +36,7 @@ namespace AdminSystem.Infrastructure
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
 
             base.OnModelCreating(builder);
 

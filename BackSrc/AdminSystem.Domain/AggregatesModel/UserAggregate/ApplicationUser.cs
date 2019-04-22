@@ -2,6 +2,8 @@
 using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
@@ -31,7 +33,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// <summary>
         /// 用户地址
         /// </summary>
-        public string Address { get; private set; }
+        public Address Address { get; private set; }
         /// <summary>
         /// 最后更新人
         /// </summary>
@@ -47,7 +49,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 
         protected ApplicationUser()
         {
-
+           
         }
         public ApplicationUser(string userName,string name,string pwd,string phone="",string sex="",string address="")
         {
@@ -55,7 +57,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
             this.Name = name;
             this.Pwd = pwd;
             this.Sex = sex;
-            this.Address = address;
+            this.Address = new Address("55","44","33","22","1");
         }
 
         public void UpdateUser()

@@ -1,0 +1,116 @@
+[2019-04-22 10:58:24.428 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\15889421601\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 14:36:20.688 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\15889421601\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 14:37:34.601 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\15889421601\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 14:37:36.248 Information]  
+ AdminSystem.Infrastructure.ApplicationDbContext 
+ Migrating database associated with context "ApplicationDbContext"
+[2019-04-22 14:37:37.391 Information]  
+ Microsoft.EntityFrameworkCore.Infrastructure 
+ Entity Framework Core "2.2.4-servicing-10062" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "MigrationsAssembly=AdminSystem.Api "
+[2019-04-22 14:37:39.196 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("83"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='AdminSystem' AND TABLE_NAME='__EFMigrationsHistory';"
+[2019-04-22 14:37:39.945 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("64"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='AdminSystem' AND TABLE_NAME='__EFMigrationsHistory';"
+[2019-04-22 14:37:40.164 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("63"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+[2019-04-22 14:37:40.222 Information]  
+ Microsoft.EntityFrameworkCore.Migrations 
+ Applying migration '"20190422063622_test1"'.
+[2019-04-22 14:37:40.700 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("206"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Address_City` longtext NULL;"
+[2019-04-22 14:37:40.886 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("152"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Address_Country` longtext NULL;"
+[2019-04-22 14:37:41.082 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("162"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Address_State` longtext NULL;"
+[2019-04-22 14:37:41.238 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("137"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Address_Street` longtext NULL;"
+[2019-04-22 14:37:41.406 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("157"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Address_ZipCode` longtext NULL;"
+[2019-04-22 14:37:41.580 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("156"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `LastLoginTime` longtext NULL;"
+[2019-04-22 14:37:41.780 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("181"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `LastUpdateTime` longtext NULL;"
+[2019-04-22 14:37:41.960 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("167"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `LastUpdateUserId` int NOT NULL DEFAULT 0;"
+[2019-04-22 14:37:42.128 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("152"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Phone` longtext NULL;"
+[2019-04-22 14:37:42.307 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("164"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ApplicationUsers` ADD `Pwd` longtext NULL;"
+[2019-04-22 14:37:42.441 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("82"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20190422063622_test1', '2.2.4-servicing-10062');"
+[2019-04-22 14:37:43.099 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("61"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ApplicationUsers` AS `a`)
+    THEN TRUE ELSE FALSE
+END"
+[2019-04-22 14:37:43.174 Information]  
+ AdminSystem.Infrastructure.ApplicationDbContext 
+ Migrated database associated with context "ApplicationDbContext"
+[2019-04-22 14:37:45.973 Information]  
+ Microsoft.AspNetCore.Hosting.Internal.WebHost 
+ Request starting HTTP/1.1 GET http://localhost:50384/api/values  
+[2019-04-22 14:37:46.629 Information]  
+ Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker 
+ Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "UserIdentity.Controllers.ValuesController.Get (AdminSystem.Api)"
+[2019-04-22 14:37:46.742 Information]  
+ Microsoft.AspNetCore.Authorization.DefaultAuthorizationService 
+ Authorization failed.
+[2019-04-22 14:37:46.804 Information]  
+ Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker 
+ Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'.
+[2019-04-22 14:37:46.891 Information]  
+ Microsoft.AspNetCore.Mvc.ChallengeResult 
+ Executing ChallengeResult with authentication schemes ([]).
+[2019-04-22 14:37:47.156 Information]  
+ Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler 
+ AuthenticationScheme: "BearerIdentityServerAuthenticationJwt" was challenged.
+[2019-04-22 14:37:47.195 Information]  
+ IdentityServer4.AccessTokenValidation.IdentityServerAuthenticationHandler 
+ AuthenticationScheme: "Bearer" was challenged.
+[2019-04-22 14:37:47.270 Information]  
+ Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker 
+ Executed action "UserIdentity.Controllers.ValuesController.Get (AdminSystem.Api)" in 569.1968ms
+[2019-04-22 14:37:47.420 Information]  
+ Microsoft.AspNetCore.Hosting.Internal.WebHost 
+ Request finished in 1456.1979ms 401 
