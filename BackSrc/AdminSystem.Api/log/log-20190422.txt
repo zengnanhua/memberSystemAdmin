@@ -239,3 +239,9 @@ WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();"
 [2019-04-22 17:55:35.206 Information]  
  AdminSystem.Infrastructure.ApplicationDbContext 
  Migrated database associated with context "ApplicationDbContext"
+[2019-04-22 23:39:13.792 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\nanhua\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 23:40:16.937 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\nanhua\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
