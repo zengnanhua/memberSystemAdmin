@@ -114,3 +114,128 @@ END"
 [2019-04-22 14:37:47.420 Information]  
  Microsoft.AspNetCore.Hosting.Internal.WebHost 
  Request finished in 1456.1979ms 401 
+[2019-04-22 17:54:59.692 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\15889421601\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 17:55:25.512 Information]  
+ Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager 
+ User profile is available. Using '"C:\Users\15889421601\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[2019-04-22 17:55:26.356 Information]  
+ AdminSystem.Infrastructure.ApplicationDbContext 
+ Migrating database associated with context "ApplicationDbContext"
+[2019-04-22 17:55:27.254 Information]  
+ Microsoft.EntityFrameworkCore.Infrastructure 
+ Entity Framework Core "2.2.4-servicing-10062" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "MigrationsAssembly=AdminSystem.Api "
+[2019-04-22 17:55:29.624 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("109"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE DATABASE `AdminSystem`;"
+[2019-04-22 17:55:31.312 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("221"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `__EFMigrationsHistory` (
+    `MigrationId` varchar(95) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    CONSTRAINT `PK___EFMigrationsHistory` PRIMARY KEY (`MigrationId`)
+);"
+[2019-04-22 17:55:32.092 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("81"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='AdminSystem' AND TABLE_NAME='__EFMigrationsHistory';"
+[2019-04-22 17:55:32.296 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("64"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+[2019-04-22 17:55:32.336 Information]  
+ Microsoft.EntityFrameworkCore.Migrations 
+ Applying migration '"20190422095501_InitApplicationContext"'.
+[2019-04-22 17:55:32.768 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("171"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ApplicationUsers` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `Name` longtext NULL,
+    `UserName` varchar(255) NULL,
+    `Pwd` longtext NULL,
+    `Sex` longtext NULL,
+    `Phone` varchar(255) NULL,
+    `Address_Street` longtext NULL,
+    `Address_City` longtext NULL,
+    `Address_Province` longtext NULL,
+    `Address_Country` longtext NULL,
+    `Address_FullAddress` longtext NULL,
+    `CreateUserId` int NOT NULL,
+    `CreateDateTime` datetime(6) NOT NULL,
+    `UpdateUserId` int NOT NULL,
+    `UpdateDateTime` datetime(6) NOT NULL,
+    `DeleteUserId` int NOT NULL,
+    `DeleteDateTime` datetime(6) NOT NULL,
+    `IsDelete` bit NOT NULL,
+    CONSTRAINT `PK_ApplicationUsers` PRIMARY KEY (`Id`)
+);"
+[2019-04-22 17:55:32.944 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("146"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `Roles` (
+    `Id` int NOT NULL AUTO_INCREMENT,
+    `RoleName` longtext NULL,
+    `RoleDescr` longtext NULL,
+    `CreateUserId` int NOT NULL,
+    `CreateDateTime` datetime(6) NOT NULL,
+    `UpdateUserId` int NOT NULL,
+    `UpdateDateTime` datetime(6) NOT NULL,
+    `DeleteUserId` int NOT NULL,
+    `DeleteDateTime` datetime(6) NOT NULL,
+    `IsDelete` bit NOT NULL,
+    CONSTRAINT `PK_Roles` PRIMARY KEY (`Id`)
+);"
+[2019-04-22 17:55:33.167 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("198"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `UserRole` (
+    `UserId` int NOT NULL,
+    `RoleId` int NOT NULL,
+    `Id` int NOT NULL,
+    CONSTRAINT `PK_UserRole` PRIMARY KEY (`UserId`, `RoleId`),
+    CONSTRAINT `FK_UserRole_Roles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `Roles` (`Id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_UserRole_ApplicationUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `ApplicationUsers` (`Id`) ON DELETE CASCADE
+);"
+[2019-04-22 17:55:33.359 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("170"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE UNIQUE INDEX `IX_ApplicationUsers_Phone` ON `ApplicationUsers` (`Phone`);"
+[2019-04-22 17:55:33.520 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("151"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE UNIQUE INDEX `IX_ApplicationUsers_UserName` ON `ApplicationUsers` (`UserName`);"
+[2019-04-22 17:55:33.738 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("189"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_UserRole_RoleId` ON `UserRole` (`RoleId`);"
+[2019-04-22 17:55:33.844 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("92"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20190422095501_InitApplicationContext', '2.2.4-servicing-10062');"
+[2019-04-22 17:55:34.392 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("61"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ApplicationUsers` AS `a`)
+    THEN TRUE ELSE FALSE
+END"
+[2019-04-22 17:55:35.053 Information]  
+ Microsoft.EntityFrameworkCore.Database.Command 
+ Executed DbCommand ("80"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32), @p4='?' (DbType = Boolean), @p5='?' (Size = 4000), @p6='?' (Size = 255), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (DbType = DateTime), @p10='?' (DbType = Int32), @p11='?' (Size = 255), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ApplicationUsers` (`CreateDateTime`, `CreateUserId`, `DeleteDateTime`, `DeleteUserId`, `IsDelete`, `Name`, `Phone`, `Pwd`, `Sex`, `UpdateDateTime`, `UpdateUserId`, `UserName`, `Address_City`, `Address_Country`, `Address_FullAddress`, `Address_Province`, `Address_Street`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16);
+SELECT `Id`
+FROM `ApplicationUsers`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();"
+[2019-04-22 17:55:35.206 Information]  
+ AdminSystem.Infrastructure.ApplicationDbContext 
+ Migrated database associated with context "ApplicationDbContext"

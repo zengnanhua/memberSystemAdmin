@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.AggregatesModel.RoleAggregate;
+﻿using AdminSystem.Domain.AggregatesModel.MenuAggregate;
+using AdminSystem.Domain.AggregatesModel.RoleAggregate;
 using AdminSystem.Domain.AggregatesModel.UserAggregate;
 using AdminSystem.Domain.SeedWork;
 using AdminSystem.Infrastructure.EntityConfigurations;
@@ -19,6 +20,7 @@ namespace AdminSystem.Infrastructure
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         private readonly IMediator _mediator;
 

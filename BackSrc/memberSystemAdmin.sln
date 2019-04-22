@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserIdentity", "UserIdentit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdminSystem", "AdminSystem", "{C35DB247-056E-4ED5-8A38-5227E4554F73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminSystem.Api", "AdminSystem.Api\AdminSystem.Api.csproj", "{73059CD4-B129-491A-87EF-21888030C187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminSystem.Api", "AdminSystem.Api\AdminSystem.Api.csproj", "{73059CD4-B129-491A-87EF-21888030C187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminSystem.Domain", "AdminSystem.Domain\AdminSystem.Domain.csproj", "{16AABD6E-9AA2-4599-BADD-3DC0D0DF5D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminSystem.Domain", "AdminSystem.Domain\AdminSystem.Domain.csproj", "{16AABD6E-9AA2-4599-BADD-3DC0D0DF5D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminSystem.Infrastructure", "AdminSystem.Infrastructure\AdminSystem.Infrastructure.csproj", "{D44F977E-1C48-409C-9BB8-AE7B4880D469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminSystem.Infrastructure", "AdminSystem.Infrastructure\AdminSystem.Infrastructure.csproj", "{D44F977E-1C48-409C-9BB8-AE7B4880D469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminSystem.Application", "AdminSystem.Application\AdminSystem.Application.csproj", "{A21A7F9E-6423-4203-A7AB-8D65074C943C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminSystem.Application", "AdminSystem.Application\AdminSystem.Application.csproj", "{A21A7F9E-6423-4203-A7AB-8D65074C943C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

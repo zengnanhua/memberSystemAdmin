@@ -11,6 +11,8 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
         {
             //用户配置
             builder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
+            builder.ApplyConfiguration(new RoleEntityTypeConfiguration());
+            builder.ApplyConfiguration(new UserRoleEntityTypeConfiguration());
         }
     }
 }
