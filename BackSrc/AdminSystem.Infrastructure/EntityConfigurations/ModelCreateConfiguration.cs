@@ -13,6 +13,8 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
             builder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
             builder.ApplyConfiguration(new RoleEntityTypeConfiguration());
             builder.ApplyConfiguration(new UserRoleEntityTypeConfiguration());
+            builder.ApplyConfiguration(new MenuEntityTypeConfiguration());
+            builder.ApplyConfiguration(new PermissionEntityTypeConfiguration());
         }
     }
 }
