@@ -14,3 +14,6 @@
 /BackSrc/AdminSystem.Infrastructure/obj/
 /BackSrc/AdminSystem.Application/bin/
 /BackSrc/AdminSystem.Application/obj/
+
+/BackSrc/test/unitTest/bin/
+/BackSrc/test/unitTest/obj/

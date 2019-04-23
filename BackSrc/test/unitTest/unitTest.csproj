@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AdminSystem.Api\AdminSystem.Api.csproj" />
+    <ProjectReference Include="..\..\AdminSystem.Application\AdminSystem.Application.csproj" />
+    <ProjectReference Include="..\..\AdminSystem.Domain\AdminSystem.Domain.csproj" />
+    <ProjectReference Include="..\..\AdminSystem.Infrastructure\AdminSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
