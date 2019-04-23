@@ -13,6 +13,9 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
         /// 菜单编码
         /// </summary>
         public string MenuNo { get; private set; }
+        /// <summary>
+        /// 父级菜单编码
+        /// </summary>
         public string PMenuNo { get; private set; }
         /// <summary>
         /// 菜单名称
