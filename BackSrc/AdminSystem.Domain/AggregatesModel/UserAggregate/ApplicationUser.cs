@@ -67,6 +67,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
             this.Sex = sex;
             this.IsDelete = false;
             this.CreateDateTime = DateTime.Now;
+            this.Address = new Address("","","","","");
         }
         public void AddUserRole(int userId, int roleId)
         {
