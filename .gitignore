@@ -3,7 +3,7 @@
 # Except this file 
 !.gitignore
 /BackSrc/.vs/
-/BackSrc/log/
+/BackSrc/AdminSystem.Api/log/
 /BackSrc/UserIdentity/bin/
 /BackSrc/UserIdentity/obj/
 /BackSrc/AdminSystem.Api/bin/
