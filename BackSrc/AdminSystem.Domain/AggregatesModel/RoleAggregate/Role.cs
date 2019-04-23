@@ -31,10 +31,13 @@ namespace AdminSystem.Domain.AggregatesModel.RoleAggregate
 
         public bool IsDelete { get; private set; }
 
+        protected Role() { }
+
         public Role(string roleName,string roleDescr)
         {
             this.RoleName = roleName;
             this.RoleDescr = RoleDescr;
+            this.CreateDateTime = DateTime.Now;
         }
     }
 }

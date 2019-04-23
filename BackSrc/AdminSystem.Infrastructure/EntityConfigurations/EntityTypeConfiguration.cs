@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.AggregatesModel.RoleAggregate;
+﻿using AdminSystem.Domain.AggregatesModel.MenuAggregate;
+using AdminSystem.Domain.AggregatesModel.RoleAggregate;
 using AdminSystem.Domain.AggregatesModel.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -36,4 +37,26 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
             builder.HasOne(ur => ur.Role).WithMany().HasForeignKey(pr => pr.RoleId);
         }
     }
+    public class MenuEntityTypeConfiguration : IEntityTypeConfiguration<Menu>
+    {
+        public void Configure(EntityTypeBuilder<Menu> builder)
+        {
+            builder.HasKey(c => c.Id);
+            builder.HasIndex(c => c.MenuNo).IsUnique();
+            builder.HasIndex(c => c.PMenuNo);
+            builder.HasIndex(c => c.DeepPath);
+        }
+    }
+    public class PermissionEntityTypeConfiguration : IEntityTypeConfiguration<Permission>
+    {
+        public void Configure(EntityTypeBuilder<Permission> builder)
+        {
+            builder.HasKey(c => c.Id);
+            builder.HasOne(c => c.ApplicationUser).WithMany(u => u.PermissionList).HasForeignKey(c => c.UserId);
+            builder.HasOne(c => c.Role).WithMany().HasForeignKey(c => c.RoleId);
+          
+        }
+    }
+
+
 }

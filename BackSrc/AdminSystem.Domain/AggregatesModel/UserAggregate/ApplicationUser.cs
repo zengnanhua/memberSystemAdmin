@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.Events;
+﻿using AdminSystem.Domain.AggregatesModel.Common;
+using AdminSystem.Domain.Events;
 using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
-    public class ApplicationUser: Entity, IAggregateRoot,IAudited
+    public class ApplicationUser : Entity, IAggregateRoot, IAudited
     {
         /// <summary>
         /// 用户姓名
         /// </summary>
-        public string Name { get;private set; }
+        public string Name { get; private set; }
         /// <summary>
         ///  用户账号
         /// </summary>
@@ -35,6 +36,8 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// </summary>
         public Address Address { get; private set; }
 
+        public List<Permission> PermissionList { get; private set; }
+
         public List<UserRole> UserRoleList { get; set; }
 
         public int CreateUserId { get; private set; }
@@ -53,17 +56,27 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 
         protected ApplicationUser()
         {
-           
+            this.PermissionList = new List<Permission>();
+            this.UserRoleList = new List<UserRole>();
         }
-        public ApplicationUser(string userName,string name,string pwd,string phone="",string sex="",string address="")
+        public ApplicationUser(string userName,string name,string pwd,string phone="",string sex="",string address=""):this()
         {
             this.UserName = userName;
             this.Name = name;
             this.Pwd = pwd;
             this.Sex = sex;
-            this.Address = new Address("55","44","33","22","1");
+            this.IsDelete = false;
+            this.CreateDateTime = DateTime.Now;
+        }
+        public void AddUserRole(int userId, int roleId)
+        {
+            this.UserRoleList.Add(new UserRole(userId, roleId));
         }
 
+        public void AddPermission(int userIdOrRoleId, string menuNo, PermissionType permissionType, PlatformType platformType)
+        {
+            this.PermissionList.Add(new Permission(userIdOrRoleId,menuNo,permissionType,platformType));
+        }
         public void UpdateUser()
         {
             this.AddDomainEvent(new CreateUserChangeRoleDomainEvent(this.UserName));
