@@ -4,6 +4,7 @@
 !.gitignore
 /BackSrc/.vs/
 /BackSrc/AdminSystem.Api/log/
+/FrontSrc/node_modules/
 /BackSrc/UserIdentity/bin/
 /BackSrc/UserIdentity/obj/
 /BackSrc/AdminSystem.Api/bin/
