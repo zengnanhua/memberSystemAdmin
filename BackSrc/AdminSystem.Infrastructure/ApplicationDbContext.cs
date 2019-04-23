@@ -20,7 +20,9 @@ namespace AdminSystem.Infrastructure
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 
         private readonly IMediator _mediator;
 

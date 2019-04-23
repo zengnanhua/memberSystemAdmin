@@ -78,10 +78,6 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
         /// <param name="menuUrl"></param>
         public Menu(string menuNo,string  menuName, string menuUrl,string order,string menuIcon,PlatformType platformType)
         {
-            if (string.IsNullOrWhiteSpace(menuUrl))
-            {
-                throw new Exception("菜单类型的url不能为空");
-            }
 
             this.MenuNo = menuNo;
             this.PMenuNo = "base";
@@ -94,29 +90,25 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             this.CreateDateTime = DateTime.Now;
             this.IsDelete = false;
             this.IsVisible = true;
-            this.DeepPath = $"{this.PMenuNo},{this.MenuNo}";
+            this.DeepPath = $"{this.MenuNo}";
         }
-        public Menu(string menuNo,Menu pMenu, string menuName, string order, string menuIcon, MenuFuntionType menuFuntionType, PlatformType platformType, string menuUrl = null)
+        public Menu CreateSonMenu(string menuNo, string menuName, string order, string menuIcon, MenuFuntionType menuFuntionType, PlatformType platformType, string menuUrl = null)
         {
-            if (menuFuntionType == MenuFuntionType.Menu)
-            {
-                if (string.IsNullOrWhiteSpace(menuUrl))
-                {
-                    throw new Exception("菜单类型的url不能为空");
-                }
-            }
-            this.MenuNo = menuNo;
-            this.PMenuNo =pMenu.MenuNo;
-            this.MenuName = menuName;
-            this.Order = order;
-            this.MenuIcon = menuIcon;
-            this.MenuFuntionType = menuFuntionType;
-            this.PlatformType = platformType;
-            this.MenuUrl = MenuUrl;
-            this.CreateDateTime = DateTime.Now;
-            this.IsDelete = false;
-            this.IsVisible = true;
-            this.DeepPath = $"{pMenu.PMenuNo},{this.MenuNo}";
+            Menu menu = new Menu();
+            menu.MenuNo = menuNo;
+            menu.PMenuNo =this.MenuNo;
+            menu.MenuName = menuName;
+            menu.Order = order;
+            menu.MenuIcon = menuIcon;
+            menu.MenuFuntionType = menuFuntionType;
+            menu.PlatformType = platformType;
+            menu.MenuUrl = MenuUrl;
+            menu.CreateDateTime = DateTime.Now;
+            menu.IsDelete = false;
+            menu.IsVisible = true;
+            menu.DeepPath = $"{this.DeepPath},{menu.MenuNo}";
+
+            return menu;
         }
     }
 

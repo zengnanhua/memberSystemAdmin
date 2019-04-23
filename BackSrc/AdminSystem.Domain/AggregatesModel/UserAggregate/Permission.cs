@@ -10,9 +10,9 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
     public class Permission:Entity
     {
-        public int UserId { get; private set; }
+        public int? UserId { get; private set; }
         public ApplicationUser ApplicationUser { get;private set; }
-        public int RoleId { get; private set; }
+        public int? RoleId { get; private set; }
         public Role Role { get; private set; }
         public string MenuNo { get; private set; }
 

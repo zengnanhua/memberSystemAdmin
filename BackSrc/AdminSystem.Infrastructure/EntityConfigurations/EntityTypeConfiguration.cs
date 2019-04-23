@@ -31,8 +31,7 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.HasKey(t => new { t.UserId, t.RoleId });
-
+            builder.HasKey(t => t.Id);
             builder.HasOne(ur => ur.ApplicationUser).WithMany(u=>u.UserRoleList).HasForeignKey(pt=>pt.UserId);
             builder.HasOne(ur => ur.Role).WithMany().HasForeignKey(pr => pr.RoleId);
         }
