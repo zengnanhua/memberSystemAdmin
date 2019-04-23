@@ -56,7 +56,7 @@ namespace AdminSystem.Api
         /// <param name="loggerConfiguration"></param>
         private static void InitSerilog(WebHostBuilderContext hostingContext, LoggerConfiguration loggerConfiguration)
         {
-            var outPutTempLate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level}] {HttpRequestId} {NewLine} {SourceContext} {NewLine} {Message}{NewLine}{Exception}";
+            var outPutTempLate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level}] {HttpRequestId} {NewLine} {SourceContext} {NewLine} {Message}{NewLine}{Exception}{NewLine}";
             var Namespace = typeof(Program).Namespace;
             loggerConfiguration
             .Enrich.WithProperty("ApplicationContext", Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1))

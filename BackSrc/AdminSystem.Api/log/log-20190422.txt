@@ -84,12 +84,15 @@ VALUES ('20190422063622_test1', '2.2.4-servicing-10062');"
         FROM `ApplicationUsers` AS `a`)
     THEN TRUE ELSE FALSE
 END"
+
 [2019-04-22 14:37:43.174 Information]  
  AdminSystem.Infrastructure.ApplicationDbContext 
  Migrated database associated with context "ApplicationDbContext"
+
 [2019-04-22 14:37:45.973 Information]  
  Microsoft.AspNetCore.Hosting.Internal.WebHost 
  Request starting HTTP/1.1 GET http://localhost:50384/api/values  
+
 [2019-04-22 14:37:46.629 Information]  
  Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker 
  Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "UserIdentity.Controllers.ValuesController.Get (AdminSystem.Api)"
