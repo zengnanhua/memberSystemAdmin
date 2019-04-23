@@ -47,7 +47,7 @@ namespace AdminSystem.Api.Infrastructure.Filters
             }
             else
             {
-                context.Result = new ObjectResult(ResultData<string>.CreateResultDataFail(context.Exception.Message));
+                context.Result = new ObjectResult(ResultData<string>.CreateResultDataFail(context.Exception.Message+context.Exception.InnerException?.Message));
             }
             
             
