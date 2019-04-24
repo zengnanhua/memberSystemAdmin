@@ -208,7 +208,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
             modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Permission", b =>
                 {
                     b.HasOne("AdminSystem.Domain.AggregatesModel.RoleAggregate.Role", "Role")
-                        .WithMany()
+                        .WithMany("PermissionList")
                         .HasForeignKey("RoleId");
 
                     b.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser", "ApplicationUser")

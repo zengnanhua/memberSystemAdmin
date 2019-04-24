@@ -102,7 +102,7 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             menu.MenuIcon = menuIcon;
             menu.MenuFuntionType = menuFuntionType;
             menu.PlatformType = platformType;
-            menu.MenuUrl = MenuUrl;
+            menu.MenuUrl = menuUrl;
             menu.CreateDateTime = DateTime.Now;
             menu.IsDelete = false;
             menu.IsVisible = true;

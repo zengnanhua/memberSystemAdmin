@@ -52,7 +52,7 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
         {
             builder.HasKey(c => c.Id);
             builder.HasOne(c => c.ApplicationUser).WithMany(u => u.PermissionList).HasForeignKey(c => c.UserId);
-            builder.HasOne(c => c.Role).WithMany().HasForeignKey(c => c.RoleId);
+            builder.HasOne(c => c.Role).WithMany(u=>u.PermissionList).HasForeignKey(c => c.RoleId);
           
         }
     }

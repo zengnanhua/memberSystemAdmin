@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -43,7 +44,8 @@ namespace AdminSystem.Api
               .AddMvc(options=> 
               {
                   options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-              }).AddControllersAsServices();
+              }).AddControllersAsServices()
+              .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
 
 
             #region 允许跨域访问

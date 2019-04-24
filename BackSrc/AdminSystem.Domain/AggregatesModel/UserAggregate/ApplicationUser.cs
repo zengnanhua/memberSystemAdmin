@@ -69,14 +69,14 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
             this.CreateDateTime = DateTime.Now;
             this.Address = new Address("","","","","");
         }
-        public void AddUserRole(int userId, int roleId)
+        public void AddUserRole(int roleId)
         {
-            this.UserRoleList.Add(new UserRole(userId, roleId));
+            this.UserRoleList.Add(new UserRole(this.Id, roleId));
         }
 
-        public void AddPermission(int userIdOrRoleId, string menuNo, PermissionType permissionType, PlatformType platformType)
+        public void AddPermission(string menuNo, PlatformType platformType)
         {
-            this.PermissionList.Add(new Permission(userIdOrRoleId,menuNo,permissionType,platformType));
+            this.PermissionList.Add(new Permission(this.Id,menuNo, PermissionType.UserPermission, platformType));
         }
         public void UpdateUser()
         {

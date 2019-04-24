@@ -14,10 +14,10 @@ namespace UserIdentity.Controllers
     [Authorize]
     public class ValuesController : Controller
     {
-        private IApplicationUserQuery _apptionUserQuery;
-        public ValuesController(IApplicationUserQuery apptionUserQuery)
+       
+        public ValuesController()
         {
-            _apptionUserQuery = apptionUserQuery;
+           
         }
         /// <summary>
         /// 获取用户 测试

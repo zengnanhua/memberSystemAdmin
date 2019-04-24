@@ -20,8 +20,9 @@ namespace AdminSystem.Api.Infrastructure.AutofacModules
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ApplicationUserQuery(QueriesConnectionString))
-                .As<IApplicationUserQuery>()
+
+            builder.Register(c => new AccountQuery(QueriesConnectionString))
+                .As<IAccountQuery>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<ApplicationUserRepository>()

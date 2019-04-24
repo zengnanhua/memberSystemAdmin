@@ -13,6 +13,12 @@ namespace AdminSystem.Api.Infrastructure
 {
     public class ApplicationDbContextSeed
     {
+        /// <summary>
+        /// 初始化种子数据
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
         public async Task SeedAsync(ApplicationDbContext context, IHostingEnvironment env)
         {
             if (!context.ApplicationUsers.Any())
@@ -22,9 +28,14 @@ namespace AdminSystem.Api.Infrastructure
                 
                 Role role = new Role("系统管理员", "系统管理员");
                 context.Roles.Add(role);
-              
-                UserRole userRole = new UserRole(user.Id, role.Id);
-                context.UserRoles.Add(userRole);
+
+                user.AddUserRole(role.Id);
+
+                foreach (var userRole in user.UserRoleList)
+                {
+                    context.UserRoles.Add(userRole);
+                }
+                
                
                 Menu menu = new Menu("base", "主菜单", "", "1", "", Domain.AggregatesModel.Common.PlatformType.Pc);
                 Menu systemManage = menu.CreateSonMenu("systemManage", "系统管理",  "1", "",MenuFuntionType.Menu,PlatformType.Pc);
@@ -34,15 +45,17 @@ namespace AdminSystem.Api.Infrastructure
 
                 context.Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage);
 
-                
 
-                Permission menuPermission = new Permission(role.Id, menu.MenuNo, PermissionType.RolePermission,PlatformType.Pc);
-                Permission systemManagePermission = new Permission(role.Id, systemManage.MenuNo, PermissionType.RolePermission, PlatformType.Pc);
-                Permission menuManagePermission = new Permission(role.Id, menuManage.MenuNo, PermissionType.RolePermission, PlatformType.Pc);
-                Permission userManagePermission = new Permission(role.Id, userManage.MenuNo, PermissionType.RolePermission, PlatformType.Pc);
-                Permission roleManagePermission = new Permission(role.Id, roleManage.MenuNo, PermissionType.RolePermission, PlatformType.Pc);
+                role.AddPermission(menu.MenuNo, PlatformType.Pc);
+                role.AddPermission(systemManage.MenuNo, PlatformType.Pc);
+                role.AddPermission(menuManage.MenuNo, PlatformType.Pc);
+                role.AddPermission(userManage.MenuNo, PlatformType.Pc);
+                role.AddPermission(roleManage.MenuNo, PlatformType.Pc);
 
-                context.Permissions.AddRange(menuPermission, systemManagePermission, menuManagePermission, userManagePermission, roleManagePermission);
+                foreach (var item in role.PermissionList)
+                {
+                    context.Permissions.Add(item);
+                }
 
                 await context.SaveChangesAsync();
             }

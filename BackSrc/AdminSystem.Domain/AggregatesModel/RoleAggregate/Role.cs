@@ -1,4 +1,6 @@
-﻿using AdminSystem.Domain.SeedWork;
+﻿using AdminSystem.Domain.AggregatesModel.Common;
+using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,14 +32,22 @@ namespace AdminSystem.Domain.AggregatesModel.RoleAggregate
         public DateTime DeleteDateTime { get; private set; }
 
         public bool IsDelete { get; private set; }
+        public List<Permission> PermissionList { get; private set; }
 
-        protected Role() { }
+        protected Role()
+        {
+            this.PermissionList = new List<Permission>();
+        }
 
-        public Role(string roleName,string roleDescr)
+        public Role(string roleName,string roleDescr):this()
         {
             this.RoleName = roleName;
-            this.RoleDescr = RoleDescr;
+            this.RoleDescr = roleDescr;
             this.CreateDateTime = DateTime.Now;
+        }
+        public void AddPermission(string menuNo, PlatformType platformType)
+        {
+            this.PermissionList.Add(new Permission(this.Id, menuNo, PermissionType.RolePermission, platformType));
         }
     }
 }
