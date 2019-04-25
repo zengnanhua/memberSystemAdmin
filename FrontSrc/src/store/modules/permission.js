@@ -52,8 +52,8 @@ const permission = {
                 const { roles } = data
                 GetMenu().then(res => {
                     //var dataList = res.data;
-                    commit('SET_ROUTES', res)
-                    resolve(res)
+                    commit('SET_ROUTES', res.data)
+                    resolve(res.data)
                 }).catch(err => {
 
                 });

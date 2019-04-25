@@ -64,13 +64,13 @@ export const constantRoutes = [{
                 path: '/permission/page',
                 name: 'userManage',
                 component: () =>
-                    import ('@/views/guide/index'),
+                    import ('@/views/userManage/index'),
             },
             {
                 path: '/permission/directive',
                 name: 'roleManage',
                 component: () =>
-                    import ('@/views/guide/index')
+                    import ('@/views/userManage/index')
             },
             {
                 path: '/permission/role',

@@ -38,11 +38,23 @@ namespace AdminSystem.Application.Queries
         /// 层路径
         /// </summary>
         public string DeepPath { get; private set; }
+        /// <summary>
+        /// 不管菜单在哪一级，都显示到主菜单上
+        /// </summary>
+        public bool AlwaysShow { get; private set; }
+        /// <summary>
+        /// 是否不缓存
+        /// </summary>
+        public bool NoCache { get; private set; }
+        /// <summary>
+        /// 不显示关闭按钮 ，一直存这标签
+        /// </summary>
+        public bool Affix { get; set; }
     }
     public class PageMenu
     {
         public string path { get; set; }
-        //public bool alwaysShow { get; set; }
+        public bool alwaysShow { get; set; }
         //public string redirect { get; set; }
         public string name { get; set; }
         public PageMenuMeta meta { get; set; }

@@ -54,7 +54,7 @@ const user = {
                     // commit('SET_TOKEN', data.token)
                     // setToken(response.data.token)
                     // resolve()
-                    console.info('dfasd')
+                  
                     const data = response.data
                     commit('SET_TOKEN', 'Bearer ' + data)
                     setToken('Bearer ' + data)
@@ -83,7 +83,7 @@ const user = {
                 commit('SET_AVATAR', data.avatar)
                 commit('SET_INTRODUCTION', data.introduction)
                     // return response;
-                console.info('12')
+      
                 resolve(response)
             })
 

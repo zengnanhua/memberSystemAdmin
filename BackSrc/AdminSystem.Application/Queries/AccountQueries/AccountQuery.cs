@@ -20,12 +20,15 @@ namespace AdminSystem.Application.Queries
         {
             PageMenu pageMenu = new PageMenu();
             pageMenu.children = new List<PageMenu>();
+            pageMenu.alwaysShow = entity.AlwaysShow;
             pageMenu.name = entity.MenuNo;
             pageMenu.path = string.IsNullOrEmpty(entity.MenuUrl)?"": entity.MenuUrl;
             pageMenu.meta = new PageMenuMeta()
             {
-                icon = string.IsNullOrWhiteSpace(entity.MenuIcon)? "dashboard" : entity.MenuIcon,
-                title = entity.MenuName
+                icon = string.IsNullOrWhiteSpace(entity.MenuIcon) ? "dashboard" : entity.MenuIcon,
+                title = entity.MenuName,
+                affix = entity.Affix,
+                noCache=entity.NoCache
             };
             return pageMenu;
         }

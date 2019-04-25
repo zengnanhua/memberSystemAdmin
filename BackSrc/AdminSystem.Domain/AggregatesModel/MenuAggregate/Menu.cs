@@ -41,6 +41,20 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
         /// 层路径
         /// </summary>
         public string DeepPath { get; private set; }
+
+        /// <summary>
+        /// 不管菜单在哪一级，都显示到主菜单上
+        /// </summary>
+        public bool AlwaysShow { get; private set; }
+        /// <summary>
+        /// 是否不缓存
+        /// </summary>
+        public bool NoCache { get; private set; }
+        /// <summary>
+        /// 不显示关闭按钮 ，一直存这标签
+        /// </summary>
+        public bool Affix { get; set; }
+
         /// <summary>
         /// 平台类型
         /// </summary>
@@ -109,6 +123,15 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             menu.DeepPath = $"{this.DeepPath},{menu.MenuNo}";
 
             return menu;
+        }
+        /// <summary>
+        /// 设置菜单特性
+        /// </summary>
+        public void SetMenuAttributeFeature(bool alwaysShow=false,bool noCache=false,bool affix=false)
+        {
+            this.AlwaysShow = alwaysShow;
+            this.NoCache = noCache;
+            this.Affix = affix;
         }
     }
 

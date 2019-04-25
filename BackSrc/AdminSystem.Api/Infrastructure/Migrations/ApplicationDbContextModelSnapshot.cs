@@ -22,6 +22,10 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Affix");
+
+                    b.Property<bool>("AlwaysShow");
+
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<int>("CreateUserId");
@@ -45,6 +49,8 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                     b.Property<string>("MenuNo");
 
                     b.Property<string>("MenuUrl");
+
+                    b.Property<bool>("NoCache");
 
                     b.Property<string>("Order");
 

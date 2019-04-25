@@ -6,6 +6,7 @@
       </a>
     </p>
     <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">{{ $t('guide.button') }}</el-button>
+    <el-input v-model="test"></el-input>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
   name: 'Guide',
   data() {
     return {
-      driver: null
+      driver: null,
+      test:"",
     }
   },
   mounted() {
