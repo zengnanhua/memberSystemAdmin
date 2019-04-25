@@ -5,12 +5,14 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AdminSystem.Api.Infrastructure.AutofacModules;
 using AdminSystem.Api.Infrastructure.Filters;
+using AdminSystem.Application.Services;
 using AdminSystem.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,7 @@ namespace AdminSystem.Api
 
 
             services
+              .AddSystemRegisterType(Configuration)
               .AddCustomSwagger(Configuration)
               .AddCustomDbContext(Configuration)
               .AddAuthorization()
@@ -108,6 +111,12 @@ namespace AdminSystem.Api
     static class CustomExtensionsMethods
     {
 
+        public static IServiceCollection AddSystemRegisterType(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
+            return services;
+        }
         /// <summary>
         /// 添加数据库
         /// </summary>

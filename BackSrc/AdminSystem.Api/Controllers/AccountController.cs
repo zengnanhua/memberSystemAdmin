@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdminSystem.Application.Commands;
+using AdminSystem.Application.Queries;
+using AdminSystem.Application.Services;
 using AdminSystem.Infrastructure.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,20 +19,45 @@ namespace AdminSystem.Api.Controllers
     [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         IMediator _mediator;
-        public AccountController(IMediator mediator)
+        IAccountQuery _accountQuery;
+        IIdentityService _identityService;
+        public AccountController(IMediator mediator, IAccountQuery  accountQuery, IIdentityService identityService)
         {
             this._mediator = mediator;
-        }
+            this._accountQuery = accountQuery;
+            this._identityService = identityService;
+
+    }
+        /// <summary>
+        /// 获取token 就是登录
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ResultData<string>> GetToken(GetTokenCommand command)
         {
-        
+            
             return await _mediator.Send(command);
         }
-            
+        /// <summary>
+        /// 获取菜单
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResultData<List<PageMenu>>> GetPageMenu()
+        {
+            var result= await _accountQuery.GetPageMenuByUserId(_identityService.GetUserId());
+            return ResultData<List<PageMenu>>.CreateResultDataSuccess("成功", result?.children);
+
+        }
+
+
+
+
     }
 
    

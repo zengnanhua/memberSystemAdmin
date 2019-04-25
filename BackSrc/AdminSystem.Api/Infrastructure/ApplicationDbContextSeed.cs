@@ -39,9 +39,9 @@ namespace AdminSystem.Api.Infrastructure
                
                 Menu menu = new Menu("base", "主菜单", "", "1", "", Domain.AggregatesModel.Common.PlatformType.Pc);
                 Menu systemManage = menu.CreateSonMenu("systemManage", "系统管理",  "1", "",MenuFuntionType.Menu,PlatformType.Pc);
-                Menu menuManage = systemManage.CreateSonMenu("menuManage", "菜单管理", "1", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/menuManage");
-                Menu userManage = systemManage.CreateSonMenu("userManage", "用户管理", "2", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/userManage");
-                Menu roleManage = systemManage.CreateSonMenu("roleManage", "角色管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/roleManage");
+                Menu menuManage = systemManage.CreateSonMenu("menuManage", "菜单管理", "1", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/page");
+                Menu userManage = systemManage.CreateSonMenu("userManage", "用户管理", "2", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/directive");
+                Menu roleManage = systemManage.CreateSonMenu("roleManage", "角色管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/role");
 
                 context.Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage);
 

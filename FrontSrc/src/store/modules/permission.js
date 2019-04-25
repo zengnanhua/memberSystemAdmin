@@ -50,7 +50,7 @@ const permission = {
             console.info(data);
             return new Promise(resolve => {
                 const { roles } = data
-                GetMenu({ userid: "3377" }).then(res => {
+                GetMenu().then(res => {
                     //var dataList = res.data;
                     commit('SET_ROUTES', res)
                     resolve(res)

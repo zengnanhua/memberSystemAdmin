@@ -18,7 +18,7 @@ module.exports = {
                 }
             },
             '/nanhua700': {
-                target: 'http://localhost:50384/api',
+                target: 'http://localhost:50383/api',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/nanhua700': ''

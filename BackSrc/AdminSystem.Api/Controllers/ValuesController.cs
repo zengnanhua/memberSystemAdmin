@@ -11,24 +11,24 @@ namespace UserIdentity.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class ValuesController : Controller
     {
-       
-        public ValuesController()
+        IAccountQuery _accountQuery;
+        public ValuesController(IAccountQuery accountQuery)
         {
-           
+            this._accountQuery = accountQuery;
         }
         /// <summary>
         /// 获取用户 测试
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<object>> Get()
+        public async Task<object> Get()
         {
            
-            //var list=await _apptionUserQuery.GetUserAsync(1);
-            return new object[] { "value1", "sdfa" };
+            //var list=await _accountQuery.GetPageMenuByUserId(1);
+            return "sdfasd";
         }
 
         // GET api/values/5

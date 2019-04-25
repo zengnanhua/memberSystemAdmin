@@ -48,6 +48,7 @@ export const constantRoutes = [{
     {
         path: '',
         component: Layout,
+        redirect: 'dashboard',
         children: [{
             path: 'dashboard',
             component: () =>
@@ -57,70 +58,29 @@ export const constantRoutes = [{
         }]
     },
     {
-        path: '/permission',
+        path: '',
         component: Layout,
-        redirect: '/permission/index',
-        alwaysShow: true, // will always show the root menu
-        meta: {
-            title: 'permission',
-            icon: 'lock',
-            roles: ['admin', 'editor'] // you can set roles in root nav
-        },
         children: [{
-                path: 'page',
+                path: '/permission/page',
+                name: 'userManage',
                 component: () =>
                     import ('@/views/guide/index'),
-                name: 'PagePermission',
-                meta: {
-                    title: 'pagePermission',
-                    roles: ['admin'] // or you can only set roles in sub nav
-                }
             },
             {
-                path: 'directive',
+                path: '/permission/directive',
+                name: 'roleManage',
                 component: () =>
-                    import ('@/views/guide/index'),
-                name: 'DirectivePermission',
-                meta: {
-                    title: 'directivePermission'
-                        // if do not set roles, means: this page does not require permission
-                }
+                    import ('@/views/guide/index')
             },
             {
-                path: 'role',
+                path: '/permission/role',
+                name: 'menuManage',
                 component: () =>
-                    import ('@/views/guide/index'),
-                name: 'RolePermission',
-                meta: {
-                    title: 'rolePermission',
-                    roles: ['admin']
-                }
-            }
+                    import ('@/views/guide/index')
+            },
         ]
     },
-    // {
-    //     path: '/documentation',
-    //     component: Layout,
-    //     children: [{
-    //         path: 'index',
-    //         component: () =>
-    //             import ('@/views/guide/index'),
-    //         name: 'Documentation',
-    //         meta: { title: 'documentation', icon: 'documentation', affix: false }
-    //     }]
-    // },
-    // {
-    //     path: '/guide',
-    //     component: Layout,
-    //     redirect: '/guide/index',
-    //     children: [{
-    //         path: 'index',
-    //         component: () =>
-    //             import ('@/views/guide/index'),
-    //         name: 'Guide',
-    //         meta: { title: 'guide', icon: 'guide', noCache: true }
-    //     }]
-    // }
+
 ]
 
 export default new Router({
@@ -130,69 +90,5 @@ export default new Router({
 })
 
 export const asyncRoutes = [
-    // {
-    //     path: '/permission',
-    //     component: Layout,
-    //     redirect: '/permission/index',
-    //     alwaysShow: true, // will always show the root menu
-    //     meta: {
-    //         title: 'permission',
-    //         icon: 'lock',
-    //         roles: ['admin', 'editor'] // you can set roles in root nav
-    //     },
-    //     children: [{
-    //             path: 'page',
-    //             component: () =>
-    //                 import ('@/views/guide/index'),
-    //             name: 'PagePermission',
-    //             meta: {
-    //                 title: 'pagePermission',
-    //                 roles: ['admin'] // or you can only set roles in sub nav
-    //             }
-    //         },
-    //         {
-    //             path: 'directive',
-    //             component: () =>
-    //                 import ('@/views/guide/index'),
-    //             name: 'DirectivePermission',
-    //             meta: {
-    //                 title: 'directivePermission'
-    //                     // if do not set roles, means: this page does not require permission
-    //             }
-    //         },
-    //         {
-    //             path: 'role',
-    //             component: () =>
-    //                 import ('@/views/guide/index'),
-    //             name: 'RolePermission',
-    //             meta: {
-    //                 title: 'rolePermission',
-    //                 roles: ['admin']
-    //             }
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: '/pdf',
-    //     component: Layout,
-    //     redirect: '/pdf/index',
-    //     children: [{
-    //         path: 'index',
-    //         component: () =>
-    //             import ('@/views/pdf/index'),
-    //         name: 'PDF',
-    //         meta: { title: 'pdf', icon: 'pdf' }
-    //     }]
-    // },
-    // {
-    //     path: '/icon',
-    //     component: Layout,
-    //     children: [{
-    //         path: 'index',
-    //         component: () =>
-    //             import ('@/views/svg-icons/index'),
-    //         name: 'Icons',
-    //         meta: { title: 'icons', icon: 'icon', noCache: true }
-    //     }]
-    // },
+
 ]
