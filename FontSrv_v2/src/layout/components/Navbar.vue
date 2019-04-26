@@ -16,7 +16,7 @@
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <lang-select class="right-menu-item hover-effect" />
+        <!-- <lang-select class="right-menu-item hover-effect" /> -->
 
       </template>
 

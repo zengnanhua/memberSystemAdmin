@@ -12,7 +12,7 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ').replace(new RegExp('route.','g'),'')" />
     </el-select>
   </div>
 </template>
@@ -140,6 +140,7 @@ export default {
     },
     querySearch(query) {
       if (query !== '') {
+        console.info(this.fuse);
         this.options = this.fuse.search(query)
       } else {
         this.options = []
