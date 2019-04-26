@@ -71,14 +71,57 @@ export const constantRoutes = [{
         path: '',
         component: Layout,
         redirect: 'dashboard',
+        alwaysShow: false,
         children: [{
-            path: 'dashboard',
-            component: () =>
-                import ('@/views/dashboard/index'),
-            name: 'Dashboard',
-            meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
-        }]
-    }
+                path: 'dashboard',
+                component: () =>
+                    import ('@/views/dashboard/index'),
+                name: 'Dashboard',
+                meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
+            },
+            // {
+            //     path: '/permission/page',
+            //     name: 'userManage',
+            //     component: () =>
+            //         import ('@/views/userManage/index'),
+            // },
+            // {
+            //     path: '/permission/directive',
+            //     name: 'roleManage',
+            //     component: () =>
+            //         import ('@/views/userManage/index'),
+            // },
+            // {
+            //     path: '/permission/role',
+            //     name: 'menuManage',
+            //     component: () =>
+            //         import ('@/views/userManage/index')
+            // },
+        ]
+    },
+    {
+        path: '',
+        component: Layout,
+        children: [{
+                path: '/permission/page',
+                name: 'userManage',
+                component: () =>
+                    import ('@/views/userManage/index'),
+            },
+            {
+                path: '/permission/directive',
+                name: 'roleManage',
+                component: () =>
+                    import ('@/views/userManage/index')
+            },
+            {
+                path: '/permission/role',
+                name: 'menuManage',
+                component: () =>
+                    import ('@/views/userManage/index')
+            },
+        ]
+    },
 
 ]
 

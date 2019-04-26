@@ -110,8 +110,40 @@ export default {
         }
       }
     },
+    findTitleByPath:function(routes){
+        for(var i in routes){
+            var temp=routes[i];
+            if(temp.path==this.$route.path){
+               if(temp.meta&&temp.meta.title){
+                 return temp.meta.title
+               }
+         
+            }
+            else{
+               if(temp.children&&temp.children.length>0){
+                  var b= this.findTitleByPath(temp.children);
+                  if(b){
+                    return b;
+                  }
+               }
+              
+            }
+        }
+        return null;
+    },
     addTags() {
-      const { name } = this.$route
+      const { name } = this.$route;
+      if(!this.$route.meta||!this.$route.meta.title||this.$route.meta.title==""){
+          var title= this.findTitleByPath(this.routes);
+          if(title!=null){
+              if(this.$route.meta){
+                  this.$route.meta.title=title;
+              }
+              else{
+                  this.$route.meta={title:title};
+              }
+          }
+      }
       if (name) {
         this.$store.dispatch('tagsView/addView', this.$route)
       }
