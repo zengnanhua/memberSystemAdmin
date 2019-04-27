@@ -71,7 +71,7 @@ export default {
             this.isShowQueryWhere=flag;
         },
         query_event:function(){
-
+            
         },
         view_event:function(){
 
