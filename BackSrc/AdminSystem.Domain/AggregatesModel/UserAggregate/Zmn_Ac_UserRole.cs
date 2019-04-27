@@ -9,16 +9,16 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
     /// <summary>
     /// 用户角色权限
     /// </summary>
-    public class UserRole : Entity
+    public class Zmn_Ac_UserRole : Entity
     {
         public int UserId { get; private set; }
-        public ApplicationUser ApplicationUser{ get; private set; }
+        public Zmn_Ac_User ApplicationUser{ get; private set; }
         public int RoleId { get; private set; }
-        public Role Role { get; private set; }
+        public Zmn_Ac_Role Role { get; private set; }
 
-        protected UserRole() { }
+        protected Zmn_Ac_UserRole() { }
 
-        public UserRole(int userId, int roleId)
+        public Zmn_Ac_UserRole(int userId, int roleId)
         {
             this.UserId = userId;
             this.RoleId = roleId;

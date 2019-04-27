@@ -18,11 +18,11 @@ namespace AdminSystem.Infrastructure
 {
     public class ApplicationDbContext: DbContext, IUnitOfWork
     {
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<Menu> Menus { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Zmn_Ac_User> Zmn_Ac_Users { get; set; }
+        public DbSet<Zmn_Ac_Role> Zmn_Ac_Roles { get; set; }
+        public DbSet<Zmn_Ac_UserRole> Zmn_Ac_UserRoles { get; set; }
+        public DbSet<Zmn_Ac_Menu> Zmn_Ac_Menus { get; set; }
+        public DbSet<Zmn_Ac_Permission> Zmn_Ac_Permissions { get; set; }
 
         private readonly IMediator _mediator;
 

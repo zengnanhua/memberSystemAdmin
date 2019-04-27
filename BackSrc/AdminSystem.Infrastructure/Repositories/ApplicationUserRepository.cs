@@ -22,11 +22,11 @@ namespace AdminSystem.Infrastructure.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public  void AddUser(ApplicationUser user)
+        public  void AddUser(Zmn_Ac_User user)
         {
             if (user.IsTransient())
             {
-                _context.ApplicationUsers
+                _context.Zmn_Ac_Users
                    .Add(user);  
             }
     

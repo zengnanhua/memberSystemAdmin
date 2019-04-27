@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace AdminSystem.Domain.AggregatesModel.CommonClass
+namespace AdminSystem.Domain.CommonClass
 {
     public class RemarkAttribute : Attribute
     {

@@ -17,7 +17,7 @@ namespace AdminSystem.Application.Commands
         }
         public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = new ApplicationUser(request.UserName,request.Name,"sdfa") ;
+            var entity = new Zmn_Ac_User(request.UserName,request.Name,"sdfa") ;
            _applicationUserRepository.AddUser(entity);
             return await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
         }

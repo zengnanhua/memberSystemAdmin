@@ -73,6 +73,18 @@ module.exports = {
                 symbolId: 'icon-[name]'
             })
             .end()
+        config.module
+            .rule('img')
+            .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+            .include.add(resolve('src/images'))
+            .end()
+            .use('url-loader')
+            .loader('url-loader')
+            .options({
+                limit: 10000,
+                //name: utils.assetsPath('img/[name].[hash:7].[ext]')
+            })
+            .end();
 
         // set preserveWhitespace
         config.module

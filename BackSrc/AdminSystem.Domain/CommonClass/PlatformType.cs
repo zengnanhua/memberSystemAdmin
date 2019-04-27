@@ -1,10 +1,10 @@
-﻿using AdminSystem.Domain.AggregatesModel.CommonClass;
+﻿using AdminSystem.Domain.CommonClass;
 using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdminSystem.Domain.AggregatesModel.Common
+namespace AdminSystem.Domain.CommonClass
 {
     public enum PlatformType
     {

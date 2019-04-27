@@ -13,5 +13,11 @@ namespace AdminSystem.Application.Queries
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<PageMenu> GetPageMenuByUserId(int userId);
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        Task<List<UserDto>> GetUserList(GetUserListParameter param);
     }
 }

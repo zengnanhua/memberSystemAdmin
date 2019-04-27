@@ -1,5 +1,4 @@
-﻿using AdminSystem.Domain.AggregatesModel.Common;
-using AdminSystem.Domain.AggregatesModel.CommonClass;
+﻿using AdminSystem.Domain.CommonClass;
 using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
 {
-    public class Menu : Entity, IAggregateRoot, IAudited
+    public class Zmn_Ac_Menu : Entity, IAggregateRoot, IAudited
     {
         /// <summary>
         /// 菜单编码
@@ -61,24 +60,18 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
         public PlatformType PlatformType { get; private set; }
         public MenuFuntionType MenuFuntionType { get; private set; }
 
-        public int CreateUserId { get; private set; }
-
-        public DateTime CreateDateTime { get; private set; }
-
         public int UpdateUserId { get; private set; }
 
         public DateTime UpdateDateTime { get; private set; }
 
-        public int DeleteUserId { get; private set; }
 
-        public DateTime DeleteDateTime { get; private set; }
 
         /// <summary>
         /// 默认是false
         /// </summary>
         public bool IsDelete { get; private set; }
 
-        protected Menu() { }
+        protected Zmn_Ac_Menu() { }
         /// <summary>
         /// 构建顶级菜单
         /// </summary>
@@ -90,7 +83,7 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
         /// <param name="menuFuntionType"></param>
         /// <param name="platformType"></param>
         /// <param name="menuUrl"></param>
-        public Menu(string menuNo,string  menuName, string menuUrl,string order,string menuIcon,PlatformType platformType)
+        public Zmn_Ac_Menu(string menuNo,string  menuName, string menuUrl,string order,string menuIcon,PlatformType platformType)
         {
 
             this.MenuNo = menuNo;
@@ -101,14 +94,14 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             this.MenuFuntionType = MenuFuntionType.Menu;
             this.PlatformType = platformType;
             this.MenuUrl = MenuUrl;
-            this.CreateDateTime = DateTime.Now;
+            this.UpdateDateTime = DateTime.Now;
             this.IsDelete = false;
             this.IsVisible = true;
             this.DeepPath = $"{this.MenuNo}";
         }
-        public Menu CreateSonMenu(string menuNo, string menuName, string order, string menuIcon, MenuFuntionType menuFuntionType, PlatformType platformType, string menuUrl = null)
+        public Zmn_Ac_Menu CreateSonMenu(string menuNo, string menuName, string order, string menuIcon, MenuFuntionType menuFuntionType, PlatformType platformType, string menuUrl = null)
         {
-            Menu menu = new Menu();
+            Zmn_Ac_Menu menu = new Zmn_Ac_Menu();
             menu.MenuNo = menuNo;
             menu.PMenuNo =this.MenuNo;
             menu.MenuName = menuName;
@@ -117,7 +110,7 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             menu.MenuFuntionType = menuFuntionType;
             menu.PlatformType = platformType;
             menu.MenuUrl = menuUrl;
-            menu.CreateDateTime = DateTime.Now;
+            menu.UpdateDateTime = DateTime.Now;
             menu.IsDelete = false;
             menu.IsVisible = true;
             menu.DeepPath = $"{this.DeepPath},{menu.MenuNo}";

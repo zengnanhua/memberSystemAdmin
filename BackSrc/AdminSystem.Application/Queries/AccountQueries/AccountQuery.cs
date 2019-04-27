@@ -16,6 +16,7 @@ namespace AdminSystem.Application.Queries
             _connectionString = !string.IsNullOrWhiteSpace(constr) ? constr : throw new ArgumentNullException(nameof(constr));
         }
 
+        #region 获取页面菜单
         private PageMenu CreatePageMenu(MenuDto entity)
         {
             PageMenu pageMenu = new PageMenu();
@@ -62,7 +63,6 @@ namespace AdminSystem.Application.Queries
             }
             return pageMenu;
         }
-
         /// <summary>
         /// 获取页面菜单
         /// </summary>
@@ -73,11 +73,11 @@ namespace AdminSystem.Application.Queries
 
             using (var connection = new MySqlConnection(_connectionString))
             {
-                string sql = @"select DISTINCT * from Menus m inner join Permissions p
+                string sql = @"select DISTINCT * from Zmn_Ac_Menus m inner join Zmn_Ac_Permissions p
                     on m.MenuNo=p.MenuNo
                     where p.RoleId in (
-		                    select r.Id from Roles r inner join  UserRoles ur on r.Id=ur.RoleId
-		                    inner join ApplicationUsers u on ur.UserId=u.Id
+		                    select r.Id from Zmn_Ac_Roles r inner join  Zmn_Ac_UserRoles ur on r.Id=ur.RoleId
+		                    inner join Zmn_Ac_Users u on ur.UserId=u.Id
 		                    where u.id=@userId
                     )
                     or p.UserId=@userId";
@@ -87,5 +87,37 @@ namespace AdminSystem.Application.Queries
             }
 
         }
+        #endregion
+
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<List<UserDto>> GetUserList(GetUserListParameter param)
+        {
+            int page = string.IsNullOrWhiteSpace(param.Page) ? 1 : Convert.ToInt32(param.Page);
+            int pageSize = string.IsNullOrWhiteSpace(param.PageSize) ? 20 : Convert.ToInt32(param.PageSize);
+            page = (page - 1) * pageSize;
+            pageSize = 20;
+            var whereSql = "";
+            if (!string.IsNullOrWhiteSpace(param.Name))
+            {
+                whereSql += " and name=@name";
+            }
+            if (!string.IsNullOrWhiteSpace(param.Phone))
+            {
+                whereSql += " and Phone=@phone";
+            }
+         
+            string sql = $@"select * from Zmn_Ac_Users where 1=1 {whereSql}  order by UpdateDateTime desc limit @page,@pageSize";
+
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                var result = (await connection.QueryAsync<UserDto>(sql, new { param.Name,param.Phone, page, pageSize })).ToList();
+                return result;
+            }
+        }
+
     }
 }

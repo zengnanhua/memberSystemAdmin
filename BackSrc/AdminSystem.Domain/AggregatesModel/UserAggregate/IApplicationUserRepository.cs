@@ -5,8 +5,8 @@ using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
-    public interface IApplicationUserRepository:IRepository<ApplicationUser>
+    public interface IApplicationUserRepository:IRepository<Zmn_Ac_User>
     {
-        void AddUser(ApplicationUser user);
+        void AddUser(Zmn_Ac_User user);
     }
 }

@@ -54,8 +54,16 @@ namespace AdminSystem.Api.Controllers
             return ResultData<List<PageMenu>>.CreateResultDataSuccess("成功", result?.children);
 
         }
-
-
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<ResultData<List<UserDto>>> GetUserList(GetUserListParameter param)
+        {
+            var result = await _accountQuery.GetUserList(param);
+            return ResultData<List<UserDto>>.CreateResultDataSuccess("成功",result,10);
+        }
 
 
     }

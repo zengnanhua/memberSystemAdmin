@@ -49,10 +49,7 @@ const mutations = {
 const actions = {
     generateRoutes({ commit }, roles) {
         return new Promise(resolve => {
-            console.info(roles);
-
             GetMenu().then(res => {
-                console.info(res);
                 //var dataList = res.data;
                 commit('SET_ROUTES', res.data)
                 resolve(res.data)

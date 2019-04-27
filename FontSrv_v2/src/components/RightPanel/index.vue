@@ -3,7 +3,8 @@
     <div class="rightPanel-background" />
     <div class="rightPanel">
       <div class="handle-button" :style="{'top':buttonTop+'px','background-color':theme}" @click="show=!show">
-        <i :class="show?'el-icon-close':'el-icon-setting'" />
+        <i :class="show?'el-icon-caret-right':'el-icon-caret-left'" />
+        <!-- el-icon-setting -->
       </div>
       <div class="rightPanel-items">
         <slot />
@@ -131,21 +132,21 @@ export default {
 
 .handle-button {
   position: absolute;
-  left: -48px;
+  left: -16px;
   border-radius: 6px 0 0 6px !important;
-  width: 48px;
+  width: 16px;
   height: 48px;
   pointer-events: auto;
   z-index: 0;
   cursor: pointer;
   pointer-events: auto;
-  font-size: 24px;
+  font-size: 20px;
   text-align: center;
   color: #fff;
   line-height: 48px;
 
   i {
-    font-size: 24px;
+    font-size: 18px;
     line-height: 48px;
   }
 }

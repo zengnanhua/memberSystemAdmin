@@ -182,7 +182,15 @@ aside {
     z-index: 1000 !important;
 }
 
+/****************************曾南华 全局element样式 20181112 begin*************************************/
+.el-table__header-wrapper thead tr th {
+    background-color: #e8e8e8;
+}
 
+.el-table th.is-leaf {
+    background-color: #e8e8e8;
+}
+/****************************曾南华 20181112 end*************************************/
 /**************************** 组织架构树 treeselect控件定义 begin*************************************/
 
 .vue-treeselect__menu-container {
@@ -194,18 +202,10 @@ aside {
     color: #606266 !important;
 }
 
-.vue-treeselect__count,
-.vue-treeselect__limit-tip-text {
+.vue-treeselect__label {
     font-weight: 200 !important;
-}
-
-.vue-treeselect--single .vue-treeselect__option--selected {
-    font-weight: 200 !important;
-}
-
-.vue-treeselect__error-tip .vue-treeselect__retry {
-    font-weight: 200 !important;
-    ;
+    font-size: 14px;
+    color: #606266 !important;
 }
 
 .vue-treeselect__multi-value-item {

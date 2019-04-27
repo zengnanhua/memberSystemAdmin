@@ -79,46 +79,28 @@ export const constantRoutes = [{
                 name: 'Dashboard',
                 meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
             },
-            // {
-            //     path: '/permission/page',
-            //     name: 'userManage',
-            //     component: () =>
-            //         import ('@/views/userManage/index'),
-            // },
-            // {
-            //     path: '/permission/directive',
-            //     name: 'roleManage',
-            //     component: () =>
-            //         import ('@/views/userManage/index'),
-            // },
-            // {
-            //     path: '/permission/role',
-            //     name: 'menuManage',
-            //     component: () =>
-            //         import ('@/views/userManage/index')
-            // },
         ]
     },
     {
         path: '',
         component: Layout,
         children: [{
-                path: '/permission/page',
+                path: '/systemManage/userManage',
                 name: 'userManage',
                 component: () =>
-                    import ('@/views/userManage/index'),
+                    import ('@/views/systemManage/userManage'),
             },
             {
-                path: '/permission/directive',
+                path: '/systemManage/menuManage',
                 name: 'roleManage',
                 component: () =>
-                    import ('@/views/userManage/index')
+                    import ('@/views/dashboard/index')
             },
             {
-                path: '/permission/role',
+                path: '/systemManage/roleManage',
                 name: 'menuManage',
                 component: () =>
-                    import ('@/views/userManage/index')
+                    import ('@/views/dashboard/index')
             },
         ]
     },

@@ -17,7 +17,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.MenuAggregate.Menu", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.MenuAggregate.Zmn_Ac_Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -26,15 +26,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.Property<bool>("AlwaysShow");
 
-                    b.Property<DateTime>("CreateDateTime");
-
-                    b.Property<int>("CreateUserId");
-
                     b.Property<string>("DeepPath");
-
-                    b.Property<DateTime>("DeleteDateTime");
-
-                    b.Property<int>("DeleteUserId");
 
                     b.Property<bool>("IsDelete");
 
@@ -71,21 +63,13 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.HasIndex("PMenuNo");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Zmn_Ac_Menus");
                 });
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.RoleAggregate.Role", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.RoleAggregate.Zmn_Ac_Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreateDateTime");
-
-                    b.Property<int>("CreateUserId");
-
-                    b.Property<DateTime>("DeleteDateTime");
-
-                    b.Property<int>("DeleteUserId");
 
                     b.Property<bool>("IsDelete");
 
@@ -99,21 +83,37 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Zmn_Ac_Roles");
                 });
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateDateTime");
+                    b.Property<string>("MenuNo");
 
-                    b.Property<int>("CreateUserId");
+                    b.Property<int>("PermissionType");
 
-                    b.Property<DateTime>("DeleteDateTime");
+                    b.Property<int>("PlatformType");
 
-                    b.Property<int>("DeleteUserId");
+                    b.Property<int?>("RoleId");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Zmn_Ac_Permissions");
+                });
+
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("IsDelete");
 
@@ -139,34 +139,10 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("ApplicationUsers");
+                    b.ToTable("Zmn_Ac_Users");
                 });
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("MenuNo");
-
-                    b.Property<int>("PermissionType");
-
-                    b.Property<int>("PlatformType");
-
-                    b.Property<int?>("RoleId");
-
-                    b.Property<int?>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.UserRole", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,14 +157,25 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("Zmn_Ac_UserRoles");
                 });
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_Permission", b =>
+                {
+                    b.HasOne("AdminSystem.Domain.AggregatesModel.RoleAggregate.Zmn_Ac_Role", "Role")
+                        .WithMany("PermissionList")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_User", "ApplicationUser")
+                        .WithMany("PermissionList")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_User", b =>
                 {
                     b.OwnsOne("AdminSystem.Domain.AggregatesModel.UserAggregate.Address", "Address", b1 =>
                         {
-                            b1.Property<int>("ApplicationUserId");
+                            b1.Property<int>("Zmn_Ac_UserId");
 
                             b1.Property<string>("City");
 
@@ -200,36 +187,25 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                             b1.Property<string>("Street");
 
-                            b1.HasKey("ApplicationUserId");
+                            b1.HasKey("Zmn_Ac_UserId");
 
-                            b1.ToTable("ApplicationUsers");
+                            b1.ToTable("Zmn_Ac_Users");
 
-                            b1.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser")
+                            b1.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_User")
                                 .WithOne("Address")
-                                .HasForeignKey("AdminSystem.Domain.AggregatesModel.UserAggregate.Address", "ApplicationUserId")
+                                .HasForeignKey("AdminSystem.Domain.AggregatesModel.UserAggregate.Address", "Zmn_Ac_UserId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
 
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Permission", b =>
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_UserRole", b =>
                 {
-                    b.HasOne("AdminSystem.Domain.AggregatesModel.RoleAggregate.Role", "Role")
-                        .WithMany("PermissionList")
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser", "ApplicationUser")
-                        .WithMany("PermissionList")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.UserRole", b =>
-                {
-                    b.HasOne("AdminSystem.Domain.AggregatesModel.RoleAggregate.Role", "Role")
+                    b.HasOne("AdminSystem.Domain.AggregatesModel.RoleAggregate.Zmn_Ac_Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.ApplicationUser", "ApplicationUser")
+                    b.HasOne("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_User", "ApplicationUser")
                         .WithMany("UserRoleList")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

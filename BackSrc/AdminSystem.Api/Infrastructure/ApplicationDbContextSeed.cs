@@ -1,7 +1,7 @@
-﻿using AdminSystem.Domain.AggregatesModel.Common;
-using AdminSystem.Domain.AggregatesModel.MenuAggregate;
+﻿using AdminSystem.Domain.AggregatesModel.MenuAggregate;
 using AdminSystem.Domain.AggregatesModel.RoleAggregate;
 using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Domain.CommonClass;
 using AdminSystem.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -21,30 +21,30 @@ namespace AdminSystem.Api.Infrastructure
         /// <returns></returns>
         public async Task SeedAsync(ApplicationDbContext context, IHostingEnvironment env)
         {
-            if (!context.ApplicationUsers.Any())
+            if (!context.Zmn_Ac_Users.Any())
             {
-                ApplicationUser user = new ApplicationUser("admin", "管理员", "123456", phone: "15889421601");
-                context.ApplicationUsers.Add(user);
+                Zmn_Ac_User user = new Zmn_Ac_User("admin", "管理员", "123456", phone: "15889421601");
+                context.Zmn_Ac_Users.Add(user);
                 
-                Role role = new Role("系统管理员", "系统管理员");
-                context.Roles.Add(role);
+                Zmn_Ac_Role role = new Zmn_Ac_Role("系统管理员", "系统管理员");
+                context.Zmn_Ac_Roles.Add(role);
 
                 user.AddUserRole(role.Id);
 
                 foreach (var userRole in user.UserRoleList)
                 {
-                    context.UserRoles.Add(userRole);
+                    context.Zmn_Ac_UserRoles.Add(userRole);
                 }
                 
                
-                Menu menu = new Menu("base", "主菜单", "", "1", "", Domain.AggregatesModel.Common.PlatformType.Pc);
-                Menu systemManage = menu.CreateSonMenu("systemManage", "系统管理",  "1", "",MenuFuntionType.Menu,PlatformType.Pc);
-                Menu menuManage = systemManage.CreateSonMenu("menuManage", "菜单管理", "1", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/page");
+                Zmn_Ac_Menu menu = new Zmn_Ac_Menu("base", "主菜单", "", "1", "", PlatformType.Pc);
+                Zmn_Ac_Menu systemManage = menu.CreateSonMenu("systemManage", "系统管理",  "1", "",MenuFuntionType.Menu,PlatformType.Pc);
+                Zmn_Ac_Menu menuManage = systemManage.CreateSonMenu("menuManage", "菜单管理", "1", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/menuManage");
                 menuManage.SetMenuAttributeFeature(affix: true);
-                Menu userManage = systemManage.CreateSonMenu("userManage", "用户管理", "2", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/directive");
-                Menu roleManage = systemManage.CreateSonMenu("roleManage", "角色管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/permission/role");
+                Zmn_Ac_Menu userManage = systemManage.CreateSonMenu("userManage", "用户管理", "2", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/userManage");
+                Zmn_Ac_Menu roleManage = systemManage.CreateSonMenu("roleManage", "角色管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/roleManage");
 
-                context.Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage);
+                context.Zmn_Ac_Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage);
 
 
                 role.AddPermission(menu.MenuNo, PlatformType.Pc);
@@ -55,7 +55,7 @@ namespace AdminSystem.Api.Infrastructure
 
                 foreach (var item in role.PermissionList)
                 {
-                    context.Permissions.Add(item);
+                    context.Zmn_Ac_Permissions.Add(item);
                 }
 
                 await context.SaveChangesAsync();

@@ -1,4 +1,4 @@
-﻿using AdminSystem.Domain.AggregatesModel.Common;
+﻿using AdminSystem.Domain.CommonClass;
 using AdminSystem.Domain.Events;
 using AdminSystem.Domain.SeedWork;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
-    public class ApplicationUser : Entity, IAggregateRoot, IAudited
+    public class Zmn_Ac_User : Entity, IAggregateRoot, IAudited
     {
         /// <summary>
         /// 用户姓名
@@ -20,7 +20,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// </summary>
         public string UserName { get; private set; }
         /// <summary>
-        /// 用户最后更新时间
+        /// 密码
         /// </summary>
         public string Pwd { get; private set; }
         /// <summary>
@@ -36,47 +36,41 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// </summary>
         public Address Address { get; private set; }
 
-        public List<Permission> PermissionList { get; private set; }
+        public List<Zmn_Ac_Permission> PermissionList { get; private set; }
 
-        public List<UserRole> UserRoleList { get; set; }
+        public List<Zmn_Ac_UserRole> UserRoleList { get; set; }
 
-        public int CreateUserId { get; private set; }
-
-        public DateTime CreateDateTime { get; private set; }
 
         public int UpdateUserId { get; private set; }
 
         public DateTime UpdateDateTime { get; private set; }
 
-        public int DeleteUserId { get; private set; }
-
-        public DateTime DeleteDateTime { get; private set; }
 
         public bool IsDelete { get; private set; }
 
-        protected ApplicationUser()
+        protected Zmn_Ac_User()
         {
-            this.PermissionList = new List<Permission>();
-            this.UserRoleList = new List<UserRole>();
+            this.PermissionList = new List<Zmn_Ac_Permission>();
+            this.UserRoleList = new List<Zmn_Ac_UserRole>();
         }
-        public ApplicationUser(string userName,string name,string pwd,string phone="",string sex="",string address=""):this()
+        public Zmn_Ac_User(string userName,string name,string pwd,string phone="",string sex="",string address=""):this()
         {
             this.UserName = userName;
             this.Name = name;
             this.Pwd = pwd;
             this.Sex = sex;
             this.IsDelete = false;
-            this.CreateDateTime = DateTime.Now;
+            this.UpdateDateTime = DateTime.Now;
             this.Address = new Address("","","","","");
         }
         public void AddUserRole(int roleId)
         {
-            this.UserRoleList.Add(new UserRole(this.Id, roleId));
+            this.UserRoleList.Add(new Zmn_Ac_UserRole(this.Id, roleId));
         }
 
         public void AddPermission(string menuNo, PlatformType platformType)
         {
-            this.PermissionList.Add(new Permission(this.Id,menuNo, PermissionType.UserPermission, platformType));
+            this.PermissionList.Add(new Zmn_Ac_Permission(this.Id,menuNo, PermissionType.UserPermission, platformType));
         }
         public void UpdateUser()
         {
