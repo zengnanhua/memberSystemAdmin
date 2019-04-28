@@ -18,6 +18,6 @@ namespace AdminSystem.Application.Queries
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<List<UserDto>> GetUserList(GetUserListParameter param);
+        Task<PageView<UserDto>> GetUserList(GetUserListParameter param);
     }
 }

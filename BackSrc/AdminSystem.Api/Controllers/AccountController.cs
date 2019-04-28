@@ -61,8 +61,8 @@ namespace AdminSystem.Api.Controllers
         /// <returns></returns>
         public async Task<ResultData<List<UserDto>>> GetUserList(GetUserListParameter param)
         {
-            var result = await _accountQuery.GetUserList(param);
-            return ResultData<List<UserDto>>.CreateResultDataSuccess("成功",result,10);
+            var pageView = await _accountQuery.GetUserList(param);
+            return ResultData<List<UserDto>>.CreateResultDataSuccess("成功", pageView.Data, pageView.Total);
         }
 
 

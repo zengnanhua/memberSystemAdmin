@@ -96,8 +96,8 @@ namespace AdminSystem.Application.Queries
     }
     public class GetUserListParameter
     {
-        public string Page { get; set; }
-        public string PageSize { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
     }

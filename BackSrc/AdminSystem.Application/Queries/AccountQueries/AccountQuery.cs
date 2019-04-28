@@ -94,12 +94,9 @@ namespace AdminSystem.Application.Queries
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<List<UserDto>> GetUserList(GetUserListParameter param)
+        public async Task<PageView<UserDto>> GetUserList(GetUserListParameter param)
         {
-            int page = string.IsNullOrWhiteSpace(param.Page) ? 1 : Convert.ToInt32(param.Page);
-            int pageSize = string.IsNullOrWhiteSpace(param.PageSize) ? 20 : Convert.ToInt32(param.PageSize);
-            page = (page - 1) * pageSize;
-            pageSize = 20;
+
             var whereSql = "";
             if (!string.IsNullOrWhiteSpace(param.Name))
             {
@@ -110,13 +107,9 @@ namespace AdminSystem.Application.Queries
                 whereSql += " and Phone=@phone";
             }
          
-            string sql = $@"select * from Zmn_Ac_Users where 1=1 {whereSql}  order by UpdateDateTime desc limit @page,@pageSize";
+            string sql = $@"select * from Zmn_Ac_Users where 1=1 {whereSql}  order by UpdateDateTime desc ";
 
-            using (var connection = new MySqlConnection(_connectionString))
-            {
-                var result = (await connection.QueryAsync<UserDto>(sql, new { param.Name,param.Phone, page, pageSize })).ToList();
-                return result;
-            }
+            return await PaginationHelp.GetPageDataAsync<UserDto>(sql, param, _connectionString);
         }
 
     }

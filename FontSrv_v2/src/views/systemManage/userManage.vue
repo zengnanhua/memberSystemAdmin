@@ -20,9 +20,8 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-button v-waves type="primary" @click="query_event">新增</el-button>
-                 <el-button v-waves type="primary" @click="query_event">新增</el-button>
-                <el-table style="width: 100%;margin-top:20px" :data="tableData"  key="tableData"
+                <el-button v-waves type="primary" @click="view_event('','add')" >新增</el-button>
+                <el-table style="width: 100%;margin-top:20px" :data="paginationEntity.tableData"  key="tableData"
                     v-loading='loadObj.table_load'
                     highlight-current-row  >
                     <el-table-column type="index" width="50" label="序号"></el-table-column>
@@ -58,11 +57,11 @@ export default {
                 phone:"",
             },
             isShowQueryWhere:false,
-            tableData:[],
             paginationEntity:{
                 currentPage:1,
                 currentSize:20,
-                total:800,
+                tableData:[],
+                total:0,
             },
         }
     },
@@ -73,8 +72,19 @@ export default {
         query_event:function(){
             
         },
-        view_event:function(){
+        view_event:function(row,flag){
+            if(flag=="add"){
+                this.$notify({
+                    title: '成功',
+                    message: "成功",
+                    type: 'success',
+                    duration:1000,
+                    onClose:()=>{
+                       
+                    },
+                }); 
 
+            }
         },
         getList:function(){
             var param={
@@ -87,6 +97,7 @@ export default {
             GetUserList(param).then(res=>{
                 this.loadObj.table_load=false;
                 this.tableData=res.data;
+                this.paginationEntity.total=res.extend;
             }).catch(err=>{
                 this.loadObj.table_load=false;
                 this.$message.error("你没有此门店的审核权限");
