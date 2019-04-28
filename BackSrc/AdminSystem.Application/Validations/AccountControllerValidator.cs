@@ -12,6 +12,7 @@ namespace AdminSystem.Application.Validations
         {
             RuleFor(c => c.IdentityName).NotEmpty().WithMessage("用户名不能为空");
             RuleFor(c => c.Password).NotEmpty().WithMessage("密码不能为空");
+            
         }
     }
 }

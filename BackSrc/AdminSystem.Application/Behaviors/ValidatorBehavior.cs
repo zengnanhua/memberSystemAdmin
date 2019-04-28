@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace AdminSystem.Application.Behaviors
 {
+    /// <summary>
+    /// MediatR 参数验证
+    /// </summary>
+    /// <typeparam name="TRequest"></typeparam>
+    /// <typeparam name="TResponse"></typeparam>
     public class ValidatorBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ILogger<ValidatorBehavior<TRequest, TResponse>> _logger;
