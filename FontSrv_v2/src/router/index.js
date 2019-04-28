@@ -5,7 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import pageMenuRouter from './pageMenuRouter'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -73,37 +73,14 @@ export const constantRoutes = [{
         redirect: 'dashboard',
         alwaysShow: false,
         children: [{
-                path: 'dashboard',
-                component: () =>
-                    import ('@/views/dashboard/index'),
-                name: 'Dashboard',
-                meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
-            },
-        ]
+            path: 'dashboard',
+            component: () =>
+                import ('@/views/dashboard/index'),
+            name: 'Dashboard',
+            meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
+        }, ]
     },
-    {
-        path: '',
-        component: Layout,
-        children: [{
-                path: '/systemManage/userManage',
-                name: 'userManage',
-                component: () =>
-                    import ('@/views/systemManage/userManage'),
-            },
-            {
-                path: '/systemManage/menuManage',
-                name: 'roleManage',
-                component: () =>
-                    import ('@/views/dashboard/index')
-            },
-            {
-                path: '/systemManage/roleManage',
-                name: 'menuManage',
-                component: () =>
-                    import ('@/views/dashboard/index')
-            },
-        ]
-    },
+    pageMenuRouter
 
 ]
 

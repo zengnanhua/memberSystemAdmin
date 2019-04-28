@@ -20,7 +20,10 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-button v-waves type="primary" @click="view_event('','add')" >新增</el-button>
+                <router-link :to="{ path: '/systemManage/userManageAdd', query: { plan: 'private' }}" class="link-type">
+                    <el-button v-waves type="primary" @click="view_event('','add')" >新增</el-button>
+                </router-link>
+              
                 <el-table style="width: 100%;margin-top:20px" :data="paginationEntity.tableData"  key="tableData"
                     v-loading='loadObj.table_load'
                     highlight-current-row  >
