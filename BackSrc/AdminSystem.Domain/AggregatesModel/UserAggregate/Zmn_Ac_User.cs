@@ -52,6 +52,7 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         {
             this.PermissionList = new List<Zmn_Ac_Permission>();
             this.UserRoleList = new List<Zmn_Ac_UserRole>();
+            this.Address = new Address("", "", "", "", "");
         }
         public Zmn_Ac_User(string userName,string name,string pwd,string phone="",string sex="",string address=""):this()
         {
@@ -59,9 +60,9 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
             this.Name = name;
             this.Pwd = pwd;
             this.Sex = sex;
+            this.Phone = phone;
             this.IsDelete = false;
             this.UpdateDateTime = DateTime.Now;
-            this.Address = new Address("","","","","");
         }
         public void AddUserRole(int roleId)
         {

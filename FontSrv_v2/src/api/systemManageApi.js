@@ -7,3 +7,10 @@ export function GetUserList(data) {
         data: data
     })
 }
+export function CreateUser(data) {
+    return request({
+        url: '/Account/CreateUser',
+        method: 'post',
+        data: data
+    })
+}

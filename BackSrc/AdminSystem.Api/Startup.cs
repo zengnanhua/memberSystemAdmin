@@ -48,7 +48,13 @@ namespace AdminSystem.Api
               {
                   options.Filters.Add(typeof(HttpGlobalExceptionFilter));
               }).AddControllersAsServices()
-              .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
+              .AddJsonOptions(
+                  options => 
+                  {
+                      options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                      options.SerializerSettings.DateFormatString = "yyyy-MM-dd hh:mm:ss";
+                  }
+              );
 
 
             #region 允许跨域访问

@@ -24,12 +24,7 @@ namespace AdminSystem.Api.Controllers
         {
             return new RedirectResult("~/swagger");
         }
-        [HttpGet]
-        public async Task<bool> CreateUser()
-        {
-            CreateUserCommand createUserCommand = new CreateUserCommand("115516","asdf","女");
-            return await _mediator.Send(createUserCommand);
-        }
+  
 
     }
 }

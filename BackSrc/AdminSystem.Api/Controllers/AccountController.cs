@@ -64,7 +64,15 @@ namespace AdminSystem.Api.Controllers
             var pageView = await _accountQuery.GetUserList(param);
             return ResultData<List<UserDto>>.CreateResultDataSuccess("成功", pageView.Data, pageView.Total);
         }
-
+        /// <summary>
+        ///创建用户
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public async Task<ResultData<string>> CreateUser(CreateUserCommand command)
+        {
+            return await _mediator.Send(command);
+        }
 
     }
 

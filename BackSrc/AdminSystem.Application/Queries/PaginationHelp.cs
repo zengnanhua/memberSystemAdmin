@@ -27,15 +27,16 @@ namespace AdminSystem.Application.Queries
             PageView<T> pageView = new PageView<T>();
             using (var connection = new MySqlConnection(_connectionStr))
             {
-                string selectSql = $"select * count from ({sql}) sssssssss ";
-                pageView.Data= (await connection.QueryAsync<T>(sql, parameters)).ToList();
+                parameters.Add("page", (page - 1) * page);
+                parameters.Add("pageSize", page * pageSize);
+                string selectSql = $"select *  from ({sql}) sssssssss LIMIT @page,@pageSize";
+                pageView.Data= (await connection.QueryAsync<T>(selectSql, parameters)).ToList();
 
 
-                parameters.Add("page", (page - 1)*page);
-                parameters.Add("pageSize", page*pageSize);
+  
 
-                string totalSql = $"select count(1) count from ({sql}) sssssssss LIMIT @page,@pageSize";
-                pageView.Total = await connection.QuerySingleAsync<int>(sql, parameters);
+                string totalSql = $"select count(1) count from ({sql}) sssssssss ";
+                pageView.Total = await connection.QuerySingleAsync<int>(totalSql, parameters);
 
                 return pageView;
 
@@ -52,18 +53,16 @@ namespace AdminSystem.Application.Queries
             {
                 throw new Exception("分页参数没有 “pagesize”");
             }
-
             PageView<T> pageView = new PageView<T>();
             using (var connection = new MySqlConnection(_connectionStr))
             {
-                string selectSql = $"select * count from ({sql}) sssssssss ";
-                pageView.Data = (await connection.QueryAsync<T>(sql, parameters)).ToList();
+                string selectSql = $"select *  from ({sql}) sssssssss  LIMIT @page,@pageSize";
+                pageView.Data = (await connection.QueryAsync<T>(selectSql, parameters)).ToList();
 
-                string totalSql = $"select count(1) count from ({sql}) sssssssss LIMIT @page,@pageSize";
-                pageView.Total = await connection.QuerySingleAsync<int>(sql, parameters);
+                string totalSql = $"select count(1) count from ({sql}) sssssssss";
+                pageView.Total = await connection.QuerySingleAsync<int>(totalSql, parameters);
 
                 return pageView;
-
             }
         }
         /// <summary>
@@ -78,7 +77,28 @@ namespace AdminSystem.Application.Queries
             var propertyInfoList= model.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfoList)
             {
-                param.Add(propertyInfo.Name.ToString(), propertyInfo.GetValue(model,null));
+                if (propertyInfo.Name.ToLower() == "page")
+                {
+                    int page = 0;
+                    if (int.TryParse(propertyInfo.GetValue(model, null)?.ToString(), out page))
+                    {
+                        param.Add(propertyInfo.Name, (page - 1) * page);
+                    }
+
+                }
+                else if (propertyInfo.Name.ToLower() == "pagesize")
+                {
+                    int pageSize = 0;
+                    if (int.TryParse(propertyInfo.GetValue(model, null)?.ToString(), out pageSize))
+                    {
+                        param.Add(propertyInfo.Name, (pageSize - 1) * pageSize);
+                    }
+                }
+                else
+                {
+                    param.Add(propertyInfo.Name, propertyInfo.GetValue(model, null));
+                }
+                
             }
             return param;
         }
@@ -87,15 +107,16 @@ namespace AdminSystem.Application.Queries
             PageView<T> pageView = new PageView<T>();
             using (var connection = new MySqlConnection(_connectionStr))
             {
-                string selectSql = $"select * count from ({sql}) sssssssss ";
-                pageView.Data = connection.Query<T>(sql, parameters).ToList();
-
-
+                string selectSql = $"select * from ({sql}) sssssssss LIMIT @page,@pageSize";
                 parameters.Add("page", (page - 1) * page);
                 parameters.Add("pagesize", page * pageSize);
 
-                string totalSql = $"select count(1) count from ({sql}) sssssssss LIMIT @page,@pageSize";
-                pageView.Total =  connection.QuerySingle<int>(sql, parameters);
+                pageView.Data = connection.Query<T>(selectSql, parameters).ToList();
+
+
+
+                string totalSql = $"select count(1) count from ({sql}) sssssssss ";
+                pageView.Total =  connection.QuerySingle<int>(totalSql, parameters);
 
                 return pageView;
 

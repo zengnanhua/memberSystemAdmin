@@ -1,4 +1,5 @@
-﻿using AdminSystem.Infrastructure.Common;
+﻿using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Infrastructure.Common;
 using IdentityModel.Client;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -13,38 +14,9 @@ using System.Threading.Tasks;
 
 namespace AdminSystem.Application.Commands
 {
-    public static class dd
-    {
-        public static string GetQueryString(this Dictionary<string, string> formData)
-        {
-            if (formData == null || formData.Count == 0)
-            {
-                return "";
-            }
-
-            StringBuilder sb = new StringBuilder();
-
-            var i = 0;
-            foreach (var kv in formData)
-            {
-                i++;
-                sb.AppendFormat("{0}={1}", kv.Key, kv.Value);
-                if (i < formData.Count)
-                {
-                    sb.Append("&");
-                }
-            }
-
-            return sb.ToString();
-        }
-        public static void FillFormDataStream(this Dictionary<string, string> formData, Stream stream)
-        {
-            string dataString = GetQueryString(formData);
-            var formDataBytes = formData == null ? new byte[0] : Encoding.UTF8.GetBytes(dataString);
-            stream.Write(formDataBytes, 0, formDataBytes.Length);
-            stream.Seek(0, SeekOrigin.Begin);//设置指针读取位置
-        }
-    }
+    /// <summary>
+    /// 获取token
+    /// </summary>
     public class GetTokenCommandHandler : IRequestHandler<GetTokenCommand, ResultData<string>>
     {
         private IConfiguration _configuration;
@@ -54,8 +26,6 @@ namespace AdminSystem.Application.Commands
         }
         public async Task<ResultData<string>> Handle(GetTokenCommand request, CancellationToken cancellationToken)
         {
-
-
 
             var client = new HttpClient();
 
@@ -90,6 +60,23 @@ namespace AdminSystem.Application.Commands
             {
                 return ResultData<string>.CreateResultDataSuccess("成功",tokenResponse.Json.Value<string>("access_token"));
             }
+        }
+    }
+    /// <summary>
+    /// 添加用户
+    /// </summary>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ResultData<string>>
+    {
+        IApplicationUserRepository _applicationUserRepository;
+        public CreateUserCommandHandler(IApplicationUserRepository applicationUserRepository)
+        {
+            this._applicationUserRepository = applicationUserRepository;
+        }
+        public async Task<ResultData<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            _applicationUserRepository.AddUser(new Zmn_Ac_User(request.UserName,request.Name,request.Pwd,request.Phone,request.Sex));
+            await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
+            return ResultData<string>.CreateResultDataSuccess("成功");
         }
     }
 }
