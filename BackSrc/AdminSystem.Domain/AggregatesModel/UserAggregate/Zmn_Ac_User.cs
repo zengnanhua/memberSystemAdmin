@@ -64,6 +64,15 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
             this.IsDelete = false;
             this.UpdateDateTime = DateTime.Now;
         }
+        public void SetZmn_Ac_UserInfo( string name, string pwd, string phone = "", string sex = "", string address = "")
+        {
+            this.Name = name;
+            this.Pwd = pwd;
+            this.Sex = sex;
+            this.Phone = phone;
+            this.IsDelete = false;
+            this.UpdateDateTime = DateTime.Now;
+        }
         public void AddUserRole(int roleId)
         {
             this.UserRoleList.Add(new Zmn_Ac_UserRole(this.Id, roleId));

@@ -62,6 +62,7 @@ namespace AdminSystem.Application.Commands
             }
         }
     }
+
     /// <summary>
     /// 添加用户
     /// </summary>
@@ -79,4 +80,24 @@ namespace AdminSystem.Application.Commands
             return ResultData<string>.CreateResultDataSuccess("成功");
         }
     }
+    /// <summary>
+    /// 更新用户
+    /// </summary>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, ResultData<string>>
+    {
+        IApplicationUserRepository _applicationUserRepository;
+        public UpdateUserCommandHandler(IApplicationUserRepository applicationUserRepository)
+        {
+            this._applicationUserRepository = applicationUserRepository;
+        }
+
+        public async Task<ResultData<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        {
+            var user= await this._applicationUserRepository.GetUserById(request.Id);
+            user.SetZmn_Ac_UserInfo(request.Name, request.Pwd, request.Phone, request.Sex);
+            await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
+            return ResultData<string>.CreateResultDataSuccess("成功");
+        }
+    }
+
 }

@@ -27,16 +27,21 @@
                    
                 </router-link> -->
                 <el-button v-waves type="primary" @click="view_event('','add')" >新增</el-button>
+                
                 <el-table style="width: 100%;margin-top:20px" :data="paginationEntity.tableData"  key="tableData"
                     v-loading='loadObj.table_load'
                     highlight-current-row  >
-                    <el-table-column type="index" width="50" label="序号"></el-table-column>
+                    <el-table-column type="index" label="序号"  width="50"></el-table-column>
                     <el-table-column prop="UserName" label="用户名" width="100"></el-table-column>
                     <el-table-column prop="Name" label="姓名"  width="100"></el-table-column>
                     <el-table-column prop="Phone" label="手机号码" width="150"></el-table-column>
                     <el-table-column prop="Sex" label="性别" width="110"> </el-table-column>
                     <el-table-column prop="UpdateDateTime" label="最后更新日期" > </el-table-column>
-                    
+                    <el-table-column  label="操作"  width="200" >
+                        <template slot-scope="{row}">
+                            <el-button  @click="view_event(row,'edit')" type="text">编辑</el-button>
+                        </template>
+                    </el-table-column>
                 </el-table>
                 <pagination v-show="paginationEntity.total>0" :total="paginationEntity.total" :page.sync="paginationEntity.currentPage" 
                     :limit.sync="paginationEntity.currentSize" @pagination="getList" />
@@ -44,15 +49,15 @@
                 <el-dialog
                     title="提示"
                     :visible.sync="dialogVisible"
-                    width="30%"
+                    width="800px"
                     :close-on-click-modal="false"
                     >
                     <el-form ref="saveEntity" :model="saveEntity" :rules="saveEntityRules"  label-width="80px">
                         <el-form-item label="用户名" prop="userName">
-                            <el-input v-model="saveEntity.userName"></el-input>
+                            <el-input v-model="saveEntity.userName" disabled></el-input>
                         </el-form-item>
                         <el-form-item label="密码"  prop="pwd">
-                            <el-input v-model="saveEntity.pwd"></el-input>
+                            <el-input type="password" v-model="saveEntity.pwd"></el-input>
                         </el-form-item>
                         <el-form-item label="姓名" prop="name">
                             <el-input v-model="saveEntity.name"></el-input>
@@ -72,12 +77,13 @@
                         <el-button type="primary" :loading="loadObj.save_load" @click="save">确 定</el-button>
                     </span>
                 </el-dialog>
+
             </el-main>
         </el-container>
     </div>
 </template>
 <script>
-import {GetUserList,CreateUser} from "@/api/systemManageApi"
+import {GetUserList,CreateUser,UpdateUser} from "@/api/systemManageApi"
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
 export default {
@@ -103,6 +109,7 @@ export default {
                 total:0,
             },
             dialogVisible:false,
+            funFlag:"",
             saveEntity:{
                 name:"",
                 userName:"",
@@ -134,17 +141,23 @@ export default {
             this.isShowQueryWhere=flag;
         },
         view_event:function(row,flag){
+            this.funFlag=flag
             if(flag=="add"){
                 this.dialogVisible=true;
-                // this.$notify({
-                //     title: '成功',
-                //     message: "成功",
-                //     type: 'success',
-                //     duration:1000,
-                //     onClose:()=>{
-                       
-                //     },
-                // }); 
+                this.saveEntity.userName=row.UserName;
+                this.saveEntity.name=row.Name;
+                this.saveEntity.pwd=row.Pwd;
+                this.saveEntity.sex=row.Sex;
+                this.saveEntity.phone=row.Phone;
+            }
+            else if(flag=="edit"){
+                this.dialogVisible=true;
+                this.saveEntity.Id=row.Id;
+                this.saveEntity.userName=row.UserName;
+                this.saveEntity.name=row.Name;
+                this.saveEntity.pwd=row.Pwd;
+                this.saveEntity.sex=row.Sex;
+                this.saveEntity.phone=row.Phone;
             }
         },
         getList:function(){
@@ -170,26 +183,44 @@ export default {
             this.$refs.saveEntity.validate((valid) => {
                 if(valid){
                     this.loadObj.save_load=true;
-                    CreateUser(this.saveEntity).then(res=>{
-                        this.$notify({
-                            title: '成功',
-                            message: "成功",
-                            type: 'success',
-                            duration:500,
-                            onClose:()=>{
-                                this.dialogVisible=false;
-                                this.loadObj.save_load=false;
-                                this.getList();
-                            },
-                        }); 
-                        
-                    }).catch(err=>{
-                        this.loadObj.save_load=false;
-                    })
+                    if(this.funFlag=="add"){
+                        CreateUser(this.saveEntity).then(res=>{
+                            this.$notify({
+                                title: '成功',
+                                message: "成功",
+                                type: 'success',
+                                duration:500,
+                                onClose:()=>{
+                                    this.dialogVisible=false;
+                                    this.loadObj.save_load=false;
+                                    this.getList();
+                                },
+                            }); 
+                        }).catch(err=>{
+                            this.loadObj.save_load=false;
+                        })
+                    }
+                    else if(this.funFlag=="edit"){
+
+                        UpdateUser(this.saveEntity).then(res=>{
+                            this.$notify({
+                                title: '成功',
+                                message: "成功",
+                                type: 'success',
+                                duration:500,
+                                onClose:()=>{
+                                    this.dialogVisible=false;
+                                    this.loadObj.save_load=false;
+                                    this.getList();
+                                },
+                            }); 
+                        }).catch(err=>{
+                            this.loadObj.save_load=false;
+                        })
+                    }
+                    
                 }
             });
-          
-            
         }
     },
     mounted(){

@@ -14,3 +14,10 @@ export function CreateUser(data) {
         data: data
     })
 }
+export function UpdateUser(data) {
+    return request({
+        url: '/Account/UpdateUser',
+        method: 'post',
+        data: data
+    })
+}

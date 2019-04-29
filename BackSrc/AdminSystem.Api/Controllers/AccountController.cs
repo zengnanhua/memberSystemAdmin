@@ -73,7 +73,15 @@ namespace AdminSystem.Api.Controllers
         {
             return await _mediator.Send(command);
         }
-
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public async Task<ResultData<string>> UpdateUser(UpdateUserCommand command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 
    
