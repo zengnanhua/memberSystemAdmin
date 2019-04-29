@@ -99,9 +99,10 @@ namespace AdminSystem.Api
             }
 
             app.UseCors("CorsPolicy");//允许跨域
-
+            app.UseStaticFiles();
             app.UseAuthentication();
 
+            
             app.UseMvc();
 
             app.UseSwagger()
