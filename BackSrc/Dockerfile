@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN cd ./AdminSystem.Api
+
 RUN dotnet restore
 
 RUN dotnet build
