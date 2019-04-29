@@ -19,6 +19,6 @@ FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 
 WORKDIR /app
 
-COPY --from=build /app/out ./
+COPY --from=build /app/AdminSystem.Api/out ./
 
 ENTRYPOINT ["dotnet", "AdminSystem.Api.dll"]
