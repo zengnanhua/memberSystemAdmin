@@ -19,13 +19,13 @@ const pageMenuRouter = {
         },
         {
             path: '/systemManage/menuManage',
-            name: 'roleManage',
+            name: 'menuManage',
             component: () =>
-                import ('@/views/dashboard/index')
+                import ('@/views/systemManage/menuManage')
         },
         {
             path: '/systemManage/roleManage',
-            name: 'menuManage',
+            name: 'roleManage',
             component: () =>
                 import ('@/views/dashboard/index')
         },

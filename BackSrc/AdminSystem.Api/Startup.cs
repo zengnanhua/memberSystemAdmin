@@ -90,16 +90,17 @@ namespace AdminSystem.Api
             return new AutofacServiceProvider(container.Build());
         }
 
-       
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            //app.UseDefaultFiles();
 
+            app.UseFileServer(new FileServerOptions());
             app.UseCors("CorsPolicy");//允许跨域
-            app.UseStaticFiles();
             app.UseAuthentication();
 
             

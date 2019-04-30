@@ -107,10 +107,12 @@ namespace AdminSystem.Application.Queries
                 whereSql += " and Phone=@phone";
             }
          
-            string sql = $@"select * from Zmn_Ac_Users where 1=1 {whereSql}  order by Id desc ";
+            string sql = $@"select * from Zmn_Ac_Users where 1=1 and isDelete=0  {whereSql}  order by Id desc ";
 
             return await PaginationHelp.GetPageDataAsync<UserDto>(sql, param, _connectionString);
         }
 
+
+        
     }
 }

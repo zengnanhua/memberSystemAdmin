@@ -17,6 +17,7 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
             builder.OwnsOne(o => o.Address);
             builder.HasIndex(c =>c.UserName).IsUnique();
             builder.HasIndex(c => c.Phone).IsUnique();
+            builder.HasQueryFilter(c => !c.IsDelete);
 
         }
     }

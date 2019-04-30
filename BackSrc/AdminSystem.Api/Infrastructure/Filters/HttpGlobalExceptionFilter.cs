@@ -31,7 +31,7 @@ namespace AdminSystem.Api.Infrastructure.Filters
             //if (env.IsDevelopment())
             if (context.Exception.GetType() == typeof(AdminSystemDomainException))
             {
-                string errorMessage = " ";
+                string errorMessage = "";
                 if (context.Exception.InnerException != null
                     && context.Exception.InnerException.GetType() == typeof(FluentValidation.ValidationException))
                 {
@@ -41,9 +41,9 @@ namespace AdminSystem.Api.Infrastructure.Filters
                         errorMessage += temp.ErrorMessage+",";
                     }
                 }
+                errorMessage=context.Exception.Message +(string.IsNullOrWhiteSpace(errorMessage)?"":"," + errorMessage.Substring(0, errorMessage.Length - 1));
 
-                context.Result = new ObjectResult(ResultData<string>.CreateResultDataFail(
-                    context.Exception.Message+","+ errorMessage.Substring(0, errorMessage.Length-1)));
+                context.Result = new ObjectResult(ResultData<string>.CreateResultDataFail(errorMessage));
             }
             else
             {

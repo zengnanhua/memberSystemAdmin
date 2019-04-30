@@ -13,6 +13,7 @@ using System.Data;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AdminSystem.Infrastructure
 {
@@ -49,9 +50,27 @@ namespace AdminSystem.Infrastructure
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await _mediator.DispatchDomainEventsAsync(this);
-            var result = await base.SaveChangesAsync();
+            var result = await this.SaveChangesAsync();
             return true;
         }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Deleted:
+                        if (entry.Entity.GetType().GetProperties().Where(c => c.Name == "IsDelete").Count() > 0)
+                        {
+                            entry.CurrentValues["IsDelete"] = true;
+                        }
+                        entry.State = EntityState.Modified;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
+    
         /// <summary>
         /// 开始事物
         /// </summary>

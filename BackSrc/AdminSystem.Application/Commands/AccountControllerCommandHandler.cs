@@ -1,4 +1,5 @@
 ﻿using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Domain.Exceptions;
 using AdminSystem.Infrastructure.Common;
 using IdentityModel.Client;
 using MediatR;
@@ -62,7 +63,6 @@ namespace AdminSystem.Application.Commands
             }
         }
     }
-
     /// <summary>
     /// 添加用户
     /// </summary>
@@ -75,7 +75,17 @@ namespace AdminSystem.Application.Commands
         }
         public async Task<ResultData<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            _applicationUserRepository.AddUser(new Zmn_Ac_User(request.UserName,request.Name,request.Pwd,request.Phone,request.Sex));
+            if (_applicationUserRepository.GetUserByUserName(request.UserName) != null)
+            {
+                throw new AdminSystemDomainException("该用户名已经存在");
+            }
+            if (_applicationUserRepository.GetUserByPhone(request.Phone)!=null)
+            {
+                throw new AdminSystemDomainException("该手机号码已经绑定");
+            }
+
+            //默认密码123456
+            _applicationUserRepository.AddUser(new Zmn_Ac_User(request.UserName,request.Name, "123456", request.Phone,request.Sex));
             await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
             return ResultData<string>.CreateResultDataSuccess("成功");
         }
@@ -93,11 +103,40 @@ namespace AdminSystem.Application.Commands
 
         public async Task<ResultData<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user= await this._applicationUserRepository.GetUserById(request.Id);
-            user.SetZmn_Ac_UserInfo(request.Name, request.Pwd, request.Phone, request.Sex);
+            var temp = _applicationUserRepository.GetUserByPhone(request.Phone);
+            if (temp != null && temp.Id != request.Id)
+            {
+                throw new AdminSystemDomainException("该手机号码已经绑定");
+            }
+
+            var user= await this._applicationUserRepository.GetUserByIdAsync(request.Id);
+            //默认密码123456
+            user.SetZmn_Ac_UserInfo(request.Name, request.Phone, request.Sex);
             await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
             return ResultData<string>.CreateResultDataSuccess("成功");
         }
     }
+    /// <summary>
+    /// 删除用户
+    /// </summary>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ResultData<string>>
+    {
+        IApplicationUserRepository _applicationUserRepository;
+        public DeleteUserCommandHandler(IApplicationUserRepository applicationUserRepository)
+        {
+            this._applicationUserRepository = applicationUserRepository;
+        }
+
+        public async Task<ResultData<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            var user= await _applicationUserRepository.GetUserByIdAsync(request.Id);
+            _applicationUserRepository.Delete(user);
+            await _applicationUserRepository.UnitOfWork.SaveEntitiesAsync();
+            return ResultData<string>.CreateResultDataSuccess("成功");
+        }
+    }
+
+
+
 
 }

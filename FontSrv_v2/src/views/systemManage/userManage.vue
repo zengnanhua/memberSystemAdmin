@@ -8,7 +8,7 @@
                             <el-form-item label="用户姓名">
                                 <el-input v-model="queryWhereEntity.name" placeholder="请输入用户姓名"></el-input>
                             </el-form-item>
-                            <el-form-item label="手机号码">
+                            <el-form-item label="手机号码" v-if="isShowQueryWhere">
                                 <el-input v-model="queryWhereEntity.phone" placeholder="请输入手机号码"></el-input>
                             </el-form-item>
                         </el-form>
@@ -40,6 +40,7 @@
                     <el-table-column  label="操作"  width="200" >
                         <template slot-scope="{row}">
                             <el-button  @click="view_event(row,'edit')" type="text">编辑</el-button>
+                            <el-button  @click="view_event(row,'delete')" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -54,10 +55,7 @@
                     >
                     <el-form ref="saveEntity" :model="saveEntity" :rules="saveEntityRules"  label-width="80px">
                         <el-form-item label="用户名" prop="userName">
-                            <el-input v-model="saveEntity.userName" disabled></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码"  prop="pwd">
-                            <el-input type="password" v-model="saveEntity.pwd"></el-input>
+                            <el-input v-model="saveEntity.userName" :disabled="funFlag=='edit'"></el-input>
                         </el-form-item>
                         <el-form-item label="姓名" prop="name">
                             <el-input v-model="saveEntity.name"></el-input>
@@ -83,11 +81,11 @@
     </div>
 </template>
 <script>
-import {GetUserList,CreateUser,UpdateUser} from "@/api/systemManageApi"
+import {GetUserList,CreateUser,UpdateUser,DeleteUser} from "@/api/systemManageApi"
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
 export default {
-    name:"userManage1",
+    name:"userManage",
     components: { Pagination },
     directives: { waves },
     data() {
@@ -111,18 +109,15 @@ export default {
             dialogVisible:false,
             funFlag:"",
             saveEntity:{
+                Id:"",
                 name:"",
                 userName:"",
-                pwd:"",
                 sex:"",
                 phone:"",
             },
             saveEntityRules:{
                 userName: [
                     { required: true, message: '请输入用户名', trigger: 'blur' },
-                ],
-                pwd: [
-                    { required: true, message: '请输入密码', trigger: 'blur' },
                 ],
                 name: [
                     { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -146,7 +141,6 @@ export default {
                 this.dialogVisible=true;
                 this.saveEntity.userName=row.UserName;
                 this.saveEntity.name=row.Name;
-                this.saveEntity.pwd=row.Pwd;
                 this.saveEntity.sex=row.Sex;
                 this.saveEntity.phone=row.Phone;
             }
@@ -155,10 +149,30 @@ export default {
                 this.saveEntity.Id=row.Id;
                 this.saveEntity.userName=row.UserName;
                 this.saveEntity.name=row.Name;
-                this.saveEntity.pwd=row.Pwd;
                 this.saveEntity.sex=row.Sex;
                 this.saveEntity.phone=row.Phone;
             }
+            else if(flag=="delete"){
+                
+                this.DeleteUser(row);
+            }
+        },
+        DeleteUser:function(row){
+            this.$confirm('确认要删除吗？') .then(_ => {
+                DeleteUser({id:row.Id}).then(res=>{
+                    this.$notify({
+                        title: '成功',
+                        message: "删除成功",
+                        type: 'success',
+                        duration:500,
+                        onClose:()=>{
+                            this.getList();
+                        },
+                    }); 
+                }).catch(err=>{
+
+                })
+            }).catch(_=>{})
         },
         getList:function(){
             var param={

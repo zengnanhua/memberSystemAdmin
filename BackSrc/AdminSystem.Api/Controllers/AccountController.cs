@@ -82,6 +82,15 @@ namespace AdminSystem.Api.Controllers
         {
             return await _mediator.Send(command);
         }
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public async Task<ResultData<string>> DeleteUser(DeleteUserCommand command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 
    

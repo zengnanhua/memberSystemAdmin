@@ -14,11 +14,28 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Zmn_Ac_User> GetUserById(int id);
+        Task<Zmn_Ac_User> GetUserByIdAsync(int id);
         /// <summary>
         /// 更新用户信息
         /// </summary>
         /// <param name="zmd_ac_user"></param>
         void Update(Zmn_Ac_User zmd_ac_user);
+        /// <summary>
+        /// 根据手机号码查询用户
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        Zmn_Ac_User GetUserByPhone(string phone);
+        /// <summary>
+        /// 根据用户名查询用户
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Zmn_Ac_User GetUserByUserName(string userName);
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="user"></param>
+        void Delete(Zmn_Ac_User user);
     }
 }

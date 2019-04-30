@@ -21,3 +21,10 @@ export function UpdateUser(data) {
         data: data
     })
 }
+export function DeleteUser(data) {
+    return request({
+        url: '/Account/DeleteUser',
+        method: 'post',
+        data: data
+    })
+}

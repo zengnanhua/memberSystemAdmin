@@ -28,18 +28,19 @@ namespace AdminSystem.Application.Commands
             this.Password = password;
         }
     }
+    /// <summary>
+    /// 创建用户
+    /// </summary>
     public class CreateUserCommand : IRequest<ResultData<string>>
     {
         public string Name { get; private set; }
         public string UserName { get; private set; }
-        public string Pwd { get; private set; }
         public string Sex { get; private set; }
         public string Phone { get; private set; }
-        public CreateUserCommand(string name, string userName, string pwd, string sex, string phone)
+        public CreateUserCommand(string name, string userName, string sex, string phone)
         {
             this.Name = name;
             this.UserName = userName;
-            this.Pwd = pwd;
             this.Sex = sex;
             this.Phone = phone;
         }
@@ -48,16 +49,22 @@ namespace AdminSystem.Application.Commands
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public string Pwd { get; private set; }
         public string Sex { get; private set; }
         public string Phone { get; private set; }
-        public UpdateUserCommand(int id,string name,string pwd,string sex,string phone)
+        public UpdateUserCommand(int id, string name, string sex, string phone)
         {
             this.Id = id;
             this.Name = name;
-            this.Pwd = pwd;
             this.Sex = sex;
             this.Phone = phone;
+        }
+    }
+    public class DeleteUserCommand : IRequest<ResultData<string>>
+    {
+        public int Id { get; private set; }
+        public DeleteUserCommand(int id)
+        {
+            this.Id = id;
         }
     }
 }
