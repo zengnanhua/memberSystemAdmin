@@ -238,6 +238,7 @@ export default {
         }
     },
     mounted(){
+        adm();
         this.getList();
     }
 }
