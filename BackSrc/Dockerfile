@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 
 WORKDIR /app
 
@@ -15,10 +15,10 @@ RUN dotnet publish -c Release -o out
 
 
 
-FROM microsoft/dotnet:2.0-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 
 WORKDIR /app
 
-COPY --from=build /app/out ./
+COPY --from=build /app/AdminSystem.Api/out ./
 
 ENTRYPOINT ["dotnet", "AdminSystem.Api.dll"]

@@ -1,8 +1,6 @@
 ﻿using AdminSystem.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace AdminSystem.Domain.AggregatesModel.UserAggregate
 {
