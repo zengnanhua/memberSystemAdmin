@@ -28,3 +28,11 @@ export function DeleteUser(data) {
         data: data
     })
 }
+export function GetMenuTree(data) {
+    return request({
+        url: '/Account/GetMenuTree',
+        method: 'post',
+        data: data
+    })
+}
+

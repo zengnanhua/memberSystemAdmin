@@ -111,8 +111,74 @@ namespace AdminSystem.Application.Queries
 
             return await PaginationHelp.GetPageDataAsync<UserDto>(sql, param, _connectionString);
         }
+        #region 获取菜单Tree
+        private static MenuTree AutoCopy(MenuDto parent)
+        {
+            MenuTree child = new MenuTree();
+
+            child.Children = new List<MenuTree>();
+
+            var ParentType = typeof(MenuDto);
+
+            var Properties = ParentType.GetProperties();
+
+            foreach (var Propertie in Properties)
+            {
+                if (Propertie.CanRead && Propertie.CanWrite)
+                {
+                    Propertie.SetValue(child, Propertie.GetValue(parent, null), null);
+                }
+            }
+
+            return child;
+        }
+
+        private MenuTree ConvertMenuTree(MenuDto baseMenuDto, List<MenuDto> menuDtoList, bool first)
+        {
+
+            //是否你第一次进来
+            MenuTree pageMenu = null;
+            if (first)
+            {
+                baseMenuDto = menuDtoList.Where(c => c.MenuNo == "base").FirstOrDefault();
+                if (baseMenuDto == null)
+                {
+                    return null;
+                }
+            }
+           pageMenu = AutoCopy(baseMenuDto);
+
+            var list = menuDtoList.Where(c => c.PMenuNo == baseMenuDto.MenuNo && c.MenuNo != baseMenuDto.MenuNo).ToList();
+            if (list == null || list.Count <= 0)
+            {
+                return pageMenu;
+            }
+            foreach (var temp in list)
+            {
+                var a = ConvertMenuTree(temp, menuDtoList, false);
+                if (a != null)
+                {
+                    pageMenu.Children.Add(a);
+                }
+            }
+            return pageMenu;
+        }
+        /// <summary>
+        /// 获取菜单列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<MenuTree> GetMenuTreeAsync()
+        {
+            string sql = "select * from Zmn_Ac_Menus";
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                var list = (await connection.QueryAsync<MenuDto>(sql)).ToList();
+                var menuTree= ConvertMenuTree(null, list, true);
+                return menuTree;
+            }
+        }
+        #endregion
 
 
-        
     }
 }

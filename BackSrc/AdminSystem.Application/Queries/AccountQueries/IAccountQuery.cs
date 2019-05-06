@@ -19,5 +19,6 @@ namespace AdminSystem.Application.Queries
         /// <param name="param"></param>
         /// <returns></returns>
         Task<PageView<UserDto>> GetUserList(GetUserListParameter param);
+        Task<MenuTree> GetMenuTreeAsync();
     }
 }

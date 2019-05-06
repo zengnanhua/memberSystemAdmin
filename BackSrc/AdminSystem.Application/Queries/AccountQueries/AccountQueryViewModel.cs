@@ -101,4 +101,8 @@ namespace AdminSystem.Application.Queries
         public string Name { get; set; }
         public string Phone { get; set; }
     }
+    public class MenuTree : MenuDto
+    {
+        public List<MenuTree> Children { get; set; }
+    }
 }

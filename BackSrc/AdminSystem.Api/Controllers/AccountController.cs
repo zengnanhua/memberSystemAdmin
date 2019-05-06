@@ -48,6 +48,7 @@ namespace AdminSystem.Api.Controllers
         /// 获取菜单
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
         public async Task<ResultData<List<PageMenu>>> GetPageMenu()
         {
             var result= await _accountQuery.GetPageMenuByUserId(_identityService.GetUserId());
@@ -59,6 +60,7 @@ namespace AdminSystem.Api.Controllers
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<ResultData<List<UserDto>>> GetUserList(GetUserListParameter param)
         {
             var pageView = await _accountQuery.GetUserList(param);
@@ -69,6 +71,7 @@ namespace AdminSystem.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<ResultData<string>> CreateUser(CreateUserCommand command)
         {
             return await _mediator.Send(command);
@@ -78,6 +81,7 @@ namespace AdminSystem.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<ResultData<string>> UpdateUser(UpdateUserCommand command)
         {
             return await _mediator.Send(command);
@@ -87,9 +91,21 @@ namespace AdminSystem.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<ResultData<string>> DeleteUser(DeleteUserCommand command)
         {
             return await _mediator.Send(command);
+        }
+
+        /// <summary>
+        /// 获取菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ResultData<MenuTree>> GetMenuTree()
+        {
+            var menuTree = await _accountQuery.GetMenuTreeAsync();
+            return ResultData<MenuTree>.CreateResultDataSuccess("成功",menuTree);
         }
     }
 
