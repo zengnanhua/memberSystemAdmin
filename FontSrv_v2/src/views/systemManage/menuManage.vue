@@ -49,7 +49,7 @@ import {GetMenuTree} from "@/api/systemManageApi"
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
 export default {
-    name:"menuManage1",
+    name:"menuManage",
     components: { Pagination },
     directives: { waves },
     data() {
@@ -105,6 +105,7 @@ export default {
         }
     },
     mounted:function(){
+        console.info(1);
         this.GetMenuTree();
     }
 }
