@@ -32,7 +32,7 @@ namespace UserIdentity.AuthenticationValidator
                 var clims= new List<Claim>()
                 {
                     new Claim("UserName", "admin"),
-                     new Claim("Role", "admin")
+                    new Claim("Role", "admin")
                 };
                 result = new GrantValidationResult(identityName, GrantType,claims: clims, customResponse:dic);
                 dic["resultCode"] = "10000";
