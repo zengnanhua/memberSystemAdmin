@@ -5,14 +5,14 @@ using System.Text;
 
 namespace AdminSystem.Domain.CommonClass
 {
-    public class RemarkAttribute : Attribute
+    public class EnumRemarkAttribute : Attribute
     {
-        public RemarkAttribute(string remark)
+        public EnumRemarkAttribute(string remark)
         {
             Remark = remark;
         }
 
-        public string Remark { get; set; }
+        public string Remark { get;private set; }
 
         /// <summary>
         /// 获取枚举备注
@@ -25,9 +25,9 @@ namespace AdminSystem.Domain.CommonClass
             Type type = _enum.GetType();
             FieldInfo fd = type.GetField(_enum.ToString());
             if (fd == null) return string.Empty;
-            object[] attrs = fd.GetCustomAttributes(typeof(RemarkAttribute), false);
+            object[] attrs = fd.GetCustomAttributes(typeof(EnumRemarkAttribute), false);
             string name = string.Empty;
-            foreach (RemarkAttribute attr in attrs)
+            foreach (EnumRemarkAttribute attr in attrs)
             {
                 name = attr.Remark;
             }

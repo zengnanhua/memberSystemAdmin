@@ -79,6 +79,18 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Zmn_Sys_Attributes",
+                columns: table => new
+                {
+                    AttrCode = table.Column<string>(nullable: false),
+                    AttrDescr = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zmn_Sys_Attributes", x => x.AttrCode);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Zmn_Ac_Permissions",
                 columns: table => new
                 {
@@ -133,6 +145,27 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "zmn_Sys_Attribute_Details",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AttrValue = table.Column<string>(nullable: true),
+                    AttrText = table.Column<string>(nullable: true),
+                    AttrCode = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_zmn_Sys_Attribute_Details", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_zmn_Sys_Attribute_Details_Zmn_Sys_Attributes_AttrCode",
+                        column: x => x.AttrCode,
+                        principalTable: "Zmn_Sys_Attributes",
+                        principalColumn: "AttrCode",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Zmn_Ac_Menus_DeepPath",
                 table: "Zmn_Ac_Menus",
@@ -180,6 +213,11 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 table: "Zmn_Ac_Users",
                 column: "UserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_zmn_Sys_Attribute_Details_AttrCode",
+                table: "zmn_Sys_Attribute_Details",
+                column: "AttrCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -194,10 +232,16 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 name: "Zmn_Ac_UserRoles");
 
             migrationBuilder.DropTable(
+                name: "zmn_Sys_Attribute_Details");
+
+            migrationBuilder.DropTable(
                 name: "Zmn_Ac_Roles");
 
             migrationBuilder.DropTable(
                 name: "Zmn_Ac_Users");
+
+            migrationBuilder.DropTable(
+                name: "Zmn_Sys_Attributes");
         }
     }
 }

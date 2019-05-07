@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using AdminSystem.Domain.AggregatesModel.AttributeAggregate;
 
 namespace AdminSystem.Infrastructure
 {
@@ -24,6 +25,9 @@ namespace AdminSystem.Infrastructure
         public DbSet<Zmn_Ac_UserRole> Zmn_Ac_UserRoles { get; set; }
         public DbSet<Zmn_Ac_Menu> Zmn_Ac_Menus { get; set; }
         public DbSet<Zmn_Ac_Permission> Zmn_Ac_Permissions { get; set; }
+        public DbSet<Zmn_Sys_Attribute> Zmn_Sys_Attributes { get; set; }
+        public DbSet<Zmn_Sys_Attribute_Detail> Zmn_Sys_Attribute_Details { get; set; }
+
 
         private readonly IMediator _mediator;
 

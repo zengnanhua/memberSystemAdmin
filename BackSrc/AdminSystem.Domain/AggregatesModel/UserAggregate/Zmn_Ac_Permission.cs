@@ -36,12 +36,12 @@ namespace AdminSystem.Domain.AggregatesModel.UserAggregate
         }
 
     }
-
+    [EnumRemark("权限种类")]
     public enum PermissionType
     {
-        [Remark("用户权限")]
+        [EnumRemark("用户权限")]
         UserPermission=1,
-        [Remark("角色权限")]
+        [EnumRemark("角色权限")]
         RolePermission=2,
     }
 

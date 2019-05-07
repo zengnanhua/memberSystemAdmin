@@ -1,4 +1,5 @@
-﻿using AdminSystem.Domain.AggregatesModel.MenuAggregate;
+﻿using AdminSystem.Domain.AggregatesModel.AttributeAggregate;
+using AdminSystem.Domain.AggregatesModel.MenuAggregate;
 using AdminSystem.Domain.AggregatesModel.RoleAggregate;
 using AdminSystem.Domain.AggregatesModel.UserAggregate;
 using Microsoft.EntityFrameworkCore;
@@ -54,9 +55,23 @@ namespace AdminSystem.Infrastructure.EntityConfigurations
             builder.HasKey(c => c.Id);
             builder.HasOne(c => c.ApplicationUser).WithMany(u => u.PermissionList).HasForeignKey(c => c.UserId);
             builder.HasOne(c => c.Role).WithMany(u=>u.PermissionList).HasForeignKey(c => c.RoleId);
-          
         }
     }
 
+    public class AttributeEntityTypeConfiguration : IEntityTypeConfiguration<Zmn_Sys_Attribute>
+    {
+        public void Configure(EntityTypeBuilder<Zmn_Sys_Attribute> builder)
+        {
+            builder.HasKey(c => c.AttrCode);
+            builder.HasMany(c => c.DetailList).WithOne().HasForeignKey(c => c.AttrCode);
+        }
+    }
+    public class AttributeDetailEntityTypeConfiguration : IEntityTypeConfiguration<Zmn_Sys_Attribute_Detail>
+    {
+        public void Configure(EntityTypeBuilder<Zmn_Sys_Attribute_Detail> builder)
+        {
+            builder.HasKey(c => c.Id);
+        }
+    }
 
 }

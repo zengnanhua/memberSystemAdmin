@@ -1,29 +1,41 @@
 ﻿using AdminSystem.Api.Controllers;
 using AdminSystem.Application.Commands;
 using AdminSystem.Application.Queries;
+using AdminSystem.Domain.AggregatesModel.UserAggregate;
+using AdminSystem.Domain.CommonClass;
 using MediatR;
 using Moq;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace unitTest
 {
+   
     class Program
     {
         
         static void Main(string[] args)
         {
-            //Mock<IMediator> _mediatorMock = new Mock<IMediator>();
 
-            //_mediatorMock.Setup(x => x.Send(It.IsAny<CreateUserCommand>(), default(CancellationToken)));
+            var enumList= typeof(PlatformType).GetTypeInfo().Assembly.GetTypes().Where(c => c.GetCustomAttribute(typeof(EnumRemarkAttribute)) != null&&c.IsEnum).ToList();
+            foreach (var item in enumList)
+            {
+                var headAttribute= item.GetCustomAttribute<EnumRemarkAttribute>();
 
-            //HomeController homeController = new HomeController(_mediatorMock.Object);
-            //var info= homeController.CreateUser().Result;
+                var fields = item.GetEnumNames();
+                foreach (var fieldItem in fields)
+                {
+                    var bodyAttribute = item.GetField(fieldItem).GetCustomAttribute<EnumRemarkAttribute>();
+                    if (bodyAttribute==null)
+                    {
+                        throw new Exception($"{headAttribute.Remark}中的值‘{fieldItem}’没有加属性标签");
+                    }
 
-           
+                }
 
-            //var pageView= PaginationHelp.GetPageDataAsync<UserDto>("SELECT * FROM Zmn_Ac_Users",1,20,new Dapper.DynamicParameters()
-            //                    , "server=www.zengnanhua.club;port=3306;user=nanhua;password=sa123; database=AdminSystem;Allow User Variables=true;").Result;
+            }
 
             Console.WriteLine("Hello World!");
         }

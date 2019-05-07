@@ -17,6 +17,36 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.AttributeAggregate.Zmn_Sys_Attribute", b =>
+                {
+                    b.Property<string>("AttrCode")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AttrDescr");
+
+                    b.HasKey("AttrCode");
+
+                    b.ToTable("Zmn_Sys_Attributes");
+                });
+
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.AttributeAggregate.Zmn_Sys_Attribute_Detail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AttrCode");
+
+                    b.Property<string>("AttrText");
+
+                    b.Property<string>("AttrValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttrCode");
+
+                    b.ToTable("zmn_Sys_Attribute_Details");
+                });
+
             modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.MenuAggregate.Zmn_Ac_Menu", b =>
                 {
                     b.Property<int>("Id")
@@ -158,6 +188,13 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Zmn_Ac_UserRoles");
+                });
+
+            modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.AttributeAggregate.Zmn_Sys_Attribute_Detail", b =>
+                {
+                    b.HasOne("AdminSystem.Domain.AggregatesModel.AttributeAggregate.Zmn_Sys_Attribute")
+                        .WithMany("DetailList")
+                        .HasForeignKey("AttrCode");
                 });
 
             modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.UserAggregate.Zmn_Ac_Permission", b =>

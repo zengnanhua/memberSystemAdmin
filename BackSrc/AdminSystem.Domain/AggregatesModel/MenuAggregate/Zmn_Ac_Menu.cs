@@ -127,12 +127,12 @@ namespace AdminSystem.Domain.AggregatesModel.MenuAggregate
             this.Affix = affix;
         }
     }
-
+    [EnumRemark("菜单类型")]
     public enum MenuFuntionType
     {
-        [Remark("菜单")]
+        [EnumRemark("菜单")]
         Menu=1,
-        [Remark("功能")]
+        [EnumRemark("功能")]
         Funtion=2,
     }
 }

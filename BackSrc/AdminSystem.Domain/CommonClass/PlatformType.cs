@@ -6,11 +6,12 @@ using System.Text;
 
 namespace AdminSystem.Domain.CommonClass
 {
+    [EnumRemark("客户端类别")]
     public enum PlatformType
     {
-        [Remark("Pc")]
+        [EnumRemark("Pc")]
         Pc =1,
-        [Remark("App")]
+        [EnumRemark("App")]
         App =2
     }
 }
