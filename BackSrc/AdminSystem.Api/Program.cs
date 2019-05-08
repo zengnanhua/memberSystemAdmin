@@ -59,6 +59,7 @@ namespace AdminSystem.Api
             var outPutTempLate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level}] {HttpRequestId} {NewLine} {SourceContext} {NewLine} {Message}{NewLine}{Exception}{NewLine}";
             var Namespace = typeof(Program).Namespace;
             loggerConfiguration
+            .MinimumLevel.Warning()
             .Enrich.WithProperty("ApplicationContext", Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1))
             .WriteTo.RollingFile("./log/log-{Date}.txt",outputTemplate: outPutTempLate)
             .Enrich.FromLogContext()

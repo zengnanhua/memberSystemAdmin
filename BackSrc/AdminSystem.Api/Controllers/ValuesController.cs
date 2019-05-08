@@ -38,8 +38,8 @@ namespace UserIdentity.Controllers
         {
             //var hello= _cachingService.CacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
             //_cachingService.RedisCacheProvider.StringSet("dd", "this is dome");
-            
-            
+
+           
            // var dd= _cachingService.RedisCacheProvider.StringGet("dd");
             //var list=await _accountQuery.GetPageMenuByUserId(1);
             return "sdfasd";
