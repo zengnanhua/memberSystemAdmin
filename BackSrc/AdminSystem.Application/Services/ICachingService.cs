@@ -8,5 +8,6 @@ namespace AdminSystem.Application.Services
     public interface ICachingService
     {
         IEasyCachingProvider CacheProvider { get; }
+        IRedisCachingProvider RedisCacheProvider { get; }
     }
 }

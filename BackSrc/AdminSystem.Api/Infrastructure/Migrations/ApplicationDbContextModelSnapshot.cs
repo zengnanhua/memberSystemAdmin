@@ -44,7 +44,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.HasIndex("AttrCode");
 
-                    b.ToTable("zmn_Sys_Attribute_Details");
+                    b.ToTable("Zmn_Sys_Attribute_Details");
                 });
 
             modelBuilder.Entity("AdminSystem.Domain.AggregatesModel.MenuAggregate.Zmn_Ac_Menu", b =>

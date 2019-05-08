@@ -22,6 +22,13 @@ namespace UserIdentity.Controllers
             this._accountQuery = accountQuery;
             this._cachingService = cachingService;
         }
+        [Serializable]
+        public class Person
+        {
+            public string Name { get; set; }
+            public string Sex { get; set; }
+            public string Age { get; set; }
+        }
         /// <summary>
         /// 获取用户 测试
         /// </summary>
@@ -29,8 +36,11 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<object> Get()
         {
-            var hello= _cachingService.CacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
-            var hello1 = _cachingService.CacheProvider.Get<string>("dsd");
+            //var hello= _cachingService.CacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
+            //_cachingService.RedisCacheProvider.StringSet("dd", "this is dome");
+            
+            
+           // var dd= _cachingService.RedisCacheProvider.StringGet("dd");
             //var list=await _accountQuery.GetPageMenuByUserId(1);
             return "sdfasd";
         }

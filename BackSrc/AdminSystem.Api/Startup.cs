@@ -11,6 +11,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasyCaching.Core;
 using EasyCaching.InMemory;
+using EasyCaching.Redis;
+using EasyCaching.Serialization.Json;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -127,6 +129,11 @@ namespace AdminSystem.Api
             services.AddEasyCaching(option =>
             {
                 option.UseInMemory("m1");
+                option.UseRedis(config =>
+                {
+                    config.DBConfig.Endpoints.Add(new EasyCaching.Core.Configurations.ServerEndPoint("www.zengnanhua.club", 6379));
+                    config.DBConfig.Database = 5;
+                }, "redis1").WithJson();
             });
             return services;
         }

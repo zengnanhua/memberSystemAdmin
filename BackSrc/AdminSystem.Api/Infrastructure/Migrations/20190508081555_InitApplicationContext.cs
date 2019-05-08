@@ -146,7 +146,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "zmn_Sys_Attribute_Details",
+                name: "Zmn_Sys_Attribute_Details",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -157,9 +157,9 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_zmn_Sys_Attribute_Details", x => x.Id);
+                    table.PrimaryKey("PK_Zmn_Sys_Attribute_Details", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_zmn_Sys_Attribute_Details_Zmn_Sys_Attributes_AttrCode",
+                        name: "FK_Zmn_Sys_Attribute_Details_Zmn_Sys_Attributes_AttrCode",
                         column: x => x.AttrCode,
                         principalTable: "Zmn_Sys_Attributes",
                         principalColumn: "AttrCode",
@@ -215,8 +215,8 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_zmn_Sys_Attribute_Details_AttrCode",
-                table: "zmn_Sys_Attribute_Details",
+                name: "IX_Zmn_Sys_Attribute_Details_AttrCode",
+                table: "Zmn_Sys_Attribute_Details",
                 column: "AttrCode");
         }
 
@@ -232,7 +232,7 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 name: "Zmn_Ac_UserRoles");
 
             migrationBuilder.DropTable(
-                name: "zmn_Sys_Attribute_Details");
+                name: "Zmn_Sys_Attribute_Details");
 
             migrationBuilder.DropTable(
                 name: "Zmn_Ac_Roles");
