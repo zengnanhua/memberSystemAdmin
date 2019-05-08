@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AdminSystem.Application.Queries;
 using AdminSystem.Application.Commands;
+using AdminSystem.Application.Services;
 
 namespace UserIdentity.Controllers
 {
@@ -15,9 +16,11 @@ namespace UserIdentity.Controllers
     public class ValuesController : Controller
     {
         IAccountQuery _accountQuery;
-        public ValuesController(IAccountQuery accountQuery)
+        ICachingService _cachingService;
+        public ValuesController(IAccountQuery accountQuery, ICachingService cachingService)
         {
             this._accountQuery = accountQuery;
+            this._cachingService = cachingService;
         }
         /// <summary>
         /// 获取用户 测试
@@ -26,7 +29,8 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<object> Get()
         {
-           
+            var hello= _cachingService.CacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
+            var hello1 = _cachingService.CacheProvider.Get<string>("dsd");
             //var list=await _accountQuery.GetPageMenuByUserId(1);
             return "sdfasd";
         }

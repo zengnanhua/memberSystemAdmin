@@ -9,6 +9,8 @@ using AdminSystem.Application.Services;
 using AdminSystem.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasyCaching.Core;
+using EasyCaching.InMemory;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,7 @@ namespace AdminSystem.Api
 
 
             services
+              .AddCache(Configuration)
               .AddSystemRegisterType(Configuration)
               .AddCustomSwagger(Configuration)
               .AddCustomDbContext(Configuration)
@@ -102,7 +105,7 @@ namespace AdminSystem.Api
             app.UseFileServer(new FileServerOptions());
             app.UseCors("CorsPolicy");//允许跨域
             app.UseAuthentication();
-
+            app.UseEasyCaching();
             
             app.UseMvc();
 
@@ -119,10 +122,22 @@ namespace AdminSystem.Api
     static class CustomExtensionsMethods
     {
 
+        public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddEasyCaching(option =>
+            {
+                option.UseInMemory("m1");
+            });
+            return services;
+        }
+
         public static IServiceCollection AddSystemRegisterType(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //登录信息
             services.AddTransient<IIdentityService, IdentityService>();
+            //缓存
+            services.AddScoped<ICachingService, CachingService>();
             return services;
         }
         /// <summary>
