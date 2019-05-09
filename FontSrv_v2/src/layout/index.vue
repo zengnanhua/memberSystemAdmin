@@ -53,6 +53,9 @@ export default {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
+  },
+  created(){
+     this.$store.dispatch('signalR/InitSignalrConnection');
   }
 }
 </script>

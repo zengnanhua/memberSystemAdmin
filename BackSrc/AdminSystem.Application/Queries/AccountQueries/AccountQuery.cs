@@ -13,6 +13,7 @@ namespace AdminSystem.Application.Queries
         private string _connectionString = string.Empty;
         public AccountQuery(string constr)
         {
+           // Microsoft.AspNetCore.SignalR.Hub
             _connectionString = !string.IsNullOrWhiteSpace(constr) ? constr : throw new ArgumentNullException(nameof(constr));
         }
 

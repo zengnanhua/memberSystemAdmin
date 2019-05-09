@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using AdminSystem.Api.Infrastructure.AutofacModules;
 using AdminSystem.Api.Infrastructure.Filters;
 using AdminSystem.Application.Services;
@@ -13,19 +9,16 @@ using EasyCaching.Core;
 using EasyCaching.InMemory;
 using EasyCaching.Redis;
 using EasyCaching.Serialization.Json;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.SignalR;
+using AdminSystem.Application.Hubs;
 
 namespace AdminSystem.Api
 {
@@ -42,6 +35,7 @@ namespace AdminSystem.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSignalR();
 
             services
               .AddCache(Configuration)
@@ -119,6 +113,10 @@ namespace AdminSystem.Api
                    //c.OAuthClientId("orderingswaggerui");
                    //c.OAuthAppName("Ordering Swagger UI");
                });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/api/chatHub");
+            });
         }
     }
     static class CustomExtensionsMethods

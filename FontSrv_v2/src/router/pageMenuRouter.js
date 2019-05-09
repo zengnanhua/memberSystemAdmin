@@ -27,7 +27,7 @@ const pageMenuRouter = {
             path: '/systemManage/roleManage',
             name: 'roleManage',
             component: () =>
-                import ('@/views/dashboard/index')
+                import ('@/views/systemManage/roleManage')
         },
 
     ]
