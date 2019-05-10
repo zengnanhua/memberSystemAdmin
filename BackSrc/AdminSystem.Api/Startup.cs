@@ -100,6 +100,10 @@ namespace AdminSystem.Api
 
             app.UseFileServer(new FileServerOptions());
             app.UseCors("CorsPolicy");//允许跨域
+
+            //处理signalr权限认证问题
+            app.UseSignalrAuthentication();
+
             app.UseAuthentication();
             app.UseEasyCaching();
             
@@ -117,10 +121,25 @@ namespace AdminSystem.Api
             {
                 routes.MapHub<ChatHub>("/api/chatHub");
             });
+  
         }
     }
     static class CustomExtensionsMethods
     {
+        public static IApplicationBuilder UseSignalrAuthentication(this IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                // 这里从url中获取token参数，实际应用请实际考虑，加一些过滤条件
+                if (context.Request.Query.TryGetValue("access_token", out var token))
+                {
+                    // 从url中拿到header，再添加到header中，一定要在UseAuthentication之前
+                    context.Request.Headers.Add("Authorization", $"Bearer {token}");
+                }
+                await next.Invoke();
+            });
+            return app;
+        }
 
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {

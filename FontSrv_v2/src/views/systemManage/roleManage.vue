@@ -31,12 +31,11 @@ export default {
     },
     methods:{
         test:function(){
-            this.signalRConnection.invoke('SendMessage','signalR').catch(function(err){
+            this.signalRConnection.invoke('SendMessage','signalR').then(res=>{
+                console.info(res);
+            }).catch(function(err){
             });
         }
-    },
-    created(){
-        
     },
     mounted(){
         var _this=this;
