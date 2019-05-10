@@ -126,6 +126,7 @@ namespace AdminSystem.Api
     }
     static class CustomExtensionsMethods
     {
+        #region Configure 扩展
         public static IApplicationBuilder UseSignalrAuthentication(this IApplicationBuilder app)
         {
             app.Use(async (context, next) =>
@@ -140,7 +141,9 @@ namespace AdminSystem.Api
             });
             return app;
         }
+        #endregion
 
+        #region ConfigureServices扩展
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEasyCaching(option =>
@@ -242,5 +245,6 @@ namespace AdminSystem.Api
 
             return services;
         }
+        #endregion
     }
 }

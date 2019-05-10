@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace AdminSystem.Application.Hubs
 {
+    public interface IChatHub
+    {
+        Task<string> SendMessage(string message);
+    }
     [Authorize]
     public class ChatHub : Hub
     {
