@@ -35,7 +35,12 @@ namespace AdminSystem.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSignalR();
+            services.AddSignalR().AddStackExchangeRedis(options=> 
+            {
+                options.Configuration.DefaultDatabase = 3;
+                options.Configuration.ChannelPrefix = "adminSystem";
+                options.Configuration.EndPoints.Add("www.zengnanhua.club",6379);
+            });
 
             services
               .AddCache(Configuration)
