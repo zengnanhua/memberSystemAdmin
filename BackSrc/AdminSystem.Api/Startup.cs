@@ -19,6 +19,9 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.AspNetCore.SignalR;
 using AdminSystem.Application.Hubs;
+using AdminSystem.Api.Infrastructure;
+using EasyCaching.HybridCache;
+using EasyCaching.Bus.Redis;
 
 namespace AdminSystem.Api
 {
@@ -34,12 +37,14 @@ namespace AdminSystem.Api
       
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
+      
+            var reidsConnectionModel= Configuration.GetValue<RedisConnectionModel>("Redis");
+         
             services.AddSignalR().AddStackExchangeRedis(options=> 
             {
                 options.Configuration.DefaultDatabase = 3;
                 options.Configuration.ChannelPrefix = "adminSystem";
-                options.Configuration.EndPoints.Add("www.zengnanhua.club",6379);
+                options.Configuration.EndPoints.Add(Configuration.GetValue<string>("Redis:Host"), Configuration.GetValue<int>("Redis:Port"));
             });
 
             services
@@ -151,15 +156,37 @@ namespace AdminSystem.Api
         #region ConfigureServices扩展
         public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddEasyCaching(option =>
+
+           services.AddEasyCaching(option =>
             {
+                //作为本地缓存
                 option.UseInMemory("m1");
+                //作为二级缓存
                 option.UseRedis(config =>
                 {
-                    config.DBConfig.Endpoints.Add(new EasyCaching.Core.Configurations.ServerEndPoint("www.zengnanhua.club", 6379));
+                    config.DBConfig.Endpoints.Add(new EasyCaching.Core.Configurations.ServerEndPoint(configuration.GetValue<string>("Redis:Host"), configuration.GetValue<int>("Redis:Port")));
                     config.DBConfig.Database = 5;
                 }, "redis1").WithJson();
+                
+                option.UseHybrid(config =>
+                {
+                    config.EnableLogging = false;
+                    // 缓存总线的订阅主题
+                    config.TopicName = "caching_topic";
+                    // 本地缓存的名字
+                    config.LocalCacheProviderName = "m1";
+                    // 分布式缓存的名字
+                    config.DistributedCacheProviderName = "redis1";
+                });
+
+                // 使用redis作为缓存总线
+                option.WithRedisBus(config =>
+                {
+                    config.Endpoints.Add(new EasyCaching.Core.Configurations.ServerEndPoint(configuration.GetValue<string>("Redis:Host"), configuration.GetValue<int>("Redis:Port")));
+                    config.Database = 6;
+                });
             });
+
             return services;
         }
 
