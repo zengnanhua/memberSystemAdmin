@@ -18,8 +18,23 @@ namespace AdminSystem.Application.Services
         /// <returns></returns>
         public int GetUserId()
         {
-            //return _context.HttpContext.User.FindFirst("UserId").Value;
-            return 1;
+            return Convert.ToInt32(_context.HttpContext.User.FindFirst("UserId").Value);
+        }
+        /// <summary>
+        /// 获取用户名
+        /// </summary>
+        /// <returns></returns>
+        public string GetUserName()
+        {
+            return _context.HttpContext.User.FindFirst("UserName").Value;
+        }
+        /// <summary>
+        /// 获取角色id
+        /// </summary>
+        /// <returns></returns>
+        public string GetRoleIds()
+        {
+            return _context.HttpContext.User.FindFirst("RoleIds").Value;
         }
     }
 }

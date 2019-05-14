@@ -31,10 +31,9 @@ export default {
     },
     methods:{
         test:function(){
-            this.signalRConnection.invoke('SendMessage','signalR').then(res=>{
+            this.$store.dispatch('signalR/Invoke',{methodName:"SendMessage",data:"signalR",func:function(res){
                 console.info(res);
-            }).catch(function(err){
-            });
+            }});
         }
     },
     mounted(){
