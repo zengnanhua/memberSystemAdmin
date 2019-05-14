@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace UserIdentity.Infrastructure.Queries
 {
-    public class AdminSystemQuery
-    {
-
-    }
+    
 }
