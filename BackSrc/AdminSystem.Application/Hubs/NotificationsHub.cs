@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace AdminSystem.Application.Hubs
 {
-    public interface IChatHub
-    {
-        Task<string> SendMessage(string message);
-    }
+
     [Authorize]
-    public class ChatHub : Hub
+    public class NotificationsHub : Hub
     {
         public async Task<string> SendMessage(string message)
         {
             //await this.Groups.AddToGroupAsync(this.Context.ConnectionId, "dfa");
-           
+          
             await Clients.All.SendAsync("ReceiveMessage", message+"dfasdf");
             return "我发送成功了";
         }

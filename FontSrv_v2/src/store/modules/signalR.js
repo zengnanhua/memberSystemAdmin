@@ -29,7 +29,7 @@ const actions = {
         if (!state.connection) {
             //| signalr.HttpTransportType.WebSockets
             connection = new signalr.HubConnectionBuilder()
-                .withUrl(process.env.VUE_APP_BASE_API + "/chatHub", {
+                .withUrl(process.env.VUE_APP_BASE_API + "/notificationhub", {
                     transport: signalr.HttpTransportType.LongPolling,
                     accessTokenFactory: () => getToken().replace("Bearer", "")
                 })

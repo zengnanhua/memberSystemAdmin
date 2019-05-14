@@ -129,7 +129,7 @@ namespace AdminSystem.Api
                });
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ChatHub>("/api/chatHub");
+                routes.MapHub<NotificationsHub>("/api/notificationhub");
             });
   
         }
