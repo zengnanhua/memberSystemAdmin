@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserIdentity.AuthenticationValidator;
+using UserIdentity.Infrastructure.Queries;
 using UserIdentity.Services;
 
 namespace UserIdentity
@@ -53,11 +54,13 @@ namespace UserIdentity
                        });
                })
                .Services.AddScoped<IProfileService, ProfileService>();
-               //.AddDeveloperSigningCredential()
-               //.AddInMemoryClients(Config.GetClients())
-               //.AddInMemoryIdentityResources(Config.GetIdentityResources())
-               //.AddInMemoryApiResources(Config.GetApiResources())
-               ;
+
+            services.AddScoped<IAdminSystemQuery, AdminSystemQuery>();
+            //.AddDeveloperSigningCredential()
+            //.AddInMemoryClients(Config.GetClients())
+            //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+            //.AddInMemoryApiResources(Config.GetApiResources())
+            
 
             #region 允许所有跨域
             services.AddCors(options =>
@@ -81,7 +84,7 @@ namespace UserIdentity
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("cors");
+            app.UseCors("CorsPolicy");
             app.UseIdentityServer();
             app.UseMvc();
         }

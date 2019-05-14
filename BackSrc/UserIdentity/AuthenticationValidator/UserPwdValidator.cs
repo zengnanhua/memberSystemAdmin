@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using UserIdentity.Infrastructure.Queries;
 
 namespace UserIdentity.AuthenticationValidator
 {
     public class UserPwdValidator : IExtensionGrantValidator
     {
         public string GrantType => ValidatorConst.UserPwd;
-
+        private IAdminSystemQuery _adminSystemQuery;
+        public UserPwdValidator(IAdminSystemQuery adminSystemQuery)
+        {
+            this._adminSystemQuery = adminSystemQuery;
+        }
         public async Task ValidateAsync(ExtensionGrantValidationContext context)
         {
             var identityName = context.Request.Raw["identityName"];
@@ -27,12 +32,20 @@ namespace UserIdentity.AuthenticationValidator
                 context.Result = result;
                 return;
             }
-            if (identityName == "admin" && password == "sa123")
+            var user= _adminSystemQuery.GetUserByUserNameOrPhone(identityName);
+            if (user==null)
+            {
+                dic["resultMessage"] = "此用户不对";
+                context.Result = result;
+                return;
+            }
+            if (password==user.Pwd)
             {
                 var clims= new List<Claim>()
                 {
-                    new Claim("UserName", "admin"),
-                    new Claim("Role", "admin")
+                    new Claim("UserId",user.Id.ToString()),
+                    new Claim("UserName", user.UserName),
+                    new Claim("RoleIds",_adminSystemQuery.GetRoleIdsByUserId(user.Id))
                 };
                 result = new GrantValidationResult(identityName, GrantType,claims: clims, customResponse:dic);
                 dic["resultCode"] = "10000";

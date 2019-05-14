@@ -11,8 +11,6 @@ namespace UserIdentity.Services
     {
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var list = new List<System.Security.Claims.Claim>();
-            list.Add(new System.Security.Claims.Claim("userName", "admin"));
             context.IssuedClaims = context.Subject.Claims.ToList();
         }
 
