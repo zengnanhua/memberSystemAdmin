@@ -27,6 +27,7 @@ const actions = {
     InitSignalrConnection: ({ commit, state }, funcBackCall) => {
         var connection = null;
         if (!state.connection) {
+            console.info(1);
             //| signalr.HttpTransportType.WebSockets
             connection = new signalr.HubConnectionBuilder()
                 .withUrl(process.env.VUE_APP_BASE_API + "/notificationhub", {
@@ -43,13 +44,14 @@ const actions = {
 
         if (state.connection.connectionState == 0) {
             try {
+                console.info(2);
                 state.connection.start().then(res => {
 
                     if (funcBackCall) {
                         funcBackCall();
                     }
                 }).catch(err => {
-
+                    console.error(err);
                 });
             } catch (e) {}
 

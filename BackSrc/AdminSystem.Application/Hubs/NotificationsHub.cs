@@ -1,38 +1,37 @@
-﻿using AdminSystem.Application.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace AdminSystem.Application.Hubs
 {
 
     [Authorize]
     public class NotificationsHub : Hub
     {
-        IIdentityService _identityService;
-        public NotificationsHub(IIdentityService identityService)
+        public async Task<string> singleLogin()
         {
-            this._identityService = identityService;
+            await Clients.OthersInGroup(this.Context.User.FindFirst("UserName").Value).SendAsync("singleOutLogin");
+            return "成功";
         }
 
         public async Task<string> SendMessage(string message)
         {
-            //await this.Groups.AddToGroupAsync(this.Context.ConnectionId, "dfa");
-          
+            IHubContext<NotificationsHub> dfd;
+        
             await Clients.All.SendAsync("ReceiveMessage", message+"dfasdf");
             return "我发送成功了";
         }
         public override async Task OnConnectedAsync()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, _identityService.GetUserName());
+            await Groups.AddToGroupAsync(Context.ConnectionId, this.Context.User.FindFirst("UserName").Value);
             await base.OnConnectedAsync();
         }
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, _identityService.GetUserName());
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, this.Context.User.FindFirst("UserName").Value);
             await base.OnDisconnectedAsync(ex);
         }
     }

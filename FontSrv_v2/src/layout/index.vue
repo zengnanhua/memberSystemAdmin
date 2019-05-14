@@ -55,7 +55,9 @@ export default {
     }
   },
   created(){
-     
+    this.$store.dispatch('signalR/SetListenMethod',{methodName:"singleOutLogin",callBack:function(data){
+        console.info("我要退出你")
+    }});
   }
 }
 </script>
