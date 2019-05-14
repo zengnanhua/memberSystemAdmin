@@ -11,5 +11,15 @@ namespace AdminSystem.Application.Services
         /// </summary>
         /// <returns></returns>
         int GetUserId();
+        /// <summary>
+        /// 获取用户名
+        /// </summary>
+        /// <returns></returns>
+        string GetUserName();
+        /// <summary>
+        /// 获取角色id
+        /// </summary>
+        /// <returns></returns>
+        string GetRoleIds();
     }
 }
