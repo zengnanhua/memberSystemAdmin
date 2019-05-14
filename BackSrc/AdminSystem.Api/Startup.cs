@@ -40,7 +40,7 @@ namespace AdminSystem.Api
       
             var reidsConnectionModel= Configuration.GetValue<RedisConnectionModel>("Redis");
          
-            services.AddSignalR().AddStackExchangeRedis(options=> 
+            services.AddSignalR().AddRedis(options=> 
             {
                 options.Configuration.DefaultDatabase = 3;
                 options.Configuration.ChannelPrefix = "adminSystem";

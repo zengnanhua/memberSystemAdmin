@@ -27,7 +27,12 @@ const actions = {
     InitSignalrConnection: ({ commit, state }, funcBackCall) => {
         var connection = null;
         if (!state.connection) {
-            connection = new signalr.HubConnectionBuilder().withUrl(process.env.VUE_APP_BASE_API + "/chatHub", { accessTokenFactory: () => getToken().replace("Bearer", "") })
+            //| signalr.HttpTransportType.WebSockets
+            connection = new signalr.HubConnectionBuilder()
+                .withUrl(process.env.VUE_APP_BASE_API + "/chatHub", {
+                    transport: signalr.HttpTransportType.LongPolling,
+                    accessTokenFactory: () => getToken().replace("Bearer", "")
+                })
                 .configureLogging(signalr.LogLevel.Warning)
                 .build();
             connection.onclose(function() {
@@ -44,12 +49,9 @@ const actions = {
                         funcBackCall();
                     }
                 }).catch(err => {
-                    console.info(state.connection.connectionState);
-                    console.info("我错误了1");
+
                 });
-            } catch (e) {
-                console.info(e);
-            }
+            } catch (e) {}
 
         } else {
             if (funcBackCall) {
@@ -63,7 +65,6 @@ const actions = {
     SetListenMethod: ({ dispatch, commit, state }, listenMethod) => {
         if (!state.connection || state.connection.connectionState == 0) {
             dispatch("InitSignalrConnection", function() {
-                //console.info("回调状态" + state.connection.connectionState);
                 commit('m_set_ListenMethod', listenMethod);
             });
         } else {
@@ -77,18 +78,13 @@ const actions = {
                     if (obj.func) {
                         obj.func(res);
                     }
-                }).catch(err => {
-                    console.info(err);
-                });
+                }).catch(err => {});
             } else if (obj.methodName && obj.data) {
                 state.connection.invoke(obj.methodName, obj.data).then(res => {
-                    console.info(res);
                     if (obj.func) {
                         obj.func(res);
                     }
-                }).catch(err => {
-                    console.info(err);
-                });
+                }).catch(err => {});
             }
         }
 
