@@ -24,15 +24,14 @@ const mutations = {
 }
 const actions = {
     //, { accessTokenFactory: () => getToken().replace("Bearer", "") }
-    InitSignalrConnection: ({ commit, state }, funcBackCall) => {
+    RegisterSignalrConnection: ({ commit, state }) => {
         var connection = null;
         if (!state.connection) {
-            console.info(1);
             //| signalr.HttpTransportType.WebSockets
             connection = new signalr.HubConnectionBuilder()
                 .withUrl(process.env.VUE_APP_BASE_API + "/notificationhub", {
                     transport: signalr.HttpTransportType.LongPolling,
-                    accessTokenFactory: () => getToken().replace("Bearer", "")
+                    accessTokenFactory: () => (getToken() ? getToken() : "").replace("Bearer", "")
                 })
                 .configureLogging(signalr.LogLevel.Warning)
                 .build();
@@ -42,61 +41,28 @@ const actions = {
             commit('m_Set_Connection', connection);
         }
 
+    },
+    StartSignalr: ({ state }) => {
         if (state.connection.connectionState == 0) {
-            try {
-                console.info(2);
-                state.connection.start().then(res => {
-
-                    if (funcBackCall) {
-                        funcBackCall();
-                    }
-                }).catch(err => {
-                    console.error(err);
-                });
-            } catch (e) {}
-
-        } else {
-            if (funcBackCall) {
-                funcBackCall();
-            }
+            state.connection.start().then(res => {
+                console.log('Hub connection started')
+            }).catch(err => {
+                console.log('Error while establishing connection' + err)
+            });
         }
-
-
-
     },
     SetListenMethod: ({ dispatch, commit, state }, listenMethod) => {
-        if (!state.connection || state.connection.connectionState == 0) {
-            dispatch("InitSignalrConnection", function() {
-                commit('m_set_ListenMethod', listenMethod);
-            });
-        } else {
-            commit('m_set_ListenMethod', listenMethod);
-        }
+        commit('m_set_ListenMethod', listenMethod);
     },
-    Invoke: ({ dispatch, state }, obj) => {
-        var invokeFunc = function() {
-            if (obj.methodName && !obj.data) {
-                state.connection.invoke(obj.methodName).then(res => {
-                    if (obj.func) {
-                        obj.func(res);
-                    }
-                }).catch(err => {});
-            } else if (obj.methodName && obj.data) {
-                state.connection.invoke(obj.methodName, obj.data).then(res => {
-                    if (obj.func) {
-                        obj.func(res);
-                    }
-                }).catch(err => {});
-            }
+    Invoke: ({ state }, obj) => {
+        if (obj.data) {
+            return state.connection.invoke(obj.methodName, obj.data);
         }
+        return state.connection.invoke(obj.methodName);
 
-        if (!state.connection || state.connection.connectionState == 0) {
-            dispatch("InitSignalrConnection", function() {
-                invokeFunc();
-            });
-        } else {
-            invokeFunc();
-        }
+    },
+    Stop: ({ state }) => {
+        state.connection.stop();
     }
 }
 export default {

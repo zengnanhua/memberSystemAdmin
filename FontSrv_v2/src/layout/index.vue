@@ -1,11 +1,11 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
+    <sidebar class="sidebar-container" v-if="false" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
-        <tags-view v-if="needTagsView" />
+        <navbar v-if="false" />
+        <!-- <tags-view v-if="needTagsView" /> -->
       </div>
       <app-main />
       <right-panel v-if="showSettings">
@@ -20,6 +20,7 @@ import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
+import { async } from 'q';
 
 export default {
   name: 'Layout',
@@ -55,9 +56,17 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('signalR/SetListenMethod',{methodName:"singleOutLogin",callBack:function(data){
-        console.info("我要退出你")
-    }});
+      signalRHelp.Init();
+      var _this=this;
+      signalRHelp.SetListenMethod("singleOutLogin", function(res){
+          _this.$confirm('您账户已在别处登录').then(async res=>{
+              await _this.$store.dispatch('user/logout')
+              _this.$router.push(`/login?redirect=${_this.$route.fullPath}`)
+          }).catch(async err=>{
+             await _this.$store.dispatch('user/logout')
+          })
+        
+      });
   }
 }
 </script>

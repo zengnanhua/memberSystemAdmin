@@ -17,7 +17,7 @@ import i18n from './lang' // internationalization
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
-
+import * as PageScript from './script'
 import * as filters from './filters' // global filters
 import * as Pagecomponents from './componentsSelf'
 /**
@@ -41,7 +41,7 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
-new Vue({
+window.thisVue = new Vue({
     el: '#app',
     router,
     store,

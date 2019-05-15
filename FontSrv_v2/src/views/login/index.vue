@@ -169,12 +169,7 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$store.dispatch('signalR/Invoke',{methodName:"singleLogin",func:function(res){
-                console.info(res);
-              }});
-
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
+              this.OutOthenLogin();
             })
             .catch(() => {
               this.loading = false
@@ -184,6 +179,20 @@ export default {
           return false
         }
       })
+    },
+    //退出其他登录
+    OutOthenLogin(){
+      signalRHelp.Init();
+      var _this=this;
+      setTimeout(function(){
+        _this.$router.push({ path: _this.redirect || '/' })
+        _this.loading = false
+        signalRHelp.Invoke("singleLogin").then(res=>{
+            console.info(res);
+        }).catch(err=>{
+            console.info(err);
+        });
+      },1000)
     }
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {

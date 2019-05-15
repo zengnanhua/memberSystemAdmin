@@ -31,19 +31,26 @@ export default {
     },
     methods:{
         test:function(){
-            this.$store.dispatch('signalR/Invoke',{methodName:"SendMessage",data:"signalR",func:function(res){
+            signalRHelp.Invoke("SendMessage","signalrddd").then(res=>{
                 console.info(res);
-            }});
+            }).catch(err=>{
+                console.info(err);
+            });
+            signalRHelp.Invoke("SendMessage1","ccc").then(res=>{
+                console.info(res);
+            }).catch(err=>{
+                console.info(err);
+            });
+            
         }
     },
     mounted(){
-        var _this=this;
-        this.$store.dispatch('signalR/SetListenMethod',{methodName:"ReceiveMessage",callBack:function(data){
-            _this.message=data;
-            console.info(data);
-        }});
-       
-        
+        signalRHelp.SetListenMethod("ReceiveMessage",function(res){
+            console.info(res);
+        });
+        signalRHelp.SetListenMethod("ReceiveMessage1",function(res){
+            console.info(res);
+        });
     }
 }
 </script>
