@@ -4,6 +4,7 @@ import { stat } from "fs";
 const state = {
     connection: null,
     methodNameList: [],
+    isFirstConnection: true, //
 }
 const mutations = {
     m_Set_Connection: (state, connection) => {
@@ -20,6 +21,9 @@ const mutations = {
             state.methodNameList.push(listenMethod.methodName);
         }
         state.connection.on(listenMethod.methodName, listenMethod.callBack);
+    },
+    m_set_IsFirstConnection: (state, isFirstConnection) => {
+        state.isFirstConnection = isFirstConnection;
     }
 }
 const actions = {
@@ -42,8 +46,9 @@ const actions = {
         }
 
     },
-    StartSignalr: ({ state }) => {
-        if (state.connection.connectionState == 0) {
+    StartSignalr: ({ commit, state }) => {
+        if (state.connection.connectionState == 0 && state.isFirstConnection) {
+            commit('m_set_IsFirstConnection', false);
             state.connection.start().then(res => {
                 console.log('Hub connection started')
             }).catch(err => {
@@ -62,7 +67,10 @@ const actions = {
 
     },
     Stop: ({ state }) => {
-        state.connection.stop();
+        if (state.connection.connectionState == 1) {
+            state.connection.stop();
+        }
+
     }
 }
 export default {
