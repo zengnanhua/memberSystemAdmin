@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminSystem.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190508081555_InitApplicationContext")]
+    [Migration("20190518132425_InitApplicationContext")]
     partial class InitApplicationContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,8 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AttrDescr");
+
+                    b.Property<DateTime>("CreateTime");
 
                     b.HasKey("AttrCode");
 

@@ -24,6 +24,8 @@ namespace AdminSystem.Api.Infrastructure.Migrations
 
                     b.Property<string>("AttrDescr");
 
+                    b.Property<DateTime>("CreateTime");
+
                     b.HasKey("AttrCode");
 
                     b.ToTable("Zmn_Sys_Attributes");

@@ -83,7 +83,8 @@ namespace AdminSystem.Api.Infrastructure.Migrations
                 columns: table => new
                 {
                     AttrCode = table.Column<string>(nullable: false),
-                    AttrDescr = table.Column<string>(nullable: true)
+                    AttrDescr = table.Column<string>(nullable: true),
+                    CreateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

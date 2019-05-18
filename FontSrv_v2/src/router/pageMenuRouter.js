@@ -29,6 +29,13 @@ const pageMenuRouter = {
             component: () =>
                 import ('@/views/systemManage/roleManage')
         },
+        {
+            path: '/systemManage/attributeManage',
+            name: 'attributeManage',
+            component: () =>
+                import ('@/views/systemManage/attributeManage')
+        },
+        
 
     ]
 }

@@ -117,7 +117,7 @@ namespace AdminSystem.Api
             app.UseAuthentication();
             app.UseEasyCaching();
             
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
 
             app.UseSwagger()
                .UseSwaggerUI(c =>

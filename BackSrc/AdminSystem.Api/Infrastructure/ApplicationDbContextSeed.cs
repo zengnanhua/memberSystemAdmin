@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Dapper;
 
 namespace AdminSystem.Api.Infrastructure
 {
@@ -47,8 +48,9 @@ namespace AdminSystem.Api.Infrastructure
                 menuManage.SetMenuAttributeFeature(affix: true);
                 Zmn_Ac_Menu userManage = systemManage.CreateSonMenu("userManage", "用户管理", "2", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/userManage");
                 Zmn_Ac_Menu roleManage = systemManage.CreateSonMenu("roleManage", "角色管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/roleManage");
+                Zmn_Ac_Menu attributeManage = systemManage.CreateSonMenu("attributeManage", "系统属性管理", "3", "", MenuFuntionType.Menu, PlatformType.Pc, "/systemManage/attributeManage");
 
-                context.Zmn_Ac_Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage);
+                context.Zmn_Ac_Menus.AddRange(menu, systemManage, menuManage, userManage, roleManage, attributeManage);
 
 
                 role.AddPermission(menu.MenuNo, PlatformType.Pc);
@@ -56,6 +58,7 @@ namespace AdminSystem.Api.Infrastructure
                 role.AddPermission(menuManage.MenuNo, PlatformType.Pc);
                 role.AddPermission(userManage.MenuNo, PlatformType.Pc);
                 role.AddPermission(roleManage.MenuNo, PlatformType.Pc);
+                role.AddPermission(attributeManage.MenuNo, PlatformType.Pc);
 
                 foreach (var item in role.PermissionList)
                 {
@@ -68,12 +71,17 @@ namespace AdminSystem.Api.Infrastructure
 
             #region 2.系统枚举初始化到数据库
             {
-                var oldList = context.Zmn_Sys_Attributes.Include(c=>c.DetailList).ToList();
+                context.Database.GetDbConnection().Execute("TRUNCATE table Zmn_Sys_Attribute_Details");
+                var oldList = context.Zmn_Sys_Attributes.Include(c=>c.DetailList).AsNoTracking().ToList();
                 if (oldList != null&&oldList.Count>0)
                 {
-                    context.Zmn_Sys_Attributes.RemoveRange(oldList);
+                    foreach (var temp in oldList)
+                    {
+                        context.Database.GetDbConnection().Execute($"delete from Zmn_Sys_Attributes where  AttrCode = '{temp.AttrCode}'");
+                    }
+
                 }
-               
+
                 var enumList = typeof(PlatformType).GetTypeInfo().Assembly.GetTypes().Where(c => c.GetCustomAttribute(typeof(EnumRemarkAttribute)) != null && c.IsEnum).ToList();
                 foreach (var item in enumList)
                 {

@@ -92,6 +92,10 @@ namespace AdminSystem.Application.Queries
         /// 用户手机号码
         /// </summary>
         public string Phone { get;  set; }
+        /// <summary>
+        /// 所属角色
+        /// </summary>
+        public string RoleAll { get; set; }
         public DateTime UpdateDateTime { get;  set; }
     }
     public class GetUserListParameter

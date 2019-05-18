@@ -35,4 +35,10 @@ export function GetMenuTree(data) {
         data: data
     })
 }
-
+export function GetAttributeList(data){
+    return request({
+        url: '/SysManage/GetAttributeList',
+        method: 'post',
+        data: data
+    }) 
+}

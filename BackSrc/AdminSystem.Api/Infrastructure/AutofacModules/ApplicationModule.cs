@@ -24,6 +24,9 @@ namespace AdminSystem.Api.Infrastructure.AutofacModules
             builder.Register(c => new AccountQuery(QueriesConnectionString))
                 .As<IAccountQuery>()
                 .InstancePerLifetimeScope();
+            builder.Register(c => new SysmanageQuery(QueriesConnectionString))
+                .As<ISysmanageQuery>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<ApplicationUserRepository>()
                .As<IApplicationUserRepository>()

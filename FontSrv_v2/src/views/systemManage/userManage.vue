@@ -36,7 +36,8 @@
                     <el-table-column prop="Name" label="姓名"  width="100"></el-table-column>
                     <el-table-column prop="Phone" label="手机号码" width="150"></el-table-column>
                     <el-table-column prop="Sex" label="性别" width="110"> </el-table-column>
-                    <el-table-column prop="UpdateDateTime" label="最后更新日期" > </el-table-column>
+                    <el-table-column prop="UpdateDateTime" label="最后更新日期"  width="200" > </el-table-column>
+                    <el-table-column prop="RoleAll" label="所属角色" ></el-table-column>
                     <el-table-column  label="操作"  width="200" >
                         <template slot-scope="{row}">
                             <el-button  @click="view_event(row,'edit')" type="text">编辑</el-button>
@@ -71,7 +72,6 @@
                         </el-form-item>
                     </el-form>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
                         <el-button type="primary" :loading="loadObj.save_load" @click="save">确 定</el-button>
                     </span>
                 </el-dialog>

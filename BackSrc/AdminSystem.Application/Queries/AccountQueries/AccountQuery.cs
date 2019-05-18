@@ -107,8 +107,14 @@ namespace AdminSystem.Application.Queries
             {
                 whereSql += " and Phone=@phone";
             }
-         
-            string sql = $@"select * from Zmn_Ac_Users where 1=1 and isDelete=0  {whereSql}  order by Id desc ";
+            string sql = $@"								 select a.id, a.UserName,a.Name,a.Phone,a.Sex,a.UpdateDateTime
+                        ,GROUP_CONCAT(c.RoleName SEPARATOR ';') roleAll  from Zmn_Ac_Users a INNER JOIN  Zmn_Ac_UserRoles b
+                        on a.Id=b.UserId
+                        INNER JOIN Zmn_Ac_Roles c 
+                        on c.Id=b.RoleId 
+						where 1=1 and a.isDelete=0  {whereSql}
+                        GROUP BY a.id,a.UserName,a.Name,a.Phone,a.Sex,a.UpdateDateTime
+						order by a.Id desc ";
 
             return await PaginationHelp.GetPageDataAsync<UserDto>(sql, param, _connectionString);
         }
