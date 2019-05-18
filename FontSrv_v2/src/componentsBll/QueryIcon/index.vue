@@ -1,7 +1,7 @@
 <template>
     <div class="components-container">
         <div>
-            <el-dialog title="选择图标" :before-close="dialogClose_event" :show-close="false" width="40%" :visible.sync="visibleTemp" :center="true">
+            <el-dialog title="选择图标"  :close-on-click-modal="false" :before-close="dialogClose_event" :show-close="false" width="40%" :visible.sync="visibleTemp" :center="true">
                 <el-row :gutter="20">
                     <el-col :span="2">
                         <el-button icon="el-icon-info" circle @click="IconCHange('el-icon-info')"></el-button>
@@ -246,6 +246,7 @@ export default {
     },
     methods:{
         IconCHange(val){
+            this.$emit('update:visible', false);
             this.$emit('select_IconVal',val);
         },
         dialogClose_event:function(){

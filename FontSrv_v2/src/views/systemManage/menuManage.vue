@@ -28,7 +28,7 @@
                         </el-card>                
                     </el-col>
                     <el-col :span="18">
-                        <el-button type="primary"  icon="el-icon-plus" >添 加</el-button>
+                        <el-button type="primary"  icon="el-icon-plus" @click="view_event(row,'add')" >添 加</el-button>
                         <el-table :data="paginationEntity.tableData"   highlight-current-row style="width: 100%; margin-top: 5px">
                             <el-table-column type="index" width="50"></el-table-column>
                             <el-table-column prop="MenuNo" label="菜单编号" width="150" ></el-table-column>
@@ -52,30 +52,40 @@
                 <el-dialog
                     title="提示"
                     :visible.sync="dialogVisible"
-                    width="800px"
+                    width="650px"
                     :close-on-click-modal="false"
                     >
                     <el-form ref="saveEntity" :model="saveEntity" :rules="saveEntityRules"  label-width="80px">
-                        <el-form-item label="用户名" prop="userName">
-                            <el-input v-model="saveEntity.userName" :disabled="funFlag=='edit'"></el-input>
+                        <el-form-item label="所属菜单" prop="PMenuNo">
+                            <treeselect  :multiple="false" :options="menuTree" :normalizer="normalizer" placeholder="默认全部" 
+                            v-model="saveEntity.PMenuNo" value-label="默认全部" clearable></treeselect>
                         </el-form-item>
-                        <el-form-item label="姓名" prop="name">
-                            <el-input v-model="saveEntity.name"></el-input>
+                        <el-form-item label="菜单编号" prop="MenuNo">
+                            <el-input v-model="saveEntity.MenuNo" placeholder="请输入菜单编号"></el-input>
                         </el-form-item>
-                        <el-form-item label="手机号码" prop="phone">
-                            <el-input v-model="saveEntity.phone"></el-input>
+                        <el-form-item label="菜单名称" prop="MenuName">
+                            <el-input v-model="saveEntity.MenuName" placeholder="请输入菜单名称"></el-input>
                         </el-form-item>
-                        <el-form-item label="性别" prop="sex">
-                            <el-select v-model="saveEntity.sex" placeholder="请选择性别" style="width:100%">
-                                <el-option label="男" value="男"></el-option>
-                                <el-option label="女" value="女"></el-option>
-                            </el-select>
+                        
+                        <el-form-item label="菜单图片" prop="MenuIcon">
+                            <el-input v-model="saveEntity.MenuIcon" disabled placeholder="选择菜单图片">
+                                <template slot="prepend"><i :class="saveEntity.MenuIcon"></i></template>
+                                <el-button slot="append" style="color:red"  icon="el-icon-search" @click="select_icon_click_event"></el-button>
+                            </el-input>
+                        </el-form-item>
+                         <el-form-item label="菜单Url" prop="MenuUrl">
+                            <el-input v-model="saveEntity.MenuUrl" placeholder="请输入菜单Url"></el-input>
+                        </el-form-item>
+                        <el-form-item label="排序" prop="Order">
+                            <NumberInput v-model="saveEntity.Order" placeholder="请输入菜单排序"></NumberInput>
                         </el-form-item>
                     </el-form>
                     <span slot="footer" class="dialog-footer">
                         <el-button type="primary" :loading="loadObj.save_load" @click="save">确 定</el-button>
                     </span>
                 </el-dialog>
+                
+                <QueryIcon :visible.sync="queryIconVisible" @select_IconVal="select_IconVal"></QueryIcon>
             </el-main>
         </el-container>
     </div>
@@ -84,10 +94,13 @@
 <script>
 import {GetMenuTree} from "@/api/systemManageApi"
 import Pagination from '@/components/Pagination'
+import NumberInput from '@/componentsSelf/NumberInput'
+import QueryIcon from '@/componentsBll/QueryIcon'
+
 import waves from '@/directive/waves'
 export default {
     name:"menuManage1",
-    components: { Pagination },
+    components: { Pagination,NumberInput,QueryIcon },
     directives: { waves },
     data() {
         return {
@@ -108,10 +121,37 @@ export default {
                 label: 'MenuName'
             },
 
+            queryIconVisible:false,
             funFlag:"",
-            dialogVisible:true,
-            saveEntity:{},
-            saveEntityRules:{},
+            dialogVisible:false,
+            saveEntity:{
+                PMenuNo:null,
+                MenuNo:"",
+                MenuName:"",
+                MenuIcon:"",
+                MenuUrl:"",
+                Order:"",
+            },
+            saveEntityRules:{
+                PMenuNo: [
+                    { required: true, message: '请选择所属菜单', trigger: 'blur' },
+                ],
+                MenuNo: [
+                    { required: true, message: '请输入菜单编号', trigger: 'blur' },
+                ],
+                MenuName: [
+                    { required: true, message: '请输入菜单名称', trigger: 'blur' },
+                ],
+                MenuIcon: [
+                    { required: true, message: '请选择菜单图片', trigger: 'blur' },
+                ],
+                MenuUrl: [
+                    { required: true, message: '请输入菜单Url', trigger: 'blur' },
+                ],
+                Order: [
+                    { required: true, message: '请输入菜单排序', trigger: 'blur' },
+                ],
+            },
         }
     },
     watch: {
@@ -145,8 +185,31 @@ export default {
 
             })
         },
+        normalizer(node) {
+            if(!node.Children||node.Children.length<=0){
+                return {
+                    id: node.MenuNo,
+                    label: node.MenuName,
+                }
+            }
+            return {
+                id: node.MenuNo,
+                label: node.MenuName,
+                children: node.Children,
+            }
+        },
+        select_icon_click_event:function(){
+            this.queryIconVisible=true;
+        },
+        select_IconVal:function(obj){
+            console.info(obj);
+            this.saveEntity.MenuIcon=obj;
+        },
         view_event:function(row,flag){
-
+            this.funFlag=flag
+            if(flag=="add"){
+                this.dialogVisible=true;
+            }
         },
         save:function(){
 

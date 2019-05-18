@@ -17,6 +17,10 @@
                 type: [String, Number],
                 default: ""
             },
+            precision:{
+                type: [String, Number],
+                default: 0
+            },
             disabled:{
                 type: Boolean,
                 default: false
@@ -37,9 +41,15 @@
                     this.tempValue = "";
                     return;
                 }
-              
-                var str=(this.value+"").replace(/[^\d.]/g, "").replace(/^\./g, "").replace(/\.{2,}/g, ".")
+                var str="";
+                if(this.precision==0||this.precision=="0"){
+                    str=(this.value+"").replace(/[^0-9]/ig,"");
+                }
+                else{
+                    str=(this.value+"").replace(/[^\d.]/g, "").replace(/^\./g, "").replace(/\.{2,}/g, ".")
                         .replace(".", "$#$").replace(/\./g, "").replace("$#$", ".").replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+                }
+         
                 this.$nextTick(() => { 
                     this.tempValue = str;
                 });

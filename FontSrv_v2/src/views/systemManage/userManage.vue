@@ -49,7 +49,7 @@
                     :limit.sync="paginationEntity.currentSize" @pagination="getList" />
 
                 <el-dialog
-                    title="提示"
+                    :title="funFlag=='edit'?'编辑用户':'添加用户'"
                     :visible.sync="dialogVisible"
                     width="800px"
                     :close-on-click-modal="false"
