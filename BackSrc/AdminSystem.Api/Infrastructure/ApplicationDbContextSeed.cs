@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminSystem.Api.Infrastructure
 {
@@ -67,12 +68,12 @@ namespace AdminSystem.Api.Infrastructure
 
             #region 2.系统枚举初始化到数据库
             {
-                var oldList = context.Zmn_Sys_Attributes.ToList();
+                var oldList = context.Zmn_Sys_Attributes.Include(c=>c.DetailList).ToList();
                 if (oldList != null&&oldList.Count>0)
                 {
                     context.Zmn_Sys_Attributes.RemoveRange(oldList);
                 }
-
+               
                 var enumList = typeof(PlatformType).GetTypeInfo().Assembly.GetTypes().Where(c => c.GetCustomAttribute(typeof(EnumRemarkAttribute)) != null && c.IsEnum).ToList();
                 foreach (var item in enumList)
                 {
