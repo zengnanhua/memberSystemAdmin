@@ -36,7 +36,12 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<object> Get()
         {
-            //var hello= _cachingService.CacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
+            var hello = _cachingService.RedisCacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
+            using (_cachingService.AcquireLock("c21211"))
+            {
+                var hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+            }
+                
             //_cachingService.RedisCacheProvider.StringSet("dd", "this is dome");
 
            

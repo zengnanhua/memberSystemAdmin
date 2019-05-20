@@ -9,35 +9,44 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace unitTest
 {
    
-    class Program
+    public class Program
     {
-        
+
+        string str = "121";
         static void Main(string[] args)
         {
-
-            var enumList= typeof(PlatformType).GetTypeInfo().Assembly.GetTypes().Where(c => c.GetCustomAttribute(typeof(EnumRemarkAttribute)) != null&&c.IsEnum).ToList();
-            foreach (var item in enumList)
+            Person person1 = new Person() { Code="0123"};
+            Person person2 = new Person() { Code="0123"};
+            Task.Run(() =>
             {
-                var headAttribute= item.GetCustomAttribute<EnumRemarkAttribute>();
-
-                var fields = item.GetEnumNames();
-                foreach (var fieldItem in fields)
-                {
-                    var bodyAttribute = item.GetField(fieldItem).GetCustomAttribute<EnumRemarkAttribute>();
-                    if (bodyAttribute==null)
-                    {
-                        throw new Exception($"{headAttribute.Remark}中的值‘{fieldItem}’没有加属性标签");
-                    }
-
-                }
-
-            }
-
+                new SS().Start("bb");
+            });
+            Task.Run(() =>
+            {
+                new SS().Start("bb");
+            });
             Console.WriteLine("Hello World!");
+            Console.ReadLine();
+        }
+    }
+    public class Person
+    {
+        public string Code { get; set; }
+    }
+    public class SS
+    {
+        private string bb = "dfas";
+        public void Start(string str)
+        {
+            Monitor.Enter(str);
+            Console.WriteLine("ok");
+            Thread.Sleep(10000);
+            Monitor.Exit(str);
         }
     }
 }
