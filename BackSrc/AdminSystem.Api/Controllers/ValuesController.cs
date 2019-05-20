@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using AdminSystem.Application.Queries;
 using AdminSystem.Application.Commands;
 using AdminSystem.Application.Services;
+using  StackExchange.Redis;
 
 namespace UserIdentity.Controllers
 {
+    
     [Produces("application/json")]
     [Route("api/[controller]")]
     //[Authorize]
@@ -36,10 +38,26 @@ namespace UserIdentity.Controllers
         [HttpGet]
         public async Task<object> Get()
         {
+            
+            var bb= _cachingService._redisDatabaseProvider.GetDatabase();
+            var b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50));
+            b = bb.LockTake("cc", "cc0", TimeSpan.FromSeconds(50));
+            b = bb.LockTake("cc0", "cc1", TimeSpan.FromSeconds(50));
+            b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50));
+            return "dfsd";
             var hello = _cachingService.RedisCacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
+            var hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+            hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+            hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+          
             using (_cachingService.AcquireLock("c21211"))
             {
-                var hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                
+             
+                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
             }
                 
             //_cachingService.RedisCacheProvider.StringSet("dd", "this is dome");

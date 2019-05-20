@@ -27,7 +27,7 @@ namespace AdminSystem.Application.Services
         public IEasyCachingProvider InMemoryCacheProvider { get; }
         public IEasyCachingProvider RedisCacheProvider { get; }
 
-        private IRedisDatabaseProvider _redisDatabaseProvider { get; }
+        public IRedisDatabaseProvider _redisDatabaseProvider { get; }
         public CachingService(IEasyCachingProviderFactory factory, IHybridCachingProvider provider, IEnumerable<IRedisDatabaseProvider> dbProviders)
         {
 
@@ -45,19 +45,36 @@ namespace AdminSystem.Application.Services
         /// <returns></returns>
         public IDisposable AcquireLock(string key)
         {
-            var token = Environment.MachineName;
-            var  redisDatabase= _redisDatabaseProvider.GetDatabase();
-            redisDatabase.LockTake(key,token,TimeSpan.FromSeconds(30));
-            LockDistribute lockDistribute = new LockDistribute(()=> {
-                redisDatabase.LockRelease(key, token);
+            var token = "ccccc";// Guid.NewGuid().ToString();// Environment.MachineName;
+            var redisDatabase = _redisDatabaseProvider.GetDatabase();
+            var jj = redisDatabase.StringGet("dsd");
+            var bb = redisDatabase.LockTake(key, token, TimeSpan.FromSeconds(20));
+            LockDistribute lockDistribute = new LockDistribute(() =>
+            {
+                var vv = redisDatabase.LockRelease(key, token);
             });
             return lockDistribute;
 
 
-            //Monitor.Enter(str);
-            //Console.WriteLine("ok");
-            //Thread.Sleep(10000);
-            //Monitor.Exit(str);
+            //单部署的时候进程锁
+            //var token = false;
+            //System.Threading.Monitor.Enter(key,ref token);
+            //try
+            //{
+            //    LockDistribute lockDistribute = new LockDistribute(() =>
+            //    {
+            //        System.Threading.Monitor.Exit(key);
+            //    });
+
+            //    return lockDistribute;
+            //}
+            //finally
+            //{
+            //    if (token)
+            //    {
+            //        System.Threading.Monitor.Exit(key);
+            //    }
+            //}
 
         }
 
