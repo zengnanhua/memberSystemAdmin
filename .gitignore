@@ -5,7 +5,10 @@
 /BackSrc/.vs/
 /BackSrc/AdminSystem.Api/log/
 /FrontSrc/node_modules/
-/FontSrv_v2/node_modules/
+/FontSrv_admin/node_modules/
+/FontSrv_admin/dist/
+/FontSrv_app/node_modules/
+/FontSrv_app/dist/
 /BackSrc/UserIdentity/bin/
 /BackSrc/UserIdentity/obj/
 /BackSrc/AdminSystem.Api/bin/
