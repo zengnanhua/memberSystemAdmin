@@ -40,7 +40,7 @@ namespace UserIdentity.Controllers
         {
             
             var bb= _cachingService._redisDatabaseProvider.GetDatabase();
-            var b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50));
+            var b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50),StackExchange.Redis.CommandFlags.PreferMaster);
             b = bb.LockTake("cc", "cc0", TimeSpan.FromSeconds(50));
             b = bb.LockTake("cc0", "cc1", TimeSpan.FromSeconds(50));
             b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50));
