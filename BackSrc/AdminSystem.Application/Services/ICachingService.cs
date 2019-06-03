@@ -26,6 +26,6 @@ namespace AdminSystem.Application.Services
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        IDisposable AcquireLock(string key);
+        LockDistribute AcquireLock(string key);
     }
 }

@@ -39,25 +39,26 @@ namespace UserIdentity.Controllers
         public async Task<object> Get()
         {
             
-            var bb= _cachingService._redisDatabaseProvider.GetDatabase();
-            var b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50),StackExchange.Redis.CommandFlags.PreferMaster);
-            b = bb.LockTake("cc", "cc0", TimeSpan.FromSeconds(50));
-            b = bb.LockTake("cc0", "cc1", TimeSpan.FromSeconds(50));
-            b = bb.LockTake("cc", "cc1", TimeSpan.FromSeconds(50));
-            return "dfsd";
+            
             var hello = _cachingService.RedisCacheProvider.Get("dsd", () => "this is dome", TimeSpan.FromMinutes(1));
             var hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
             hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
             hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
           
-            using (_cachingService.AcquireLock("c21211"))
+            using (var obj= _cachingService.AcquireLock("c21211"))
             {
-                
-             
-                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
-                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
-                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
-                hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                if (obj.IsAcquired)
+                {
+                    hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                    System.Threading.Thread.Sleep(2000);
+                    hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                    hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                    hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
+                }
+                else
+                {
+                    return "处理失败,请重新提交";
+                }
             }
                 
             //_cachingService.RedisCacheProvider.StringSet("dd", "this is dome");
@@ -65,7 +66,7 @@ namespace UserIdentity.Controllers
            
            // var dd= _cachingService.RedisCacheProvider.StringGet("dd");
             //var list=await _accountQuery.GetPageMenuByUserId(1);
-            return "sdfasd";
+            return "提交成功";
         }
 
         // GET api/values/5

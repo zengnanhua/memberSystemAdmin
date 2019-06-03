@@ -10,9 +10,17 @@ namespace AdminSystem.Application.Services
     public class LockDistribute : IDisposable
     {
         private Action _func;
+        /// <summary>
+        /// 代码是否可以执行
+        /// </summary>
+        public bool IsAcquired { get; set; } = true;
         public LockDistribute(Action func)
         {
             this._func = func;
+        }
+        ~LockDistribute()
+        {
+            _func();
         }
         public void Dispose()
         {
@@ -43,16 +51,17 @@ namespace AdminSystem.Application.Services
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public IDisposable AcquireLock(string key)
+        public LockDistribute AcquireLock(string key)
         {
-            var token = "ccccc";// Guid.NewGuid().ToString();// Environment.MachineName;
+            var token = Guid.NewGuid().ToString();// Environment.MachineName;
             var redisDatabase = _redisDatabaseProvider.GetDatabase();
-            var jj = redisDatabase.StringGet("dsd");
-            var bb = redisDatabase.LockTake(key, token, TimeSpan.FromSeconds(20));
+            
+            var b = redisDatabase.LockTake(key, token, TimeSpan.FromSeconds(20));
             LockDistribute lockDistribute = new LockDistribute(() =>
             {
                 var vv = redisDatabase.LockRelease(key, token);
             });
+            lockDistribute.IsAcquired = b;
             return lockDistribute;
 
 
