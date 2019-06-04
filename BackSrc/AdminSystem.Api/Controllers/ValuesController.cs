@@ -45,12 +45,12 @@ namespace UserIdentity.Controllers
             hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
             hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
           
-            using (var obj= _cachingService.AcquireLock("c21211"))
+            using (var obj= _cachingService.AcquireBlock("c21211"))
             {
                 if (obj.IsAcquired)
                 {
                     hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(30*1000);
                     hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
                     hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");
                     hello1 = _cachingService.RedisCacheProvider.Get<string>("dsd");

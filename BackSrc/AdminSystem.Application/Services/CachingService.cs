@@ -47,6 +47,38 @@ namespace AdminSystem.Application.Services
          
         }
         /// <summary>
+        /// 阻塞锁 分布式锁
+        /// </summary>
+        /// <returns></returns>
+        public LockDistribute AcquireBlock(string key)
+        {
+            var token = Guid.NewGuid().ToString();// Environment.MachineName;
+            var redisDatabase = _redisDatabaseProvider.GetDatabase();
+            var b = false;
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            
+            while (!b)
+            {
+                b = redisDatabase.LockTake(key, token, TimeSpan.FromSeconds(20));
+                if (!b)
+                {
+                    if (stopwatch.Elapsed >= TimeSpan.FromSeconds(9)) //如果阻塞超过9秒就退出
+                    {
+                        throw new Exception("阻塞分布式锁超时");
+                        break;
+                    }
+                    System.Threading.Thread.Sleep(200);
+                } 
+            }
+            
+            LockDistribute lockDistribute = new LockDistribute(() =>
+            {
+                var vv = redisDatabase.LockRelease(key, token);
+            });
+            lockDistribute.IsAcquired = b;
+            return lockDistribute;
+        }
+        /// <summary>
         ///redis 分布式锁
         /// </summary>
         /// <param name="key"></param>

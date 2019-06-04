@@ -27,5 +27,10 @@ namespace AdminSystem.Application.Services
         /// <param name="key"></param>
         /// <returns></returns>
         LockDistribute AcquireLock(string key);
+        /// <summary>
+        /// 阻塞锁 分布式锁
+        /// </summary>
+        /// <returns></returns>
+        LockDistribute AcquireBlock(string key);
     }
 }
